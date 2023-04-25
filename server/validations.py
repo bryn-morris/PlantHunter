@@ -4,7 +4,7 @@ import re
 #######            Validations for User Model
 ############################################################
 
-special_characters = re.compile(r'~`!@#\$\%\^&\*\(\)-_\+=\{\}\[\]\|\\\/:\'"<>\.?')
+special_characters = re.compile(r'[!@#$%^&*(),.?":{}|<>]')
 
 def email_validation(email_string):
     if '@' not in email_string:

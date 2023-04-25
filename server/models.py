@@ -51,8 +51,8 @@ class Observation(db.Model, SerializerMixin):
     location = db.Column(db.String)
     comment = db.Column(db.String)
 
-    user_id = db.relationship(db.Integer, db.ForeignKey('users.id'))
-    plant_id = db.relationship(db.Integer, db.ForeignKey('plants.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    plant_id = db.Column(db.Integer, db.ForeignKey('plants.id'))
 
     # Use Flask Uploads to associate user image with observation
     # image = db.Column(db.String)
