@@ -33,7 +33,7 @@ if __name__ == '__main__':
         for _ in range(1,10):
             new_user = User(
                 username = faker.user_name() + 'asdfg',
-                password = faker.word() + '@!@#$%',
+                password_hash = faker.word() + '@!@#$%',
                 email = faker.email(),
                 )
             user_list.append(new_user)

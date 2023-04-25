@@ -4,7 +4,7 @@ from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.hybrid import  hybrid_property
 from validations import *
 
-from config import db
+from config import db, bcrypt
 
 class User(db.Model, SerializerMixin):
 
@@ -13,8 +13,8 @@ class User(db.Model, SerializerMixin):
     serialize_rules = ('-created_at', '-updated_at', '-observations', '-plants')
 
     id = db.Column(db.Integer, primary_key = True)
-    username = db.Column(db.String)
-    password = db.Column(db.String)
+    username = db.Column(db.String, unique=True)
+    _password_hash = db.Column(db.String)
     email = db.Column(db.String)
 
     created_at = db.Column(db.DateTime, server_default = db.func.now())
@@ -27,7 +27,7 @@ class User(db.Model, SerializerMixin):
 
     #validations
 
-    @validates('email', 'username', 'password')
+    @validates('email', 'username', 'password_hash')
     def validation(self,key,value):
         if key == 'email':
             email_validation(value)
@@ -35,11 +35,27 @@ class User(db.Model, SerializerMixin):
         if key == 'username':
             username_length_validation(value)
             return value
-        if key == 'password':
+        if key == 'password_hash':
             password_length_validation(value)
             return value
 
     #Password Hashing Methods
+
+    @hybrid_property
+    def password_hash(self):
+        return self._password_hash
+    
+    @password_hash.setter
+    def password_hash(self, password):
+        password_hash = bcrypt.generate_password_hash(
+            password.encode('utf-8')
+        )
+        self._password_hash = password_hash.decode('utf-8')
+
+    def authenticate(self, password):
+        return bcrypt.check_password_hash(
+            self._password_hash, password.encode('utf-8')
+        )
 
 class Observation(db.Model, SerializerMixin):
 
