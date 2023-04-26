@@ -1,10 +1,10 @@
-import re
+# import re
 
 ############################################################
 #######            Validations for User Model
 ############################################################
 
-special_characters = re.compile(r'[!@#$%^&*(),.?":{}|<>]')
+# special_characters = re.compile(r'[!@#$%^&*(),.?":{}|<>]')
 
 def email_validation(email_string):
     if '@' not in email_string:
@@ -17,8 +17,10 @@ def username_length_validation(username_string):
 def password_length_validation(password_string):
     if len(password_string) < 8:
         raise ValueError('Please enter a password 8 characters or longer!')
-    if special_characters.search(password_string) == None:
-        raise ValueError('Please enter a password with at least one Special Character')
+    # Execute this on the frontend or in app as password is converted to a hash
+    # before this validation is run
+    # if special_characters.search(password_string) == None:
+    #     raise ValueError('Please enter a password with at least one Special Character')
 
 ############################################################
 #######            Validations for Observations

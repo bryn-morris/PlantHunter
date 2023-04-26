@@ -2,43 +2,99 @@
 
 # Standard library imports
 
+
 # Remote library imports
 from flask import make_response, request, session, jsonify
 from flask_restful import Resource
+from sqlalchemy.exc import IntegrityError
 
 # Local imports
 from config import app, db, api
+
 from models import User, Observation, Plant
 
 class Signup(Resource):
     
     def post(self):
+
+        user_attr = ["username", "password", "email"]
+        user_obj = {}
+
+        for attr in user_attr:
+            try:
+                user_obj[attr] = request.get_json()[attr]
+            except ValueError as e:
+                return make_response({"Value Error": f"{e}"}, 400)
+            
+        newUser = User( 
+                    username = user_obj[f'{user_attr[0]}'],
+                    password_hash = user_obj[f'{user_attr[1]}'],
+                    email = user_obj[f'{user_attr[2]}'],
+                    )
         
-        username = request.get_json()['username']
-        password = request.get_json()['password']
-        email = request.get_json()['email']
+        try:
+            db.session.add(newUser)
+            db.session.commit()       
+        except IntegrityError:
+            db.session.rollback()
+            return make_response({
+                    "Integrity Error": "This username is not unique. Please try again!"
+                }, 400)
 
-        db.session.add( User( username = username, password_hash = password, email = email,))
-        db.session.commit()
+        db_user = User.query.filter(User.username == user_obj[f'{user_attr[0]}']).one()
+        session['user_id'] = db_user.id
 
-        ######
-        # add functionality to log in after sign in and redirect to home page after sign in->login
-        ######
+        response = make_response(newUser.to_dict(),201)
+        response.set_cookie('session_id', session.sid)
+
+        return response    
 
 class Login(Resource):
 
-    def
+    def post(self):
 
-    if self.authenticate('password'):
-                pass
-            else:
-                pass
+        sub_user = request.get_json().get('username')
+        sub_pass = request.get_json().get('password')
+
+        sel_user = User.query.filter(User.username == sub_user).one_or_none()
+        if sel_user == None or sel_user.authenticate(sub_pass) == False:
+            return make_response({"error":"Please enter a valid username/password!"}, 401)
+        else:
+            session['user_id'] = sel_user.id
+            response = make_response(sel_user.to_dict(), 201)
+            response.set_cookie('session_id', session.sid)
+            return response
+
+    # check session in front end with useEffect, and store in state.
+    # if that piece of state exists/not null, user is not logged in and
+    # then we should route them to app
+    # Otherwise, just consider them "logged in" and route them to the rest
+    # of the website. If that piece of state is null or false, route them to
+    # the login page. 
 
 class Logout(Resource):
-    pass
+    
+    def delete(self):
+        session.pop('user_id', None)
+        response = make_response({"message":"Log out Successful!"})
+        response.set_cookie('session_id', '')
 
+#May want to use non-restful routing if I am going to have this return
+# important data
 class CurrentSession(Resource):
-    pass
+    
+    def get(self):
+
+        if session['user_id'] is not None:
+            
+            sel_user = User.query.filter(User.id == session['user_id']).one()
+            return make_response(sel_user.to_dict(), 200)
+
+        else:
+            return make_response(
+                {"error":"User not found! Please Sign In!"},
+                404
+            )
 
 #######################################################
 ###########             API Resources
@@ -48,78 +104,6 @@ api.add_resource(Signup, '/signup')
 api.add_resource(Login, '/login')
 api.add_resource(Logout, '/logout')
 api.add_resource(CurrentSession, '/currentsession')
-
-# class Signup(Resource):
-#     def post(self):
-#         data = request.get_json()
-#         temp_user = User(
-#             username = data['username'],
-#             image = data['image'],
-#             _password = data['password']
-#         )
-#         temp_user.password_hash = temp_user._password
-#         new_password = temp_user._password
-
-#         new_user = User(
-#             username = data['username'],
-#             image = data['image'],
-#             _password = new_password
-#         )
-#         db.session.add(new_user)
-#         db.session.commit()
-
-#         return make_response(
-#             {},
-#             200
-#         )
-# api.add_resource(Signup, '/signup')
-        
-
-# class Login(Resource):
-#     def post(self):
-#         data = request.get_json()
-#         user = User.query.filter(
-#             User.username == data['username']
-#         ).first()
-
-#         password = data['password']
-#         if not user:
-#             return {'error': 'Must enter a valid username and password'}, 404
-
-        
-#         elif user.authenticate(password):
-#             session['user_id'] = user.id
-#             session_user.append(user.to_dict(rules=('dogs',)))
-#             return make_response(
-#                 user.to_dict(),
-#                 200
-#             )
-#         return {'error': 'Must enter a valid username and password'}, 404
-# api.add_resource(Login, '/login')
-
-# class Logout(Resource):
-#     def delete(self):
-#         session.pop('user_id', None)
-#         return session.get('user_id')
-        
-
-# api.add_resource(Logout, '/logout')
-
-# class CurrentSession(Resource):
-#     def get(self):
-
-#         user = session_user[0]
-#         if not user:
-#             return make_response(
-#                 {'error': 'User not found'},
-#                 404
-#             )
-    
-#         return make_response(
-#             user,
-#             200
-#         )
-# api.add_resource(CurrentSession, '/current-session')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

@@ -1,6 +1,7 @@
 # Standard library imports
 
 # Remote library imports
+import os
 from flask import Flask
 from flask_cors import CORS
 from flask_migrate import Migrate
@@ -36,3 +37,6 @@ CORS(app)
 
 #Password Encryption
 bcrypt = Bcrypt(app)
+
+#Super Secret Key, no looking pls
+app.secret_key = os.urandom(16)
