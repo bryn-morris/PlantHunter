@@ -13,6 +13,10 @@ from config import app, db, api
 
 from models import User, Observation, Plant
 
+#######################################################
+###########        Login & Authentication
+#######################################################
+
 class Signup(Resource):
     
     def post(self):
@@ -44,8 +48,12 @@ class Signup(Resource):
         db_user = User.query.filter(User.username == user_obj[f'{user_attr[0]}']).one()
         session['user_id'] = db_user.id
 
-        response = make_response(newUser.to_dict(),201)
-        response.set_cookie('session_id', session.sid)
+        response = make_response(
+            newUser.to_dict(
+                only = ('username', 'email')
+            ),
+            201
+            )
 
         return response    
 
@@ -61,8 +69,12 @@ class Login(Resource):
             return make_response({"error":"Please enter a valid username/password!"}, 401)
         else:
             session['user_id'] = sel_user.id
-            response = make_response(sel_user.to_dict(), 201)
-            response.set_cookie('session_id', session.sid)
+            response = make_response(
+                sel_user.to_dict(
+                   only = ('username','email') 
+                ),
+                201
+                )
             return response
 
     # check session in front end with useEffect, and store in state.
@@ -77,10 +89,8 @@ class Logout(Resource):
     def delete(self):
         session.pop('user_id', None)
         response = make_response({"message":"Log out Successful!"})
-        response.set_cookie('session_id', '')
+        return response
 
-#May want to use non-restful routing if I am going to have this return
-# important data
 class CurrentSession(Resource):
     
     def get(self):
@@ -88,13 +98,26 @@ class CurrentSession(Resource):
         if session['user_id'] is not None:
             
             sel_user = User.query.filter(User.id == session['user_id']).one()
-            return make_response(sel_user.to_dict(), 200)
+            return make_response(
+                sel_user.to_dict(
+                    only = ('username','email')
+                ),
+                200
+                )
 
         else:
             return make_response(
                 {"error":"User not found! Please Sign In!"},
                 404
             )
+#######################################################
+###########             Other Resources
+#######################################################       
+
+class Home(Resource):
+
+    def get(self):
+        pass
 
 #######################################################
 ###########             API Resources
