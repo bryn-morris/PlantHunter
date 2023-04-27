@@ -7,6 +7,7 @@
 from flask import make_response, request, session, jsonify
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
+import jwt
 
 # Local imports
 from config import app, db, api
@@ -25,16 +26,18 @@ class Signup(Resource):
         user_obj = {}
 
         for attr in user_attr:
-            try:
-                user_obj[attr] = request.get_json()[attr]
-            except ValueError as e:
-                return make_response({"Value Error": f"{e}"}, 400)
+            user_obj[attr] = request.get_json()[attr]
             
-        newUser = User( 
+        try:
+            newUser = User( 
                     username = user_obj[f'{user_attr[0]}'],
                     password_hash = user_obj[f'{user_attr[1]}'],
                     email = user_obj[f'{user_attr[2]}'],
                     )
+        except ValueError as e:
+                print('Is this working?')
+                return make_response({"Value Error": f"{e}"}, 400)
+        
         
         try:
             db.session.add(newUser)
@@ -46,13 +49,19 @@ class Signup(Resource):
                 }, 400)
 
         db_user = User.query.filter(User.username == user_obj[f'{user_attr[0]}']).one()
-        session['user_id'] = db_user.id
+        token = jwt.encode(
+                {
+                    'user_id': db_user.id},
+                    app.config['SECRET_KEY'],
+                    algorithm='HS256'
+            )   
 
         response = make_response(
             newUser.to_dict(
                 only = ('username', 'email')
             ),
-            201
+            201,
+            {'Authorization': f'Bearer {token}'}
             )
 
         return response    
@@ -68,13 +77,23 @@ class Login(Resource):
         if sel_user == None or sel_user.authenticate(sub_pass) == False:
             return make_response({"error":"Please enter a valid username/password!"}, 401)
         else:
-            session['user_id'] = sel_user.id
+            
+
+            token = jwt.encode(
+                {
+                    'user_id': sel_user.id},
+                    app.config['SECRET_KEY'],
+                    algorithm='HS256'
+            )   
+    
             response = make_response(
                 sel_user.to_dict(
                    only = ('username','email') 
                 ),
-                201
+                201,
+                {'Authorization': f'Bearer {token}'}
                 )
+            
             return response
 
     # check session in front end with useEffect, and store in state.

@@ -39,4 +39,4 @@ CORS(app)
 bcrypt = Bcrypt(app)
 
 #Super Secret Key, no looking pls
-app.secret_key = os.urandom(16)
+app.config['SECRET_KEY'] = os.urandom(16)

@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { View, TextInput, Button } from "react-native"
 
-function Login ({handleSubmitFormObj}) {
+function Login ({handleLoggiesSubmit}) {
 
     const emptyLoginObj = {
         username: '',
@@ -10,8 +10,8 @@ function Login ({handleSubmitFormObj}) {
 
     const [loginObj, setLoginObj] = useState(emptyLoginObj)
 
-    const handleLoginSubmit = (e) => {
-        handleSubmitFormObj(loginObj)
+    const handleLoginSubmit = () => {
+        handleLoggiesSubmit(loginObj)
         setLoginObj(emptyLoginObj)
     }
 
@@ -21,7 +21,6 @@ function Login ({handleSubmitFormObj}) {
             {...loginObj, [id]: text}
         )})
     }
-
 
     return(
         <View>
