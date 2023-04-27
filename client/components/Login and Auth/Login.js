@@ -1,3 +1,4 @@
+import { StackActions } from "@react-navigation/routers"
 import { useState } from "react"
 import { View, TextInput, Button } from "react-native"
 
@@ -16,7 +17,6 @@ function Login ({handleLoggiesSubmit}) {
     }
 
     const handleInputChange = (id, text) => {
-        console.log(text)
         setLoginObj(()=>{return(
             {...loginObj, [id]: text}
         )})

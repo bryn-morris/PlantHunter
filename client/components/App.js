@@ -1,20 +1,20 @@
 import { StatusBar } from 'expo-status-bar';
+import { useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import Loggies from './Loggies';
+import Loggies from './Login and Auth/Loggies';
 import OpeningPage from './OpeningPage';
+import Home from './Home';
 import { AuthProvider } from '../context/AuthContext';
+import Main from './Main';
 
 
 function App() {
 
   // const [isLoading, setIsLoading] = useState(true)
   
-  
-  const Stack = createNativeStackNavigator()
-
 
   // const authContext = useMemo(()=>({
   //   signIn: () =>{
@@ -48,21 +48,8 @@ function App() {
 
   return (
     <AuthProvider>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName='Loggies'
-          screenOptions={{
-            gestureEnabled : true,
-            gestureDirection: 'vertical',          
-          }}
-        >
-          <Stack.Screen name = 'OpeningPage' component={OpeningPage}/>
-          <Stack.Screen name = 'Loggies' component = {Loggies} />
-        </Stack.Navigator>
-      </NavigationContainer>
+        <Main />
     </AuthProvider>
-      
-    
   );
 }
 

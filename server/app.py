@@ -110,6 +110,7 @@ class Logout(Resource):
         response = make_response({"message":"Log out Successful!"})
         return response
 
+#May not even need to use this if using JSON Web Tokens
 class CurrentSession(Resource):
     
     def get(self):

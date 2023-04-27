@@ -4,6 +4,8 @@ import { View, TextInput, Button } from "react-native"
 
 function SignUp ({handleLoggiesSubmit}) {
 
+
+
     const emptySignupObj = {
         username: '',
         password: '',
@@ -15,6 +17,7 @@ function SignUp ({handleLoggiesSubmit}) {
     const handleSignupSubmit = () => {
         handleLoggiesSubmit(signupObj)
         setSignupObj(emptySignupObj)
+
     }
 
     const handleInputChange = (id, text) => {

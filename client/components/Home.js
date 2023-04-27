@@ -1,25 +1,31 @@
-
-import { View, Button } from "react-native"
+import { useContext } from "react";
+import { View, Button, Text } from "react-native"
 import * as SecureStore from 'expo-secure-store';
+import { AuthContext } from "../context/AuthContext";
 
-function Home() {
+function Home({navigation}) {
 
     //Logout function - move around after routing has been better established
 
-    function handleLogout() {
+    const { setUserToken } = useContext(AuthContext)
+
+    async function handleLogout() {
         try{
-            SecureStore.deleteItemAsync('token')
-        // Redirect the user to the login page, possibly:
-        // navigation.navigate('Login');
+            await SecureStore.deleteItemAsync('token')
+            setUserToken(null)
+            navigation.popToTop()
         } catch (error){
             console.log(error)
         }
-        
     }
 
     return(
         <View>
-            {/* <Button onPress={handleLogout}/> */}
+            <Text> Is This Working?</Text>
+            <Button
+                title = 'logout'
+                onPress={handleLogout}
+            />
         </View>
     )
     
