@@ -38,7 +38,6 @@ class Signup(Resource):
                 print('Is this working?')
                 return make_response({"Value Error": f"{e}"}, 400)
         
-        
         try:
             db.session.add(newUser)
             db.session.commit()       
@@ -77,8 +76,6 @@ class Login(Resource):
         if sel_user == None or sel_user.authenticate(sub_pass) == False:
             return make_response({"error":"Please enter a valid username/password!"}, 401)
         else:
-            
-
             token = jwt.encode(
                 {
                     'user_id': sel_user.id},

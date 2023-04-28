@@ -13,39 +13,6 @@ import Main from './Main';
 
 function App() {
 
-  // const [isLoading, setIsLoading] = useState(true)
-  
-
-  // const authContext = useMemo(()=>({
-  //   signIn: () =>{
-  //     setUserToken(secureToken);
-  //     setIsLoading(false);
-  //   },
-  //   signOut: ()=>{
-  //     setUserToken(null);
-  //     setIsLoading(false);
-  //   },
-  //   signUp: () => {
-  //     setUserToken(secureToken);
-  //     setIsLoading(false)
-  //   }
-  // }), [])
-
-
-  // if (isLoading) {
-  //   return(
-  //     <View style={{flex:1, justifyContent:'center',alignItens:'center'}}>
-  //       <ActivityIndicator size = 'large' />
-  //     </View>
-  //   )
-  // }
-
-  // useEffect(()=>{
-  //   setTimeout(()=>{
-  //     setIsLoading(false)
-  //   }, 1000)
-  // },[])
-
   return (
     <AuthProvider>
         <Main />

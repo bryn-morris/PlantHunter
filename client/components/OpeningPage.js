@@ -14,7 +14,7 @@ function OpeningPage ({navigation}) {
                 title = 'Transition Between Screens!'
                 onPress = {() => {navigation.navigate(
                         userToken ?
-                        'Home' : 
+                        'HomeContainer' : 
                         'Loggies'
                 )}}
             />

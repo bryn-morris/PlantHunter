@@ -1,10 +1,9 @@
-import { StyleSheet, Text, View} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { useEffect, useContext } from "react";
 import OpeningPage from './OpeningPage';
-import Home from './Home';
+import HomeContainer from './HomeContainer';
 import Loggies from './Login and Auth/Loggies';
 import { AuthContext } from '../context/AuthContext';
 import * as SecureStore from 'expo-secure-store';
@@ -29,7 +28,7 @@ function Main () {
                 initialRouteName='OpeningPage'
             >
                 <Stack.Screen name = 'OpeningPage' component={OpeningPage} />
-                <Stack.Screen name = 'Home' component={Home} /> 
+                <Stack.Screen name = 'HomeContainer' component={HomeContainer} /> 
                 <Stack.Screen name = 'Loggies' component = {Loggies} />
             </Stack.Navigator>
       </NavigationContainer>

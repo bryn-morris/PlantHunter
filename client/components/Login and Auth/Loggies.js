@@ -31,14 +31,13 @@ function Loggies({navigation}) {
     async function handleLoggiesSubmit(formObj) {
         
         try{
-            const r = await fetch(`https://5bd9-174-74-7-135.ngrok-free.app/${isLogin}`,{
+            const r = await fetch(`https://e8b5-174-74-7-135.ngrok-free.app/${isLogin}`,{
             method: "POST",
             headers: {"Content-Type":"application/json"},
             body: JSON.stringify(formObj)
         })
         if(r.ok){
             const token = r.headers.get('authorization').split(' ')[1]
-            console.log(token)
             await SecureStore.setItemAsync('token', token)
             setUserToken(await SecureStore.getItemAsync('token'))
             navigation.dispatch(
@@ -46,6 +45,7 @@ function Loggies({navigation}) {
             )
         } else{
             // render modal
+            console.log(r)
             r.json().then(err => {
                 setRecentError(err[Object.keys(err)[0]])
                 setModalVisible(true)
