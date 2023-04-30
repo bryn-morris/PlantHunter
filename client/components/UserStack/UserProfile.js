@@ -6,6 +6,8 @@ return (
     <View>
         <Text>Profile Page</Text>
     </View>
+        
+    
 )
 
 }

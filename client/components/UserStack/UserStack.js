@@ -8,7 +8,7 @@ function UserStack() {
     const Stack = createNativeStackNavigator()
     
     return (
-        <Stack.Navigator initialRouteName='UserProfile'>
+        <Stack.Navigator initialRouteName='UserProfile' >
             <Stack.Screen name = 'UserProfile' component = {UserProfile} />
             <Stack.Screen name = 'UserGallery' component = {UserGallery} />
         </Stack.Navigator>

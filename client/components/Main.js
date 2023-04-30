@@ -28,7 +28,7 @@ function Main () {
                 initialRouteName='OpeningPage'
             >
                 <Stack.Screen name = 'OpeningPage' component={OpeningPage} />
-                <Stack.Screen name = 'HomeContainer' component={HomeContainer} /> 
+                <Stack.Screen name = 'HomeContainer' component={HomeContainer} options={{ headerShown: false }}/> 
                 <Stack.Screen name = 'Loggies' component = {Loggies} />
             </Stack.Navigator>
       </NavigationContainer>

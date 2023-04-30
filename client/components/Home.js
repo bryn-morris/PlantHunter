@@ -10,8 +10,10 @@ function Home() {
 
 
     return(
-        
+        <View>
             <Text>Home Page</Text>
+        </View>
+            
         
         
     )

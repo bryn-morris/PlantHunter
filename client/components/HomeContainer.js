@@ -28,10 +28,11 @@ function HomeContainer({navigation}) {
     // Add Compendium (STRETCH GOAL) to Tab Navigator connected to API
     // Need to remove header from the view in the above component??
     return(
+        // <Text>TESTING</Text>
             <Tab.Navigator>
-                <Tab.Screen name = 'Home' component={Home}/> 
-                <Tab.Screen name = 'UserStack' component={UserStack}/>
-                <Tab.Screen name = 'IndexStack' component={IndexStack}/>
+                <Tab.Screen name = 'Home' component={Home} /> 
+                <Tab.Screen name = 'UserStack' component={UserStack} options={{ headerShown: false }}/>
+                <Tab.Screen name = 'IndexStack' component={IndexStack} options={{ headerShown: false }}/>
             </Tab.Navigator>
     )
 }

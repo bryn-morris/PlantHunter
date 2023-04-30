@@ -31,7 +31,7 @@ function Loggies({navigation}) {
     async function handleLoggiesSubmit(formObj) {
         
         try{
-            const r = await fetch(`https://e8b5-174-74-7-135.ngrok-free.app/${isLogin}`,{
+            const r = await fetch(`https://ad4f-174-74-7-135.ngrok-free.app/${isLogin}`,{
             method: "POST",
             headers: {"Content-Type":"application/json"},
             body: JSON.stringify(formObj)

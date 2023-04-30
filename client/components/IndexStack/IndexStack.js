@@ -8,7 +8,7 @@ function IndexStack() {
     const Stack = createNativeStackNavigator()
     
     return (
-        <Stack.Navigator initialRouteName='Index'>
+        <Stack.Navigator initialRouteName='PlantDetails'>
             <Stack.Screen name = 'Index' component = {Index} />
             <Stack.Screen name = 'PlantDetails' component = {PlantDetails} />
         </Stack.Navigator>
