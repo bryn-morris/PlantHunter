@@ -35,7 +35,6 @@ class Signup(Resource):
                     email = user_obj[f'{user_attr[2]}'],
                     )
         except ValueError as e:
-                print('Is this working?')
                 return make_response({"Value Error": f"{e}"}, 400)
         
         try:
@@ -108,29 +107,37 @@ class Logout(Resource):
         return response
 
 #May not even need to use this if using JSON Web Tokens
-class CurrentSession(Resource):
+# class CurrentSession(Resource):
     
-    def get(self):
+#     def get(self):
 
-        if session['user_id'] is not None:
+#         if session['user_id'] is not None:
             
-            sel_user = User.query.filter(User.id == session['user_id']).one()
-            return make_response(
-                sel_user.to_dict(
-                    only = ('username','email')
-                ),
-                200
-                )
+#             sel_user = User.query.filter(User.id == session['user_id']).one()
+#             return make_response(
+#                 sel_user.to_dict(
+#                     only = ('username','email')
+#                 ),
+#                 200
+#                 )
 
-        else:
-            return make_response(
-                {"error":"User not found! Please Sign In!"},
-                404
-            )
+#         else:
+#             return make_response(
+#                 {"error":"User not found! Please Sign In!"},
+#                 404
+#             )
 #######################################################
 ###########             Other Resources
 #######################################################       
+
+class Plants_by_User(Resource):
+
+    def get(self):
         
+        data = request.headers.get('Authorization')
+
+        return make_response({'message':f'{data}'}, 200)
+               
 
 
 #######################################################
@@ -140,7 +147,8 @@ class CurrentSession(Resource):
 api.add_resource(Signup, '/signup')
 api.add_resource(Login, '/login')
 api.add_resource(Logout, '/logout')
-api.add_resource(CurrentSession, '/currentsession')
+api.add_resource(Plants_by_User, '/plantsbyuser')
+# api.add_resource(CurrentSession, '/currentsession')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

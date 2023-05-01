@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from 'react'
+import React, {useState, useContext} from 'react'
 import { View, Switch, Modal, TouchableOpacity, Text } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import { StackActions } from "@react-navigation/routers"
@@ -31,7 +31,7 @@ function Loggies({navigation}) {
     async function handleLoggiesSubmit(formObj) {
         
         try{
-            const r = await fetch(`https://ad4f-174-74-7-135.ngrok-free.app/${isLogin}`,{
+            const r = await fetch(`https://ca72-174-74-7-135.ngrok-free.app/${isLogin}`,{
             method: "POST",
             headers: {"Content-Type":"application/json"},
             body: JSON.stringify(formObj)
@@ -41,11 +41,10 @@ function Loggies({navigation}) {
             await SecureStore.setItemAsync('token', token)
             setUserToken(await SecureStore.getItemAsync('token'))
             navigation.dispatch(
-                StackActions.replace('Home')
+                StackActions.replace('AppContainer')
             )
         } else{
-            // render modal
-            console.log(r)
+            // Change so Modal is only on part of screen and styled
             r.json().then(err => {
                 setRecentError(err[Object.keys(err)[0]])
                 setModalVisible(true)
