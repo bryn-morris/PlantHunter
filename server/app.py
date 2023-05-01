@@ -143,7 +143,17 @@ class Plants_by_User(Resource):
         
         sel_users_plants = User.query.filter(User.id == user_id).one().plants
 
-        user_plants =   [pl.to_dict() for pl in sel_users_plants]
+        user_plants =   [pl.to_dict(
+                            rules = (
+                                        'observations.comment',
+                                        '-observations.plant',
+                                        '-observations.user._password_hash',
+                                        '-observations.user.email',
+                                        '-observations.user.id',
+                                        '-observations.user_id',
+                                        '-observations.plant_id',
+                                        '-observations.id',
+                                    )) for pl in sel_users_plants]
             
         return make_response(
             user_plants, 200)
