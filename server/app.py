@@ -8,11 +8,17 @@ from flask import make_response, request, session, jsonify
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 import jwt
+import os
 
 # Local imports
 from config import app, db, api
 
 from models import User, Observation, Plant
+
+#Super Secret Key, no looking pls
+# Move to somewhere more secure on refactor
+# likely store within app context to import over here
+SECRET_KEY = os.urandom(16)
 
 #######################################################
 ###########        Login & Authentication
@@ -50,7 +56,7 @@ class Signup(Resource):
         token = jwt.encode(
                 {
                     'user_id': db_user.id},
-                    app.config['SECRET_KEY'],
+                    SECRET_KEY,
                     algorithm='HS256'
             )   
 
@@ -68,7 +74,7 @@ class Login(Resource):
 
     def post(self):
 
-        sub_user = request.get_json().get('username')
+        sub_user = request.get_json().get('username').lower()
         sub_pass = request.get_json().get('password')
 
         sel_user = User.query.filter(User.username == sub_user).one_or_none()
@@ -78,8 +84,8 @@ class Login(Resource):
             token = jwt.encode(
                 {
                     'user_id': sel_user.id},
-                    app.config['SECRET_KEY'],
-                    algorithm='HS256'
+                    key = SECRET_KEY,
+                    algorithm = 'HS256'
             )   
     
             response = make_response(
@@ -91,13 +97,6 @@ class Login(Resource):
                 )
             
             return response
-
-    # check session in front end with useEffect, and store in state.
-    # if that piece of state exists/not null, user is not logged in and
-    # then we should route them to app
-    # Otherwise, just consider them "logged in" and route them to the rest
-    # of the website. If that piece of state is null or false, route them to
-    # the login page. 
 
 class Logout(Resource):
     
@@ -134,9 +133,20 @@ class Plants_by_User(Resource):
 
     def get(self):
         
-        data = request.headers.get('Authorization')
+        decoded_token = request.headers.get('Authorization').split(' ')[1]
+        # if user authentication doesn't match, kick back to login or some other error
+        user_id = jwt.decode(
+                            jwt = decoded_token,
+                            key = SECRET_KEY,
+                            algorithms = ['HS256'],
+                          )['user_id']
+        
+        sel_users_plants = User.query.filter(User.id == user_id).one().plants
 
-        return make_response({'message':f'{data}'}, 200)
+        user_plants =   [pl.to_dict() for pl in sel_users_plants]
+            
+        return make_response(
+            user_plants, 200)
                
 
 

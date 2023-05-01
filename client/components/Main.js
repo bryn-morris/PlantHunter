@@ -24,9 +24,7 @@ function Main () {
 
     return (
         <NavigationContainer>
-            <Stack.Navigator
-                initialRouteName='OpeningPage'
-            >
+            <Stack.Navigator initialRouteName='OpeningPage'>
                 <Stack.Screen name = 'OpeningPage' component={OpeningPage} />
                 <Stack.Screen name = 'AppContainer' component={AppContainer} options={{ headerShown: false }}/> 
                 <Stack.Screen name = 'Loggies' component = {Loggies} />

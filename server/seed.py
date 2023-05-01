@@ -38,12 +38,18 @@ if __name__ == '__main__':
                 )
             user_list.append(new_user)
 
+        user_list.append(User(
+                                username = 'testings',
+                                password_hash = 'password',
+                                email = 'password@password.com'
+                            ))
+
 
         print('Creating Observations...')
 
         obs_list = []
 
-        for _ in range(1,20):
+        for _ in range(1,30):
             new_ob = Observation(
                 location = faker.city(),
                 comment = faker.sentence(nb_words=5, variable_nb_words=True),
@@ -52,15 +58,33 @@ if __name__ == '__main__':
             )
 
             obs_list.append(new_ob)
+        
+        obs_list.append(Observation(
+            location = 'testing',
+            comment = 'testcomment1',
+            user_id = 10,
+            plant_id = randint(1,20)
+        ))
+
+        obs_list.append(new_ob)
+
+        obs_list.append(Observation(
+            location = 'testing2',
+            comment = 'testcomment2',
+            user_id = 10,
+            plant_id = randint(1,20)
+        ))
+
+        obs_list.append(new_ob)
 
         print('Creating Plants...')
 
         plant_list = []
 
-        for _ in range(1,20):
+        for _ in range(1,21):
             newPlant = Plant(
                 name = faker.word(),
-                image = 'sample_image',
+                image = 'https://h2.commercev3.net/cdn.brecks.com/images/800/69799A.jpg',
                 genus = faker.word(),
                 species = faker.word(),
                 location = faker.word(),
