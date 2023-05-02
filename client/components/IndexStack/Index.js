@@ -85,6 +85,7 @@ function Index({navigation}){
     }
 
     function deletionFetch(doomedID){
+        //deletion from backend
         fetch(`https://customngrok.ngrok.app/plantsbyuser/${doomedID}`,{
             method: "DELETE",
             headers: {
@@ -92,23 +93,22 @@ function Index({navigation}){
                 "Authorization": `Bearer ${userToken}`,
             }
         })
-        .then(setUserPlants(
-            [...userPlants].map((eachPlant)=>{
-
-                console.log(eachPlant)
+        //deletion from frontend
+        
+        setUserPlants(
+            userPlants.map((eachPlant)=>{
                 if (eachPlant.id !== doomedID) {
+                    console.log(eachPlant)
                     return eachPlant
                 }
             })
-        ))
-            .then(
-                setDoomedIndices(
-                    [...doomedIndices].filter((each)=>each !== doomedID)
-                )
-            )
-            
-            
+        )
+                // setDoomedIndices(
+                //     [...doomedIndices].filter((each)=>each !== doomedID)
+                // )      
     }
+
+    // userPlants ? console.log(userPlants.length) : null
         // update frontend
 
     ////////////////////////////////////////////////
@@ -118,6 +118,7 @@ function Index({navigation}){
     function renderIndexImages () {
 
             if (userPlants){
+                // slice fails when there is one entry left, refactor needed
                 const halfOfUP = Math.ceil(userPlants.length/2)
 
                 //Possible Refactor, bugfix after delete request
@@ -147,15 +148,15 @@ function Index({navigation}){
                                     (eachPl)=>{return(
                                         <>
                                             <TouchableHighlight 
-                                                key={eachPl.id}
+                                                key={eachPl.observations.id}
                                                 onPress={()=> renderDetailPage(eachPl)}
                                                 onLongPress={()=>{deletionAddition(eachPl.id)}}
                                             >
                                                 <Image 
-                                                    key={eachPl.id} 
+                                                    key={eachPl.observations.id} 
                                                     source = {{uri: eachPl.image}} 
                                                     style = {styles.image}
-                                            />
+                                                />
                                             </TouchableHighlight>
                                             <>
                                             {
@@ -174,12 +175,12 @@ function Index({navigation}){
                                 {userPlants.slice(halfOfUP).map(
                                     (eachPl)=>{return(
                                         <TouchableHighlight 
-                                            key = {eachPl.id} 
+                                            key = {eachPl.observations.id} 
                                             onPress={()=> renderDetailPage(eachPl)}
                                             onLongPress={()=>{deletionAddition(eachPl.id)}}
                                         >
                                             <Image 
-                                                key={eachPl.id} 
+                                                key={eachPl.observations.id} 
                                                 source = {{uri: eachPl.image}} 
                                                 style = {styles.image}
                                         />
