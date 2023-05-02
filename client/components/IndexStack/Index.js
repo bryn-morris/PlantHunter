@@ -66,6 +66,7 @@ function Index({navigation}){
             //possibly pass handleformsubmit through navigation.options?
             handleFormSubmit: handleFormSubmit
         })
+        setDoomedIndices([])
     }
 
     ////////////////////////////////////////////////
@@ -85,6 +86,11 @@ function Index({navigation}){
     }
 
     function deletionFetch(doomedID){
+
+        setDoomedIndices(
+            [...doomedIndices].filter((each)=>each !== doomedID)
+        )
+
         //deletion from backend
         fetch(`https://customngrok.ngrok.app/plantsbyuser/${doomedID}`,{
             method: "DELETE",
@@ -96,113 +102,84 @@ function Index({navigation}){
         //deletion from frontend
         
         setUserPlants(
-            userPlants.map((eachPlant)=>{
-                if (eachPlant.id !== doomedID) {
-                    console.log(eachPlant)
-                    return eachPlant
-                }
-            })
+            // userPlants.map((eachPlant)=>{
+            //     if (eachPlant.id !== doomedID) {
+            //         return eachPlant
+            //     }
+            // })
+            [...userPlants].filter(each => each.id !== doomedID)
         )
-                // setDoomedIndices(
-                //     [...doomedIndices].filter((each)=>each !== doomedID)
-                // )      
+                     
     }
 
-    // userPlants ? console.log(userPlants.length) : null
         // update frontend
 
-    ////////////////////////////////////////////////
-    ///////  Render On This Page
-    ////////////////////////////////////////////////
-
-    function renderIndexImages () {
-
-            if (userPlants){
-                // slice fails when there is one entry left, refactor needed
-                const halfOfUP = Math.ceil(userPlants.length/2)
-
-                //Possible Refactor, bugfix after delete request
-                // const indexColumns = [userPlants.slice(0,halfOfUP),userPlants.slice(halfOfUP)]
-                
-                // {indexColumns.forEach((ind)=>{ind.map(
-                //     (eachPl)=>{return(
-                //         <TouchableHighlight 
-                //             key={eachPl.id} 
-                //             onPress={()=> renderDetailPage(eachPl)}
-                //             onLongPress={()=>{console.log('Testing')}}
-                //         >
-                //             <Image 
-                //                 key={eachPl.id} 
-                //                 source = {{uri: eachPl.image}} 
-                //                 style = {styles.image}
-                //         />
-                //         </TouchableHighlight>
-                //     )}
-                // )})}
-        
-                return(
-                    <ScrollView style = {styles.scrollView}>
-                        <View style = {styles.container}>
-                            <View style = {styles.column}>
-                                {userPlants.slice(0,halfOfUP).map(
-                                    (eachPl)=>{return(
-                                        <>
-                                            <TouchableHighlight 
-                                                key={eachPl.observations.id}
-                                                onPress={()=> renderDetailPage(eachPl)}
-                                                onLongPress={()=>{deletionAddition(eachPl.id)}}
-                                            >
-                                                <Image 
-                                                    key={eachPl.observations.id} 
-                                                    source = {{uri: eachPl.image}} 
-                                                    style = {styles.image}
-                                                />
-                                            </TouchableHighlight>
-                                            <>
-                                            {
-                                                doomedIndices.includes(eachPl.id) ?
-                                                <Button 
-                                                    title="TESTING"
-                                                    onPress={()=>deletionFetch(eachPl.id)}/>: 
-                                                null
-                                            }
-                                            </>
-                                        </>
-                                    )}
-                                )}
-                            </View>
-                            <View style = {styles.column}>
-                                {userPlants.slice(halfOfUP).map(
-                                    (eachPl)=>{return(
-                                        <TouchableHighlight 
-                                            key = {eachPl.observations.id} 
-                                            onPress={()=> renderDetailPage(eachPl)}
-                                            onLongPress={()=>{deletionAddition(eachPl.id)}}
-                                        >
-                                            <Image 
-                                                key={eachPl.observations.id} 
-                                                source = {{uri: eachPl.image}} 
-                                                style = {styles.image}
-                                        />
-                                        </TouchableHighlight> 
-                                    )}
-                                )}
-                            </View>
-                        </View>
-                    </ScrollView>
-                )
-            } else{
-                return(<Text>Loading...</Text>)
-            }
-    }
+    
     
     // add search function to search filter through plant objects that return
     // from fetch - likely basd on plant name or location
 
     // render plant images on screen and make htem have an effect on press
 
-    return(renderIndexImages() )
-    
+    ////////////////////////////////////////////////
+    ///////  Render On This Page
+    ////////////////////////////////////////////////
+
+    const halfOfUP = userPlants ? Math.ceil(userPlants.length/2) : null
+
+    return(userPlants ?
+        <ScrollView style = {styles.scrollView}>
+        <View style = {styles.container}>
+            <View style = {styles.column}>
+                {userPlants.slice(0,halfOfUP).map(
+                    (eachPl)=>{return(
+                        <>
+                            <TouchableHighlight 
+                                key={eachPl.observations.id}
+                                onPress={()=> renderDetailPage(eachPl)}
+                                onLongPress={()=>{deletionAddition(eachPl.id)}}
+                            >
+                                <Image 
+                                    key={eachPl.observations.id} 
+                                    source = {{uri: eachPl.image}} 
+                                    style = {styles.image}
+                                />
+                            </TouchableHighlight>
+                            <>
+                            {
+                                doomedIndices.includes(eachPl.id) ?
+                                <Button
+                                    // key = {eachPL.observations.id} 
+                                    title="TESTING"
+                                    onPress={()=>deletionFetch(eachPl.id)}/>: 
+                                null
+                            }
+                            </>
+                        </>
+                    )}
+                )}
+            </View>
+            <View style = {styles.column}>
+                {userPlants.slice(halfOfUP).map(
+                    (eachPl)=>{return(
+                        <TouchableHighlight 
+                            key = {eachPl.observations.id} 
+                            onPress={()=> renderDetailPage(eachPl)}
+                            onLongPress={()=>{deletionAddition(eachPl.id)}}
+                        >
+                            <Image 
+                                key={eachPl.observations.id} 
+                                source = {{uri: eachPl.image}} 
+                                style = {styles.image}
+                        />
+                        </TouchableHighlight> 
+                    )}
+                )}
+            </View>
+        </View>
+    </ScrollView>:
+    <Text>Loading...</Text>
+    )    
 }
 
     ////////////////////////////////////////////////
