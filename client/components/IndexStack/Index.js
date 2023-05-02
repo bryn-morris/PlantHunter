@@ -52,6 +52,13 @@ function Index({navigation}){
             })
     }
     ,[])
+    
+    //pass info straight to fronted on submit edit button in edit modal
+    // create a piece fo state and update it with use effect so that the 
+    // plant configuration object is forcibly re-renedered - put the userplants
+    // in context so it can be accessed by plant details, then filter through
+    // to check to compare id's to find the right array element and use that
+    // info to populate page and modal
 
     function renderDetailPage (eachPl) {
         navigation.navigate('PlantDetails', { 
@@ -60,6 +67,8 @@ function Index({navigation}){
             handleFormSubmit: handleFormSubmit
         })
     }
+
+
 
     function renderIndexImages () {
 

@@ -1,16 +1,22 @@
-import { View, Text, Button, Modal, TouchableOpacity, Image, StyleSheet } from 'react-native'
-import { useEffect, useState } from 'react';
+import { View, Text, Button, TouchableOpacity, Image, StyleSheet } from 'react-native'
+import { useEffect, useState, useContext } from 'react';
 import PlantUsers from './PlantDetailsModals/PlantUsers';
 
 import EditModal from './PlantDetailsModals/EditModal';
+import { PlantContext } from '../../context/PlantContext';
 
 function PlantDetails({route}) {
     
-    const specificPlant = route.params.plant
+    const [specificPlant, setSpecificPlant] = useState(route.params.plant)
 
-    // useEffect(()=>{
-    //     setSpecificPlant(route.params.plant)
-    // }, [route.params.plant])
+    const {userPlants} = useContext(PlantContext)
+
+    useEffect(()=>{
+        setSpecificPlant(()=>{
+            return userPlants.find(eachPl => eachPl.id == specificPlant.id)
+        })
+    },
+    [userPlants])
     
     const handleFormSubmit = route.params.handleFormSubmit
 
@@ -45,30 +51,35 @@ function PlantDetails({route}) {
 
     return (
         <View>
-            
+            {
+                specificPlant ? 
+                (<> 
+                    <TouchableOpacity onPress={()=>setEditModalVisible(true)}>
+                        <Text>Edit</Text>
+                    </TouchableOpacity>
+                    <EditModal {...editModalPropsObj}/>
+                    {/* Plant Detail Data */}
+                    <Image 
+                        source = {{uri: specificPlant.image}}
+                        style = {styles.image}
+                    />
+                    <Text>{specificPlant.name}</Text>
+                    <Text>{specificPlant.growth_duration}</Text>
+                    <Text>{specificPlant.genus}</Text>
+                    <Text>{specificPlant.growth_habit}</Text>
+                    <Text>{specificPlant.description}</Text>
+                    <Text>{specificPlant.species}</Text>    
+                    {/* User Comments Modal Below */}
+                    <Button 
+                        title = 'User Reviews'
+                        onPress={()=>{setModalVisible(true)}}
+                    />
+                    <PlantUsers {...userModalPropsObj}/>
+                 </>
+                ) :
+                <Text> Loading... </Text>
+            }
             {/* Edit Modal */}
-            <TouchableOpacity onPress={()=>setEditModalVisible(true)}>
-                <Text>Edit</Text>
-            </TouchableOpacity>
-            <EditModal {...editModalPropsObj}/>
-            {/* Plant Detail Data */}
-            <Image 
-                source = {{uri: specificPlant.image}}
-                style = {styles.image}
-            />
-            <Text>{specificPlant.name}</Text>
-            <Text>{specificPlant.growth_duration}</Text>
-            <Text>{specificPlant.genus}</Text>
-            <Text>{specificPlant.growth_habit}</Text>
-            <Text>{specificPlant.description}</Text>
-            <Text>{specificPlant.species}</Text>
-            {/* User Comments Modal Below */}
-            <Button 
-                title = 'User Reviews'
-                onPress={()=>{setModalVisible(true)}}
-            />
-            <PlantUsers {...userModalPropsObj}/>
-            
         </View>
     )
 }

@@ -4,6 +4,8 @@ import ModalData from "./ModalData"
 
 function PlantUsers({modalVisible, setModalVisible, specificPlant}){
 
+    // console.log(specificPlant.observations)
+
     return(
         <Modal
             visible={modalVisible}
