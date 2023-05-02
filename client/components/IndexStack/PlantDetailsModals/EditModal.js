@@ -3,8 +3,6 @@ import { useState } from "react"
 
 function EditModal ({editModalVisible, setEditModalVisible, handleFormSubmit, specificPlant }) {
 
-    console.log(specificPlant)
-
     const defaultFormObject = {
         id: specificPlant.id,
         image: '',

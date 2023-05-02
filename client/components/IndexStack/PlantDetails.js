@@ -20,11 +20,6 @@ function PlantDetails({route}) {
     
     const handleFormSubmit = route.params.handleFormSubmit
 
-    // want to be able to click on the text/button/icon with the relevant info 
-    // to edit the details on the card, pass that prop back to index
-    // so that updates are rendered there if the image is updated
-    // and send a fetch to update the backend
-
     const [modalVisible, setModalVisible] = useState(false);
     const [editModalVisible, setEditModalVisible] = useState(false)
 
@@ -35,6 +30,9 @@ function PlantDetails({route}) {
     // Want to implement Flask Uploads so user can upload a photo from their
     // mobile device instead of having to use a url
 
+    /////////////////////////////////
+    ///////   Props Objects
+    /////////////////////////////////
 
     editModalPropsObj = {
         editModalVisible: editModalVisible,
@@ -48,6 +46,10 @@ function PlantDetails({route}) {
         setModalVisible: setModalVisible,
         specificPlant: specificPlant,
     }
+
+    ////////////////////////////////////////////
+    ///////   Rendered to Page
+    ////////////////////////////////////////////
 
     return (
         <View>

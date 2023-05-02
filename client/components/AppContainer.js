@@ -10,8 +10,6 @@ import { PlantProvider } from "../context/PlantContext";
 function AppContainer() {
 
     const Tab = createBottomTabNavigator()
-    
-    // Add Compendium (STRETCH GOAL) to Tab Navigator connected to API
 
     return(
         <PlantProvider>

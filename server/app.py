@@ -157,7 +157,9 @@ class Plants_by_User(Resource):
             
         return make_response(
             user_plants, 200)
-               
+
+#possible refactor for non restful so sel_plant only take one space
+# in memory               
 class Plant_by_id(Resource):
 
     def patch(self, id):
@@ -182,6 +184,15 @@ class Plant_by_id(Resource):
                                         '-observations.id',
             )
         ), 200)
+
+    def delete(self, id):
+
+        sel_plant = Plant.query.filter(Plant.id == id).one()
+
+        db.session.delete(sel_plant)
+        db.session.commit()
+
+        return make_response({}, 204)
     
 #######################################################
 ###########             API Resources

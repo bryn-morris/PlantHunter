@@ -7,9 +7,7 @@ function Compendium({navigation}){
     return(
         <View>
             <Text>Compendium Page</Text>
-        </View>
-        
-        
+        </View>    
     )
 }
 

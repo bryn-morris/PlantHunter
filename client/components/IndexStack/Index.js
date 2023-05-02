@@ -1,5 +1,5 @@
-import { Text, Image, ScrollView, View, StyleSheet, TouchableHighlight } from "react-native"
-import { useContext, useEffect } from "react"
+import { Text, Image, ScrollView, View, StyleSheet, TouchableHighlight, Button } from "react-native"
+import { useContext, useEffect, useState } from "react"
 import { PlantContext } from "../../context/PlantContext"
 import { AuthContext } from '../../context/AuthContext';
 
@@ -8,11 +8,14 @@ function Index({navigation}){
 
     const { userToken } = useContext(AuthContext)
     const { userPlants, setUserPlants } = useContext(PlantContext)
+    const [ doomedIndices, setDoomedIndices ] = useState([])
 
-    // State for Edit Form in PlantDetails
-    
+    ////////////////////////////////////////////////
+    ///////   Patch from Plant Details
+    ////////////////////////////////////////////////
+
     const handleFormSubmit = (formObj) => {
-        fetch (`https://9708-174-74-7-135.ngrok-free.app/plantsbyuser/${formObj.id}`,{
+        fetch (`https://customngrok.ngrok.app/plantsbyuser/${formObj.id}`,{
             method: "PATCH",
             headers: {
                 "Content-type":"application/json",
@@ -35,11 +38,11 @@ function Index({navigation}){
     }
 
 
-    //Fetch for Index and Plant Data, may want to implement caching and move
-    // this useEffect around after MVP is hit on refactor
-    // This currently fires again when 
+    ////////////////////////////////////////////////
+    ///////   GET for all Plants from DB
+    ////////////////////////////////////////////////
     useEffect( ()=> {
-        fetch ('https://9708-174-74-7-135.ngrok-free.app/plantsbyuser', {
+        fetch ('https://customngrok.ngrok.app/plantsbyuser', {
             method: "GET",
             headers: {
                 "Content-type":"application/json",
@@ -52,13 +55,10 @@ function Index({navigation}){
             })
     }
     ,[])
-    
-    //pass info straight to fronted on submit edit button in edit modal
-    // create a piece fo state and update it with use effect so that the 
-    // plant configuration object is forcibly re-renedered - put the userplants
-    // in context so it can be accessed by plant details, then filter through
-    // to check to compare id's to find the right array element and use that
-    // info to populate page and modal
+
+    ////////////////////////////////////////////////
+    ///////  Pass State & Reroute to Plant Details
+    ////////////////////////////////////////////////
 
     function renderDetailPage (eachPl) {
         navigation.navigate('PlantDetails', { 
@@ -68,12 +68,76 @@ function Index({navigation}){
         })
     }
 
+    ////////////////////////////////////////////////
+    ///////  Deletion to State
+    ////////////////////////////////////////////////
 
+    function deletionAddition (doomedID) {
+        const checkState = doomedIndices.findIndex((eachElement)=> eachElement === doomedID)
+        
+        if (checkState == -1){
+            setDoomedIndices([...doomedIndices, doomedID])
+        } else {
+            setDoomedIndices(
+            [...doomedIndices].filter((each)=>each !== doomedID)
+            )
+        }
+    }
+
+    function deletionFetch(doomedID){
+        fetch(`https://customngrok.ngrok.app/plantsbyuser/${doomedID}`,{
+            method: "DELETE",
+            headers: {
+                "Content-type":"application/json",
+                "Authorization": `Bearer ${userToken}`,
+            }
+        })
+        .then(setUserPlants(
+            [...userPlants].map((eachPlant)=>{
+
+                console.log(eachPlant)
+                if (eachPlant.id !== doomedID) {
+                    return eachPlant
+                }
+            })
+        ))
+            .then(
+                setDoomedIndices(
+                    [...doomedIndices].filter((each)=>each !== doomedID)
+                )
+            )
+            
+            
+    }
+        // update frontend
+
+    ////////////////////////////////////////////////
+    ///////  Render On This Page
+    ////////////////////////////////////////////////
 
     function renderIndexImages () {
 
             if (userPlants){
                 const halfOfUP = Math.ceil(userPlants.length/2)
+
+                //Possible Refactor, bugfix after delete request
+                // const indexColumns = [userPlants.slice(0,halfOfUP),userPlants.slice(halfOfUP)]
+                
+                // {indexColumns.forEach((ind)=>{ind.map(
+                //     (eachPl)=>{return(
+                //         <TouchableHighlight 
+                //             key={eachPl.id} 
+                //             onPress={()=> renderDetailPage(eachPl)}
+                //             onLongPress={()=>{console.log('Testing')}}
+                //         >
+                //             <Image 
+                //                 key={eachPl.id} 
+                //                 source = {{uri: eachPl.image}} 
+                //                 style = {styles.image}
+                //         />
+                //         </TouchableHighlight>
+                //     )}
+                // )})}
         
                 return(
                     <ScrollView style = {styles.scrollView}>
@@ -81,20 +145,39 @@ function Index({navigation}){
                             <View style = {styles.column}>
                                 {userPlants.slice(0,halfOfUP).map(
                                     (eachPl)=>{return(
-                                        <TouchableHighlight key={eachPl.id} onPress={()=> renderDetailPage(eachPl)}>
-                                            <Image 
-                                                key={eachPl.id} 
-                                                source = {{uri: eachPl.image}} 
-                                                style = {styles.image}
-                                        />
-                                        </TouchableHighlight>
+                                        <>
+                                            <TouchableHighlight 
+                                                key={eachPl.id}
+                                                onPress={()=> renderDetailPage(eachPl)}
+                                                onLongPress={()=>{deletionAddition(eachPl.id)}}
+                                            >
+                                                <Image 
+                                                    key={eachPl.id} 
+                                                    source = {{uri: eachPl.image}} 
+                                                    style = {styles.image}
+                                            />
+                                            </TouchableHighlight>
+                                            <>
+                                            {
+                                                doomedIndices.includes(eachPl.id) ?
+                                                <Button 
+                                                    title="TESTING"
+                                                    onPress={()=>deletionFetch(eachPl.id)}/>: 
+                                                null
+                                            }
+                                            </>
+                                        </>
                                     )}
                                 )}
                             </View>
                             <View style = {styles.column}>
                                 {userPlants.slice(halfOfUP).map(
                                     (eachPl)=>{return(
-                                        <TouchableHighlight key = {eachPl.id} onPress={()=> renderDetailPage(eachPl)}>
+                                        <TouchableHighlight 
+                                            key = {eachPl.id} 
+                                            onPress={()=> renderDetailPage(eachPl)}
+                                            onLongPress={()=>{deletionAddition(eachPl.id)}}
+                                        >
                                             <Image 
                                                 key={eachPl.id} 
                                                 source = {{uri: eachPl.image}} 
@@ -118,7 +201,12 @@ function Index({navigation}){
     // render plant images on screen and make htem have an effect on press
 
     return(renderIndexImages() )
+    
 }
+
+    ////////////////////////////////////////////////
+    ///////  Styling
+    ////////////////////////////////////////////////
 
 const styles = StyleSheet.create({
     scrollView: {
