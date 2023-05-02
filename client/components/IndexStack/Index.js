@@ -2,6 +2,7 @@ import { Text, Image, ScrollView, View, StyleSheet, TouchableHighlight, Button }
 import { useContext, useEffect, useState } from "react"
 import { PlantContext } from "../../context/PlantContext"
 import { AuthContext } from '../../context/AuthContext';
+import PlantIcon from "./PlantIcon";
 
 
 function Index({navigation}){
@@ -102,13 +103,21 @@ function Index({navigation}){
         //deletion from frontend
         
         setUserPlants(
+
+            //Why do I need to return an array that has the same length as
+            // the initial one and then filter through to remove null? 
+
             // userPlants.map((eachPlant)=>{
             //     if (eachPlant.id !== doomedID) {
             //         return eachPlant
+            //     } else {
+            //         return null
             //     }
-            // })
+            // }
+            // ).filter(eachPlant => eachPlant !== null))
             [...userPlants].filter(each => each.id !== doomedID)
         )
+        
                      
     }
 
@@ -121,9 +130,17 @@ function Index({navigation}){
 
     // render plant images on screen and make htem have an effect on press
 
+    const plantIconPropsObj = {
+        renderDetailPage: renderDetailPage,
+        deletionAddition: deletionAddition,
+        doomedIndices: doomedIndices,
+    }
+
     ////////////////////////////////////////////////
     ///////  Render On This Page
     ////////////////////////////////////////////////
+
+    //this NEEDS a refactor - likely using flatlist
 
     const halfOfUP = userPlants ? Math.ceil(userPlants.length/2) : null
 
@@ -133,46 +150,22 @@ function Index({navigation}){
             <View style = {styles.column}>
                 {userPlants.slice(0,halfOfUP).map(
                     (eachPl)=>{return(
-                        <>
-                            <TouchableHighlight 
-                                key={eachPl.observations.id}
-                                onPress={()=> renderDetailPage(eachPl)}
-                                onLongPress={()=>{deletionAddition(eachPl.id)}}
-                            >
-                                <Image 
-                                    key={eachPl.observations.id} 
-                                    source = {{uri: eachPl.image}} 
-                                    style = {styles.image}
-                                />
-                            </TouchableHighlight>
-                            <>
-                            {
-                                doomedIndices.includes(eachPl.id) ?
-                                <Button
-                                    // key = {eachPL.observations.id} 
-                                    title="TESTING"
-                                    onPress={()=>deletionFetch(eachPl.id)}/>: 
-                                null
-                            }
-                            </>
-                        </>
+                        <PlantIcon 
+                            eachPl = {eachPl}
+                            {...plantIconPropsObj}
+                        />
                     )}
                 )}
             </View>
             <View style = {styles.column}>
                 {userPlants.slice(halfOfUP).map(
                     (eachPl)=>{return(
-                        <TouchableHighlight 
-                            key = {eachPl.observations.id} 
-                            onPress={()=> renderDetailPage(eachPl)}
-                            onLongPress={()=>{deletionAddition(eachPl.id)}}
-                        >
-                            <Image 
-                                key={eachPl.observations.id} 
-                                source = {{uri: eachPl.image}} 
-                                style = {styles.image}
+                        <PlantIcon 
+                            eachPl = {eachPl}
+                            renderDetailPage = {renderDetailPage}
+                            deletionAddition = {deletionAddition}
+                            doomedIndices = {doomedIndices}
                         />
-                        </TouchableHighlight> 
                     )}
                 )}
             </View>

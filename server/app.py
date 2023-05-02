@@ -174,13 +174,13 @@ class Plant_by_id(Resource):
 
         return make_response(sel_plant.to_dict(
             rules = (
-                                        'observations.comment',
-                                        '-observations.plant',
-                                        '-observations.user._password_hash',
-                                        '-observations.user.email',
-                                        '-observations.user.id',
-                                        '-observations.user_id',
-                                        '-observations.plant_id',
+                    'observations.comment',
+                    '-observations.plant',
+                    '-observations.user._password_hash',
+                    '-observations.user.email',
+                    '-observations.user.id',
+                    '-observations.user_id',
+                    '-observations.plant_id',
             )
         ), 200)
 
