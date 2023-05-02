@@ -9,6 +9,35 @@ function Index({navigation}){
     const { userToken } = useContext(AuthContext)
     const { userPlants, setUserPlants } = useContext(PlantContext)
 
+    // State for Edit Form in PlantDetails
+    
+    const handleFormSubmit = (formObj) => {
+        fetch (`https://9708-174-74-7-135.ngrok-free.app/plantsbyuser/${formObj.id}`,{
+            method: "PATCH",
+            headers: {
+                "Content-type":"application/json",
+                "Authorization": `Bearer ${userToken}`,
+            },
+            body: JSON.stringify(formObj)
+        })
+        .then(r=>r.json())
+        .then(updatedPlant=>{
+            setUserPlants(
+                userPlants.map((eachPlant)=>{
+                    if (eachPlant.id == updatedPlant.id){
+                        return updatedPlant
+                    } else{
+                        return eachPlant
+                    }
+                }))
+            }
+        ) 
+    }
+
+
+    //Fetch for Index and Plant Data, may want to implement caching and move
+    // this useEffect around after MVP is hit on refactor
+    // This currently fires again when 
     useEffect( ()=> {
         fetch ('https://9708-174-74-7-135.ngrok-free.app/plantsbyuser', {
             method: "GET",
@@ -25,7 +54,11 @@ function Index({navigation}){
     ,[])
 
     function renderDetailPage (eachPl) {
-        navigation.navigate('PlantDetails', { plant: eachPl })
+        navigation.navigate('PlantDetails', { 
+            plant: eachPl,
+            //possibly pass handleformsubmit through navigation.options?
+            handleFormSubmit: handleFormSubmit
+        })
     }
 
     function renderIndexImages () {

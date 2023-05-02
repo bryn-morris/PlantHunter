@@ -158,12 +158,36 @@ class Plants_by_User(Resource):
         return make_response(
             user_plants, 200)
                
+class Plant_by_id(Resource):
 
+    def patch(self, id):
 
+        sel_plant = Plant.query.filter(Plant.id == id).one()
+
+        for attr in request.get_json():
+            setattr(sel_plant, attr, request.get_json()[attr])
+        
+        db.session.add(sel_plant)
+        db.session.commit()
+
+        return make_response(sel_plant.to_dict(
+            rules = (
+                                        'observations.comment',
+                                        '-observations.plant',
+                                        '-observations.user._password_hash',
+                                        '-observations.user.email',
+                                        '-observations.user.id',
+                                        '-observations.user_id',
+                                        '-observations.plant_id',
+                                        '-observations.id',
+            )
+        ), 200)
+    
 #######################################################
 ###########             API Resources
 #######################################################
 
+api.add_resource(Plant_by_id, '/plantsbyuser/<int:id>')
 api.add_resource(Signup, '/signup')
 api.add_resource(Login, '/login')
 api.add_resource(Logout, '/logout')

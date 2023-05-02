@@ -1,11 +1,18 @@
 import { View, Text, Button, Modal, TouchableOpacity, Image, StyleSheet } from 'react-native'
-import { useState } from 'react';
-import ModalData from './ModalData';
+import { useEffect, useState } from 'react';
+import PlantUsers from './PlantDetailsModals/PlantUsers';
+
+import EditModal from './PlantDetailsModals/EditModal';
 
 function PlantDetails({route}) {
     
     const specificPlant = route.params.plant
-    console.log(specificPlant)
+
+    // useEffect(()=>{
+    //     setSpecificPlant(route.params.plant)
+    // }, [route.params.plant])
+    
+    const handleFormSubmit = route.params.handleFormSubmit
 
     // want to be able to click on the text/button/icon with the relevant info 
     // to edit the details on the card, pass that prop back to index
@@ -13,37 +20,55 @@ function PlantDetails({route}) {
     // and send a fetch to update the backend
 
     const [modalVisible, setModalVisible] = useState(false);
+    const [editModalVisible, setEditModalVisible] = useState(false)
 
-    const handleCloseModal = () => {
-        setModalVisible(false);
+    // eventually I want the edit functionality for name tied to a search bar
+    // that the user must use to search through documented plants so that
+    // the species and genus etc may be determined.
+
+    // Want to implement Flask Uploads so user can upload a photo from their
+    // mobile device instead of having to use a url
+
+
+    editModalPropsObj = {
+        editModalVisible: editModalVisible,
+        setEditModalVisible: setEditModalVisible,
+        handleFormSubmit: handleFormSubmit,
+        specificPlant: specificPlant
+    }
+
+    userModalPropsObj = {
+        modalVisible: modalVisible,
+        setModalVisible: setModalVisible,
+        specificPlant: specificPlant,
     }
 
     return (
         <View>
-            <Text>{specificPlant.name}</Text>
+            
+            {/* Edit Modal */}
+            <TouchableOpacity onPress={()=>setEditModalVisible(true)}>
+                <Text>Edit</Text>
+            </TouchableOpacity>
+            <EditModal {...editModalPropsObj}/>
+            {/* Plant Detail Data */}
             <Image 
                 source = {{uri: specificPlant.image}}
                 style = {styles.image}
             />
+            <Text>{specificPlant.name}</Text>
             <Text>{specificPlant.growth_duration}</Text>
             <Text>{specificPlant.genus}</Text>
             <Text>{specificPlant.growth_habit}</Text>
             <Text>{specificPlant.description}</Text>
             <Text>{specificPlant.species}</Text>
+            {/* User Comments Modal Below */}
             <Button 
                 title = 'User Reviews'
                 onPress={()=>{setModalVisible(true)}}
             />
-            <Modal
-                visible={modalVisible}
-                animationType="slide"
-                onRequestClose={handleCloseModal}
-            >
-                {specificPlant.observations.map((eachObs)=><ModalData key = {eachObs.id} eachObs={eachObs} />)}
-                <TouchableOpacity onPress={handleCloseModal}>
-                    <Text>Close</Text>
-                </TouchableOpacity>
-            </Modal>
+            <PlantUsers {...userModalPropsObj}/>
+            
         </View>
     )
 }

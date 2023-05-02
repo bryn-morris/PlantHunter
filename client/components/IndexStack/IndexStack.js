@@ -5,7 +5,7 @@ import Index from './Index';
 import { useEffect } from 'react';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
-import PlantUsers from './PlantUsers';
+import PlantUsers from './PlantDetailsModals/PlantUsers';
 import { PlantContext } from '../../context/PlantContext';
 
 function IndexStack() {
