@@ -4,6 +4,8 @@ import ModalData from "./ModalData"
 
 function PlantUsers({modalVisible, setModalVisible, specificPlant}){
 
+    //Likely going to want to rerender the ModalData into a sectionList
+    
     return(
         <Modal
             visible={modalVisible}

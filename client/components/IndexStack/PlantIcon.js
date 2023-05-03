@@ -1,4 +1,4 @@
-import { TouchableHighlight, Image, StyleSheet, Button } from "react-native"
+import { TouchableHighlight, Image, StyleSheet, Button, Text } from "react-native"
 import { useContext } from "react"
 import { PlantContext } from "../../context/PlantContext"
 import { AuthContext } from '../../context/AuthContext'
@@ -7,22 +7,6 @@ function PlantIcon ({eachPl, renderDetailPage, deletionAddition, doomedIndices, 
 
     const { userPlants, setUserPlants } = useContext(PlantContext)
     const { userToken } = useContext(AuthContext)
-
-    ////////////////////////////////////////////////
-    ///////  Deletion to State
-    ////////////////////////////////////////////////
-
-    function deletionAddition (doomedID) {
-        const checkState = doomedIndices.findIndex((eachElement)=> eachElement === doomedID)
-        
-        if (checkState == -1){
-            setDoomedIndices([...doomedIndices, doomedID])
-        } else {
-            setDoomedIndices(
-            [...doomedIndices].filter((each)=>each !== doomedID)
-            )
-        }
-    }
 
     ////////////////////////////////////////////////
     ///////  Deletion on Backend & Frontend
@@ -63,6 +47,9 @@ function PlantIcon ({eachPl, renderDetailPage, deletionAddition, doomedIndices, 
                     source = {{uri: eachPl.image}} 
                     style = {styles.image}
                 />
+                <Text
+                    style = {styles.title}
+                >{eachPl.name}</Text>
                 {
                 doomedIndices.includes(eachPl.id) ?
                 <Button
@@ -71,6 +58,7 @@ function PlantIcon ({eachPl, renderDetailPage, deletionAddition, doomedIndices, 
                     onPress={()=>deletionFetch(eachPl.id)}/>: 
                 null
                 }
+                
             </>
         </TouchableHighlight>
     )
@@ -78,11 +66,14 @@ function PlantIcon ({eachPl, renderDetailPage, deletionAddition, doomedIndices, 
 
 const styles = StyleSheet.create({
     image: {
-      width: 100,
-      height: 100,
-      resizeMode: 'cover',
-      margin: 30
+        width: 100,
+        height: 100,
+        resizeMode: 'cover',
+        margin: 30
     },
+    title:{
+        textAlign: 'center',
+    }
   });
 
 export default PlantIcon

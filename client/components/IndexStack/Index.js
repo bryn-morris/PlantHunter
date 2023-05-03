@@ -11,7 +11,7 @@ function Index({navigation}){
     const { userPlants, setUserPlants } = useContext(PlantContext)
     const [ doomedIndices, setDoomedIndices ] = useState([])
 
-    // refactor to see by observations for this section?
+   
 
     ////////////////////////////////////////////////
     ///////   GET for all Plants from DB
@@ -32,6 +32,22 @@ function Index({navigation}){
     ,[])
 
     ////////////////////////////////////////////////
+    ///////  Deletion to State
+    ////////////////////////////////////////////////
+
+    function deletionAddition (doomedID) {
+        const checkState = doomedIndices.findIndex((eachElement)=> eachElement === doomedID)
+        
+        if (checkState == -1){
+            setDoomedIndices([...doomedIndices, doomedID])
+        } else {
+            setDoomedIndices(
+            [...doomedIndices].filter((each)=>each !== doomedID)
+            )
+        }
+    }
+
+    ////////////////////////////////////////////////
     ///////  Pass State & Reroute to Plant Details
     ////////////////////////////////////////////////
 
@@ -42,15 +58,23 @@ function Index({navigation}){
         setDoomedIndices([])
     }
 
+    ////////////////////////////////////////////////
+    ///////  Search Feature
+    ////////////////////////////////////////////////
+    
     // add search function to search filter through plant objects that return
     // from fetch - likely basd on plant name or location
 
-    // render plant images on screen and make htem have an effect on press
+
+    ////////////////////////////////////////////////
+    ///////  Props Objects
+    ////////////////////////////////////////////////
 
     const plantIconPropsObj = {
         renderDetailPage: renderDetailPage,
         doomedIndices: doomedIndices,
         setDoomedIndices: setDoomedIndices,
+        deletionAddition: deletionAddition,
     }
 
     ////////////////////////////////////////////////

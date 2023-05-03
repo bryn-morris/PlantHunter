@@ -8,18 +8,26 @@ function EditModal ({editModalVisible, setEditModalVisible, specificPlant }) {
     const { userToken } = useContext(AuthContext)
     const { userPlants, setUserPlants } = useContext(PlantContext)
 
+    const defaultFormObject = {
+        id: specificPlant.id,
+        image: '',
+    }
+
+    const [formObject, setFormObject] = useState(defaultFormObject)
+
     ////////////////////////////////////////////////
     ///////   Patch from Plant Details
     ////////////////////////////////////////////////
 
-    const handleFormSubmit = (formObj) => {
-        fetch (`https://customngrok.ngrok.app/plantsbyuser/${formObj.id}`,{
+    const handleEditSubmit = () => {
+        
+        fetch (`https://customngrok.ngrok.app/plantsbyuser/${formObject.id}`,{
             method: "PATCH",
             headers: {
                 "Content-type":"application/json",
                 "Authorization": `Bearer ${userToken}`,
             },
-            body: JSON.stringify(formObj)
+            body: JSON.stringify(formObject)
         })
         .then(r=>r.json())
         .then(updatedPlant=>{
@@ -33,16 +41,7 @@ function EditModal ({editModalVisible, setEditModalVisible, specificPlant }) {
                 }))
             }
         ) 
-    }
 
-    const defaultFormObject = {
-        id: specificPlant.id,
-        image: '',
-    }
-    const [formObject, setFormObject] = useState(defaultFormObject)
-
-    const handleEditSubmit = () => {
-        handleFormSubmit(formObject)
         setEditModalVisible(false)
     }
 
