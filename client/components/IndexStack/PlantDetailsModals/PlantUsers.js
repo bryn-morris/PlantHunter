@@ -15,7 +15,10 @@ function PlantUsers({modalVisible, setModalVisible, specificPlant}){
             {specificPlant.observations.map(
                 (eachObs)=><ModalData key = {eachObs.id} eachObs={eachObs} />
             )}
-            <TouchableOpacity key={specificPlant.id} onPress={()=>setModalVisible(false)}>
+            <TouchableOpacity 
+                key={specificPlant.id} 
+                onPress={()=>setModalVisible(false)}
+            >
                 <Text>Close</Text>
             </TouchableOpacity>
         </Modal>

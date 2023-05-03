@@ -9,8 +9,6 @@ import Login from './Login';
 import SignUp from './SignUp';
 import VerificationModal from './VerificationModal';
 
-
-
 function Loggies({navigation}) {
 
     const [isLogin, toggleIsLogin] = useState('login')

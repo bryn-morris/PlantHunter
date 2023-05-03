@@ -81,7 +81,6 @@ function PlantDetails({route}) {
                 ) :
                 <Text> Loading... </Text>
             }
-            {/* Edit Modal */}
         </View>
     )
 }

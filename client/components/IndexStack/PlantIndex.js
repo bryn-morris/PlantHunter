@@ -1,6 +1,5 @@
 import { Text, StyleSheet, FlatList } from "react-native"
 import { useContext, useEffect, useState } from "react"
-import * as SecureStore from 'expo-secure-store';
 import { PlantContext } from "../../context/PlantContext"
 import { AuthContext } from '../../context/AuthContext';
 import PlantIcon from "./PlantIcon";
@@ -9,7 +8,7 @@ import LogOutModal from "../Login and Auth/LogOutModal";
 
 function Index({navigation}){
 
-    const { userToken, setUserToken } = useContext(AuthContext)
+    const { userToken } = useContext(AuthContext)
     const { userPlants, setUserPlants } = useContext(PlantContext)
     const [ doomedIndices, setDoomedIndices ] = useState([])
     const [ logOutModalVisible, setLogOutModalVisible ] = useState(false) 
@@ -68,6 +67,8 @@ function Index({navigation}){
     ///////  Search Feature
     ////////////////////////////////////////////////
     
+
+    
     // add search function to search filter through plant objects that return
     // from fetch - likely basd on plant name or location
 
@@ -97,25 +98,25 @@ function Index({navigation}){
     ////////////////////////////////////////////////
 
     return(
-            <>
-                {userPlants ?
-                <FlatList
-                    data={userPlants}
-                    nestedScrollEnabled = {true}
-                    style = {styles.container}
-                    numColumns={2}
-                    contentContainerStyle={styles.container}
-                    keyExtractor={(item) => item.observations.id}
-                    renderItem={({ item }) => (
-                        <PlantIcon eachPl={item} {...plantIconPropsObj} />
-                    )}
-                />
-                :
-                <Text>Loading...</Text>}
-                {logOutModalVisible ?
-                <LogOutModal {...logOutModalPropsObj}/>:
-                null}
-            </>
+        <>
+            {userPlants ?
+            <FlatList
+                data={userPlants}
+                nestedScrollEnabled = {true}
+                style = {styles.container}
+                numColumns={2}
+                contentContainerStyle={styles.container}
+                keyExtractor={(item) => item.observations.id}
+                renderItem={({ item }) => (
+                    <PlantIcon eachPl={item} {...plantIconPropsObj} />
+                )}
+            />
+            :
+            <Text>Loading...</Text>}
+            {logOutModalVisible ?
+            <LogOutModal {...logOutModalPropsObj}/>:
+            null}
+        </>
             
     )    
 }
