@@ -2,8 +2,9 @@ import { Text, StyleSheet, FlatList } from "react-native"
 import { useContext, useEffect, useState } from "react"
 import { PlantContext } from "../../context/PlantContext"
 import { AuthContext } from '../../context/AuthContext';
-import PlantIcon from "./PlantIcon";
+import PlantIcon from "./PlantIndexComponents/PlantIcon";
 import LogOutModal from "../Login and Auth/LogOutModal";
+import PlantSearch from "./PlantIndexComponents/PlantSearch";
 
 
 function Index({navigation}){
@@ -11,7 +12,8 @@ function Index({navigation}){
     const { userToken } = useContext(AuthContext)
     const { userPlants, setUserPlants } = useContext(PlantContext)
     const [ doomedIndices, setDoomedIndices ] = useState([])
-    const [ logOutModalVisible, setLogOutModalVisible ] = useState(false) 
+    const [ logOutModalVisible, setLogOutModalVisible ] = useState(false)
+    const [ searchString, setSearchString ] = useState('')
 
     ////////////////////////////////////////////////
     ///////   GET for all Plants from DB
@@ -67,7 +69,14 @@ function Index({navigation}){
     ///////  Search Feature
     ////////////////////////////////////////////////
     
-
+    const filteredByName = userPlants?
+        [...userPlants].filter(
+            (eachObj)=>eachObj.name.toLowerCase().includes(
+            searchString.toLowerCase()
+            )    
+        ) : 
+        null
+    
     
     // add search function to search filter through plant objects that return
     // from fetch - likely basd on plant name or location
@@ -93,15 +102,21 @@ function Index({navigation}){
         setLogOutModalVisible: setLogOutModalVisible, 
     }
 
+    const plantSearchPropsObj = {
+        setSearchString: setSearchString,
+        searchString: searchString   
+    }
+
     ////////////////////////////////////////////////
     ///////  Render On This Page
     ////////////////////////////////////////////////
 
     return(
         <>
+            <PlantSearch {...plantSearchPropsObj}/>
             {userPlants ?
             <FlatList
-                data={userPlants}
+                data={userPlants ? filteredByName : null}
                 nestedScrollEnabled = {true}
                 style = {styles.container}
                 numColumns={2}

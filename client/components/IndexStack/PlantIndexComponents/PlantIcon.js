@@ -1,7 +1,7 @@
 import { TouchableHighlight, Image, StyleSheet, Button, Text } from "react-native"
 import { useContext } from "react"
-import { PlantContext } from "../../context/PlantContext"
-import { AuthContext } from '../../context/AuthContext'
+import { PlantContext } from "../../../context/PlantContext"
+import { AuthContext } from '../../../context/AuthContext'
 
 function PlantIcon ({eachPl, renderDetailPage, deletionAddition, doomedIndices, setDoomedIndices}) {
 
