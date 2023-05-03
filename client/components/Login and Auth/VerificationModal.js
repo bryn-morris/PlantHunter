@@ -2,6 +2,9 @@ import { View, TouchableOpacity, Text, Modal } from "react-native";
 
 function VerificationModal({modalVisible, recentError, setModalVisible}){
 
+//STYLE: Modal reconfigure so it is only part of the screen, maybe instead of
+           // attaching to button
+
     return(
         <Modal
                 visible={modalVisible}
@@ -9,10 +12,10 @@ function VerificationModal({modalVisible, recentError, setModalVisible}){
                 onRequestClose={() => setModalVisible(false)}
             >
                 <View>
-                <TouchableOpacity onPress={() => setModalVisible(false)}>
-                    <Text>Close</Text>
-                </TouchableOpacity>
-                <Text>{recentError}</Text>
+                    <TouchableOpacity onPress={() => setModalVisible(false)}>
+                        <Text>Close</Text>
+                    </TouchableOpacity>
+                    <Text>{recentError}</Text>
                 </View>
         </Modal>
     )

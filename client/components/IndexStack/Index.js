@@ -1,5 +1,6 @@
 import { Text, StyleSheet, FlatList } from "react-native"
 import { useContext, useEffect, useState } from "react"
+import * as SecureStore from 'expo-secure-store';
 import { PlantContext } from "../../context/PlantContext"
 import { AuthContext } from '../../context/AuthContext';
 import PlantIcon from "./PlantIcon";
@@ -7,7 +8,7 @@ import PlantIcon from "./PlantIcon";
 
 function Index({navigation}){
 
-    const { userToken } = useContext(AuthContext)
+    const { userToken, setUserToken } = useContext(AuthContext)
     const { userPlants, setUserPlants } = useContext(PlantContext)
     const [ doomedIndices, setDoomedIndices ] = useState([])
 
@@ -16,14 +17,20 @@ function Index({navigation}){
     ////////////////////////////////////////////////
 
     useEffect( ()=> {
-        fetch ('https://customngrok.ngrok.app/plantsbyuser', {
+         fetch ('https://customngrok.ngrok.app/plantsbyuser', {
             method: "GET",
             headers: {
                 "Content-type":"application/json",
                 "Authorization": `Bearer ${userToken}`,
             }
         })
-            .then(r=>r.json())
+            .then(r=>{
+                if (!r.ok) {
+                    SecureStore.deleteItemAsync('token')
+                    setUserToken(null)
+                    navigation.popToTop()
+                };
+                return r.json()})
             .then(plants => {
                 setUserPlants(plants)
             })

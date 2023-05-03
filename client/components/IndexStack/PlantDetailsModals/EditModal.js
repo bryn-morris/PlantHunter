@@ -40,7 +40,8 @@ function EditModal ({editModalVisible, setEditModalVisible, specificPlant }) {
                     }
                 }))
             }
-        ) 
+        )
+        .catch(error => {console.log(error)})
 
         setEditModalVisible(false)
     }

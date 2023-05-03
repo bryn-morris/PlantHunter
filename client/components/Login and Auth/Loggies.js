@@ -41,7 +41,6 @@ function Loggies({navigation}) {
                 StackActions.replace('AppContainer')
             )
         } else{
-            // Change so Modal is only on part of screen and styled
             r.json().then(err => {
                 setRecentError(err[Object.keys(err)[0]])
                 setModalVisible(true)

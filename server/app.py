@@ -9,6 +9,7 @@ from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 import jwt
 import os
+from jwt.exceptions import DecodeError, InvalidTokenError, InvalidSignatureError
 
 # Local imports
 from config import app, db, api
@@ -22,6 +23,25 @@ SECRET_KEY = os.urandom(16)
 #######################################################
 ###########        Login & Authentication
 #######################################################
+
+def JWT_Authentication_Decorator(func):
+
+    def wrapper_func(*args, **kwargs):
+        
+        decoded_token = request.headers.get('Authorization').split(' ')[1]
+        try:
+            jwt.decode(
+                jwt = decoded_token,
+                key = SECRET_KEY,
+                algorithms = ['HS256'],
+            )
+        except:
+            return make_response({"error": "Authentication failed - Token Error"},401)
+
+        return func(*args, **kwargs)
+
+    return wrapper_func
+
 
 class Signup(Resource):
     
@@ -97,43 +117,17 @@ class Login(Resource):
             
             return response
 
-class Logout(Resource):
-    
-    def delete(self):
-        session.pop('user_id', None)
-        response = make_response({"message":"Log out Successful!"})
-        return response
-
-#May not even need to use this if using JSON Web Tokens
-# class CurrentSession(Resource):
-    
-#     def get(self):
-
-#         if session['user_id'] is not None:
-            
-#             sel_user = User.query.filter(User.id == session['user_id']).one()
-#             return make_response(
-#                 sel_user.to_dict(
-#                     only = ('username','email')
-#                 ),
-#                 200
-#                 )
-
-#         else:
-#             return make_response(
-#                 {"error":"User not found! Please Sign In!"},
-#                 404
-#             )
 #######################################################
 ###########             Other Resources
 #######################################################       
 
-class Plants_by_User(Resource):
 
+class Plants_by_User(Resource):
+    @JWT_Authentication_Decorator
     def get(self):
         
         decoded_token = request.headers.get('Authorization').split(' ')[1]
-        # if user authentication doesn't match, kick back to login or some other error
+        
         user_id = jwt.decode(
                             jwt = decoded_token,
                             key = SECRET_KEY,
@@ -158,9 +152,11 @@ class Plants_by_User(Resource):
             user_plants, 200)
 
 #possible refactor for non restful so sel_plant only take one space
-# in memory               
+# in memory
+# 
+         
 class Plant_by_id(Resource):
-
+    @JWT_Authentication_Decorator
     def patch(self, id):
 
         sel_plant = Plant.query.filter(Plant.id == id).one()
@@ -182,7 +178,7 @@ class Plant_by_id(Resource):
                     '-observations.plant_id',
             )
         ), 200)
-
+    @JWT_Authentication_Decorator
     def delete(self, id):
 
         sel_plant = Plant.query.filter(Plant.id == id).one()
@@ -191,17 +187,15 @@ class Plant_by_id(Resource):
         db.session.commit()
 
         return make_response({}, 204)
-    
+
 #######################################################
 ###########             API Resources
 #######################################################
 
-api.add_resource(Plant_by_id, '/plantsbyuser/<int:id>')
 api.add_resource(Signup, '/signup')
 api.add_resource(Login, '/login')
-api.add_resource(Logout, '/logout')
+api.add_resource(Plant_by_id, '/plantsbyuser/<int:id>')
 api.add_resource(Plants_by_User, '/plantsbyuser')
-# api.add_resource(CurrentSession, '/currentsession')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

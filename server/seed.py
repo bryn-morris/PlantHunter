@@ -39,8 +39,13 @@ if __name__ == '__main__':
             user_list.append(new_user)
 
         user_list.append(User(
-                                username = 'testings',
-                                password_hash = 'password',
+                                username = 'testinga',
+                                password_hash = 'Password',
+                                email = 'password@password.com'
+                            ))
+        user_list.append(User(
+                                username = 'testingb',
+                                password_hash = 'Password',
                                 email = 'password@password.com'
                             ))
 
@@ -53,7 +58,7 @@ if __name__ == '__main__':
             new_ob = Observation(
                 location = faker.city(),
                 comment = faker.sentence(nb_words=5, variable_nb_words=True),
-                user_id = randint(1,10),
+                user_id = randint(1,11),
                 plant_id = randint(1,20)
             )
 
@@ -71,7 +76,7 @@ if __name__ == '__main__':
         obs_list.append(Observation(
             location = 'testing2',
             comment = 'testcomment2',
-            user_id = 10,
+            user_id = 11,
             plant_id = randint(1,20)
         ))
 
