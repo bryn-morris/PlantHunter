@@ -4,6 +4,7 @@ import * as SecureStore from 'expo-secure-store';
 import { PlantContext } from "../../context/PlantContext"
 import { AuthContext } from '../../context/AuthContext';
 import PlantIcon from "./PlantIcon";
+import LogOutModal from "../Login and Auth/LogOutModal";
 
 
 function Index({navigation}){
@@ -11,6 +12,7 @@ function Index({navigation}){
     const { userToken, setUserToken } = useContext(AuthContext)
     const { userPlants, setUserPlants } = useContext(PlantContext)
     const [ doomedIndices, setDoomedIndices ] = useState([])
+    const [ logOutModalVisible, setLogOutModalVisible ] = useState(false) 
 
     ////////////////////////////////////////////////
     ///////   GET for all Plants from DB
@@ -26,9 +28,7 @@ function Index({navigation}){
         })
             .then(r=>{
                 if (!r.ok) {
-                    SecureStore.deleteItemAsync('token')
-                    setUserToken(null)
-                    navigation.popToTop()
+                    setLogOutModalVisible(true)
                 };
                 return r.json()})
             .then(plants => {
@@ -86,25 +86,37 @@ function Index({navigation}){
         deletionAddition: deletionAddition,
     }
 
+    const logOutModalPropsObj = {
+        navigation: navigation, 
+        logOutModalVisible: logOutModalVisible,
+        setLogOutModalVisible: setLogOutModalVisible, 
+    }
+
     ////////////////////////////////////////////////
     ///////  Render On This Page
     ////////////////////////////////////////////////
 
     return(
-            userPlants ?
-            <FlatList
-                data={userPlants}
-                nestedScrollEnabled = {true}
-                style = {styles.container}
-                numColumns={2}
-                contentContainerStyle={styles.container}
-                keyExtractor={(item) => item.observations.id}
-                renderItem={({ item }) => (
-                    <PlantIcon eachPl={item} {...plantIconPropsObj} />
-                )}
-            />
-            :
-            <Text>Loading...</Text> 
+            <>
+                {userPlants ?
+                <FlatList
+                    data={userPlants}
+                    nestedScrollEnabled = {true}
+                    style = {styles.container}
+                    numColumns={2}
+                    contentContainerStyle={styles.container}
+                    keyExtractor={(item) => item.observations.id}
+                    renderItem={({ item }) => (
+                        <PlantIcon eachPl={item} {...plantIconPropsObj} />
+                    )}
+                />
+                :
+                <Text>Loading...</Text>}
+                {logOutModalVisible ?
+                <LogOutModal {...logOutModalPropsObj}/>:
+                null}
+            </>
+            
     )    
 }
 
