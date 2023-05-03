@@ -71,7 +71,7 @@ class Observation(db.Model, SerializerMixin):
     plant_id = db.Column(db.Integer, db.ForeignKey('plants.id'))
 
     # Use Flask Uploads to associate user image with observation
-    # image = db.Column(db.String)
+    image = db.Column(db.String)
 
     # use created_at as a TimeStamp for when viewing was
     created_at = db.Column(db.DateTime, server_default = db.func.now())

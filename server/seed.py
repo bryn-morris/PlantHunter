@@ -58,6 +58,7 @@ if __name__ == '__main__':
             new_ob = Observation(
                 location = faker.city(),
                 comment = faker.sentence(nb_words=5, variable_nb_words=True),
+                image = 'https://h2.commercev3.net/cdn.brecks.com/images/800/69799A.jpg',
                 user_id = randint(1,11),
                 plant_id = randint(1,20)
             )
@@ -67,6 +68,7 @@ if __name__ == '__main__':
         obs_list.append(Observation(
             location = 'testing',
             comment = 'testcomment1',
+            image = 'https://h2.commercev3.net/cdn.brecks.com/images/800/69799A.jpg',
             user_id = 10,
             plant_id = randint(1,20)
         ))
@@ -77,6 +79,7 @@ if __name__ == '__main__':
             obs_list.append(Observation(
                 location = 'testing2',
                 comment = 'testcomment2',
+                image = 'https://h2.commercev3.net/cdn.brecks.com/images/800/69799A.jpg',
                 user_id = 11,
                 plant_id = randint(1,20)
             ))

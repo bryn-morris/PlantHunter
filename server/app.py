@@ -21,7 +21,7 @@ from models import User, Observation, Plant
 SECRET_KEY = os.urandom(16)
 
 #######################################################
-###########        Login & Authentication
+###########        Authentication Wrapper
 #######################################################
 
 def JWT_Authentication_Decorator(func):
@@ -41,6 +41,10 @@ def JWT_Authentication_Decorator(func):
         return func(*args, **kwargs)
 
     return wrapper_func
+
+#######################################################
+###########        Login & Authentication
+#######################################################
 
 
 class Signup(Resource):
@@ -187,13 +191,34 @@ class Plant_by_id(Resource):
         db.session.commit()
 
         return make_response({}, 204)
+    
+class Observations_by_User(Resource):
 
+    def get(self):
+
+        decoded_token = request.headers.get('Authorization').split(' ')[1]
+        
+        user_id = jwt.decode(
+            jwt = decoded_token,
+            key = SECRET_KEY,
+            algorithms = ['HS256'],
+        )['user_id']
+
+        sel_Observations = Observation.query.filter(Observation.user_id == user_id).all()
+
+        response = [o.to_dict(
+            only = ('image',)
+        ) for o in sel_Observations]
+
+        return make_response(response, 200)
+    
 #######################################################
 ###########             API Resources
 #######################################################
 
 api.add_resource(Signup, '/signup')
 api.add_resource(Login, '/login')
+api.add_resource(Observations_by_User, '/observationsbyuser')
 api.add_resource(Plant_by_id, '/plantsbyuser/<int:id>')
 api.add_resource(Plants_by_User, '/plantsbyuser')
 
