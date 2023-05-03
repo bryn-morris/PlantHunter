@@ -1,4 +1,5 @@
 import {View, Text, StyleSheet, Image, Button} from 'react-native'
+import { Camera, CameraType } from 'expo-camera'
 import LogOutButton from './LogOutButton'
 import { useEffect, useContext, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext'
@@ -13,7 +14,12 @@ function MyProfile({navigation}) {
 
     const { userToken, logOutModalVisible, setLogOutModalVisible } = useContext(AuthContext)
 
-    const [ plantIndexImages, setPlantIndexImages ] = useState(null)
+    const [ plantIndexImages, setPlantIndexImages ] = useState(null);
+    const [ permission, setPermission ] = Camera.useCameraPermissions();
+    const [ photo, setPhoto ] = useState(null);
+
+
+
 
     ////////////////////////////////////////////
     ///////   Random Image from DB
