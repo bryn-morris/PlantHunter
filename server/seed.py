@@ -73,14 +73,15 @@ if __name__ == '__main__':
 
         obs_list.append(new_ob)
 
-        obs_list.append(Observation(
-            location = 'testing2',
-            comment = 'testcomment2',
-            user_id = 11,
-            plant_id = randint(1,20)
-        ))
+        for _ in range(1,15):
+            obs_list.append(Observation(
+                location = 'testing2',
+                comment = 'testcomment2',
+                user_id = 11,
+                plant_id = randint(1,20)
+            ))
 
-        obs_list.append(new_ob)
+            obs_list.append(new_ob)
 
         print('Creating Plants...')
 

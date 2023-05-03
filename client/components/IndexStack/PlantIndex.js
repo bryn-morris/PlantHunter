@@ -15,6 +15,8 @@ function Index({navigation}){
     const [ logOutModalVisible, setLogOutModalVisible ] = useState(false)
     const [ searchString, setSearchString ] = useState('')
 
+    // May Need to refactor to get observations instead of plants once
+    // Compendium is set up
     ////////////////////////////////////////////////
     ///////   GET for all Plants from DB
     ////////////////////////////////////////////////
@@ -69,14 +71,14 @@ function Index({navigation}){
     ///////  Search Feature
     ////////////////////////////////////////////////
     
-    const filteredByName = userPlants?
+    const filteredByName = 
+         userPlants && userPlants.length > 0 ?
         [...userPlants].filter(
             (eachObj)=>eachObj.name.toLowerCase().includes(
             searchString.toLowerCase()
             )    
         ) : 
         null
-    
     
     // add search function to search filter through plant objects that return
     // from fetch - likely basd on plant name or location
@@ -121,7 +123,7 @@ function Index({navigation}){
                 style = {styles.container}
                 numColumns={2}
                 contentContainerStyle={styles.container}
-                keyExtractor={(item) => item.observations.id}
+                keyExtractor={(item) => item.observations[0].id}
                 renderItem={({ item }) => (
                     <PlantIcon eachPl={item} {...plantIconPropsObj} />
                 )}
@@ -143,9 +145,10 @@ function Index({navigation}){
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      paddingHorizontal: 20,
-      paddingTop: 90
+        paddingHorizontal: 20,
+        paddingTop: 90,
+        minHeight: '100%',
+        paddingBottom: 100,
     },
   });
 
