@@ -115,8 +115,9 @@ function Index({navigation}){
 
     return(
         <>
-            <PlantSearch {...plantSearchPropsObj}/>
             {userPlants ?
+            <>
+            <PlantSearch {...plantSearchPropsObj}/>
             <FlatList
                 data={userPlants ? filteredByName : null}
                 nestedScrollEnabled = {true}
@@ -128,6 +129,7 @@ function Index({navigation}){
                     <PlantIcon eachPl={item} {...plantIconPropsObj} />
                 )}
             />
+            </>
             :
             <Text>Loading...</Text>}
             {logOutModalVisible ?

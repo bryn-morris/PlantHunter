@@ -4,7 +4,7 @@ import { View, Button, Text } from "react-native"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import IndexStack from "./IndexStack/IndexStack";
 import Compendium from "./Compendium.js";
-import MyProfile from "./MyProfile";
+import MyProfile from "./ProfileStack/MyProfile";
 import { PlantProvider } from "../context/PlantContext";
 
 function AppContainer() {

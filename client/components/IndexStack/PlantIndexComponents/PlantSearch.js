@@ -1,4 +1,4 @@
-import { Text, TextInput } from "react-native"
+import { TextInput } from "react-native"
 
 function PlantSearch({searchString, setSearchString}){
 
@@ -7,15 +7,11 @@ function PlantSearch({searchString, setSearchString}){
     } 
 
     return(
-        <>
-            <Text>TESTING! PLANT SEARCH COMPONENT</Text>
             <TextInput 
                 onChangeText={handleSearchString}
                 placeholder="Search by name here!"
                 value={searchString}
             />
-        </>
-        
     )
 }
 
