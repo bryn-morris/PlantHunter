@@ -4,9 +4,9 @@ import { AuthContext } from "../../context/AuthContext";
 import * as SecureStore from 'expo-secure-store'
 
 
-function LogOutModal({navigation, logOutModalVisible, setLogOutModalVisible}) {
+function LogOutModal({navigation}) {
 
-    const { setUserToken } = useContext(AuthContext)
+    const { setUserToken, logOutModalVisible, setLogOutModalVisible } = useContext(AuthContext)
 
      async function handleLogout() {
         try{

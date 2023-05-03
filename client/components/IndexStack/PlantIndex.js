@@ -9,10 +9,10 @@ import PlantSearch from "./PlantIndexComponents/PlantSearch";
 
 function Index({navigation}){
 
-    const { userToken } = useContext(AuthContext)
+    const { userToken, logOutModalVisible, setLogOutModalVisible } = useContext(AuthContext)
     const { userPlants, setUserPlants } = useContext(PlantContext)
+
     const [ doomedIndices, setDoomedIndices ] = useState([])
-    const [ logOutModalVisible, setLogOutModalVisible ] = useState(false)
     const [ searchString, setSearchString ] = useState('')
 
     // May Need to refactor to get observations instead of plants once
@@ -99,9 +99,7 @@ function Index({navigation}){
     }
 
     const logOutModalPropsObj = {
-        navigation: navigation, 
-        logOutModalVisible: logOutModalVisible,
-        setLogOutModalVisible: setLogOutModalVisible, 
+        navigation: navigation,
     }
 
     const plantSearchPropsObj = {

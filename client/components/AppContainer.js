@@ -1,6 +1,3 @@
-import { useContext } from "react";
-import { View, Button, Text } from "react-native"
-
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import IndexStack from "./IndexStack/IndexStack";
 import Compendium from "./Compendium.js";
