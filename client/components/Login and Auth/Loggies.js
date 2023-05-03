@@ -7,6 +7,7 @@ import { StackActions } from "@react-navigation/routers"
 import { AuthContext } from '../../context/AuthContext';
 import Login from './Login';
 import SignUp from './SignUp';
+import VerificationModal from './VerificationModal';
 
 
 
@@ -23,10 +24,6 @@ function Loggies({navigation}) {
     const [modalVisible, setModalVisible] = useState(false);
     const [recentError, setRecentError] = useState(null)
 
-    const handleCloseModal = () => {
-        setModalVisible(false);
-    };
-    
 
     async function handleLoggiesSubmit(formObj) {
         
@@ -55,6 +52,12 @@ function Loggies({navigation}) {
         }            
     }
 
+    const verificationModalObject = {
+        modalVisible: modalVisible,
+        recentError: recentError,
+        setModalVisible: setModalVisible,
+    }
+
     return(
         <View>
             {
@@ -69,18 +72,7 @@ function Loggies({navigation}) {
                     <Switch onValueChange={toggleSwitch}/>
                 </View> 
             }
-            <Modal
-                visible={modalVisible}
-                animationType="slide"
-                onRequestClose={handleCloseModal}
-            >
-                <View>
-                <TouchableOpacity onPress={handleCloseModal}>
-                    <Text>Close</Text>
-                </TouchableOpacity>
-                <Text>{recentError}</Text>
-                </View>
-            </Modal>
+            <VerificationModal {...verificationModalObject}/>
         </View>    
     )
 }

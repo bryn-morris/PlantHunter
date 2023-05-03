@@ -11,11 +11,10 @@ function Index({navigation}){
     const { userPlants, setUserPlants } = useContext(PlantContext)
     const [ doomedIndices, setDoomedIndices ] = useState([])
 
-   
-
     ////////////////////////////////////////////////
     ///////   GET for all Plants from DB
     ////////////////////////////////////////////////
+
     useEffect( ()=> {
         fetch ('https://customngrok.ngrok.app/plantsbyuser', {
             method: "GET",
@@ -65,6 +64,9 @@ function Index({navigation}){
     // add search function to search filter through plant objects that return
     // from fetch - likely basd on plant name or location
 
+    ////////////////////////////////////////////////
+    ///////  Filter Feature
+    ////////////////////////////////////////////////
 
     ////////////////////////////////////////////////
     ///////  Props Objects
@@ -103,7 +105,7 @@ function Index({navigation}){
     ///////  Styling
     ////////////////////////////////////////////////
 
-    //refactor this
+
 const styles = StyleSheet.create({
     container: {
       flex: 1,

@@ -12,7 +12,6 @@ import os
 
 # Local imports
 from config import app, db, api
-
 from models import User, Observation, Plant
 
 #Super Secret Key, no looking pls
