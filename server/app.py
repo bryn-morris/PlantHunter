@@ -162,8 +162,10 @@ class Plants_by_User(Resource):
 class Plant_by_id(Resource):
     @JWT_Authentication_Decorator
     def patch(self, id):
-
-        sel_plant = Plant.query.filter(Plant.id == id).one()
+        try: 
+            sel_plant = Plant.query.filter(Plant.id == id).one()
+        except:
+            return make_response({"error":"Entry Not Found!"},404)
 
         for attr in request.get_json():
             setattr(sel_plant, attr, request.get_json()[attr])
@@ -193,7 +195,7 @@ class Plant_by_id(Resource):
         return make_response({}, 204)
     
 class Observations_by_User(Resource):
-    
+
     @JWT_Authentication_Decorator
     def get(self):
 

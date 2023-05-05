@@ -2,23 +2,19 @@ import { Modal, TextInput, Button, TouchableOpacity, Text } from "react-native"
 import { useContext, useState } from "react"
 import { AuthContext } from "../../../context/AuthContext"
 import { PlantContext } from "../../../context/PlantContext"
+import LogOutModal from "../../Login and Auth/LogOutModal"
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 
-function EditModal ({editModalVisible, setEditModalVisible, specificPlant }) {
+function EditModal ({navigation, editModalVisible, setEditModalVisible, specificPlant }) {
 
-    const { userToken } = useContext(AuthContext)
+    const { userToken, logOutModalVisible, setLogOutModalVisible } = useContext(AuthContext)
     const { userPlants, setUserPlants } = useContext(PlantContext)
+    const [ isError, setIsError ] = useState(null)
 
-    // const defaultFormObject = {
-    //     id: specificPlant.id,
-    //     image: '',
-    // }
-
-    // const [formObject, setFormObject] = useState(defaultFormObject)
 
     ////////////////////////////////////////////////
-    ///////   Patch from Plant Details
+    ///////   Patch to Plant Details
     ////////////////////////////////////////////////
 
     const editDetailsFormSchema = yup.object().shape({
@@ -38,24 +34,44 @@ function EditModal ({editModalVisible, setEditModalVisible, specificPlant }) {
                 "Authorization": `Bearer ${userToken}`,
             },
             body: JSON.stringify(values)
-        })
-        .then(r=>r.json())
-        .then(updatedPlant=>{
-            setUserPlants(
-                userPlants.map((eachPlant)=>{
-                    if (eachPlant.id == updatedPlant.id){
-                        return updatedPlant
-                    } else{
-                        return eachPlant
-                    }
-                }))
-            }
-        )
-        .catch(error => {console.log(error)})
-
-        setEditModalVisible(false)
+            })
+            .then(r=>r.json())
+            .then(updatedPlant=>{
+                setUserPlants(
+                    userPlants.map((eachPlant)=>{
+                        if (eachPlant.id == updatedPlant.id){
+                            return updatedPlant
+                        } else{
+                            return eachPlant
+                        }
+                    }))
+                setEditModalVisible(false)
+                }
+            )
+            .catch(error => {
+                if (error.response.status === 404){
+                    setIsError(true);
+                    setTimeout(()=>{
+                        setIsError(false)},3000)
+                }
+                if (error.status === 401){
+                    setLogOutModalVisible(true)
+                }
+            })
         }
     });
+
+    ////////////////////////////////////////////////
+    ///////  Props Objects
+    ////////////////////////////////////////////////
+
+    const logOutModalPropsObj = {
+        navigation: navigation,
+    }
+
+    ////////////////////////////////////////////////
+    ///////  Render On This Page
+    ////////////////////////////////////////////////
 
     return(
         <Modal
@@ -71,6 +87,9 @@ function EditModal ({editModalVisible, setEditModalVisible, specificPlant }) {
             {formik.touched.uri && formik.errors.uri && (
                 <Text style={{ color: 'red' }}>{formik.errors.image}</Text>
             )}
+            {isError ? 
+                <Text style={{ color: 'red' }}>Plant not Found!</Text> : null
+            }
             <Button 
                 title = 'Submit Your Changes'
                 onPress={formik.handleSubmit}
@@ -78,108 +97,11 @@ function EditModal ({editModalVisible, setEditModalVisible, specificPlant }) {
             <TouchableOpacity key={specificPlant.id} onPress={()=>setEditModalVisible(false)}>
                 <Text>Close</Text>
             </TouchableOpacity>
+            {logOutModalVisible ?
+            <LogOutModal {...logOutModalPropsObj}/>:
+            null}
         </Modal>
     )
 }
 
-    // const handleEditSubmit = () => {
-        
-    //     fetch (`https://customngrok.ngrok.app/plantsbyuser/${formObject.id}`,{
-    //         method: "PATCH",
-    //         headers: {
-    //             "Content-type":"application/json",
-    //             "Authorization": `Bearer ${userToken}`,
-    //         },
-    //         body: JSON.stringify(formObject)
-    //     })
-    //     .then(r=>r.json())
-    //     .then(updatedPlant=>{
-    //         setUserPlants(
-    //             userPlants.map((eachPlant)=>{
-    //                 if (eachPlant.id == updatedPlant.id){
-    //                     return updatedPlant
-    //                 } else{
-    //                     return eachPlant
-    //                 }
-    //             }))
-    //         }
-    //     )
-    //     .catch(error => {console.log(error)})
-
-    //     setEditModalVisible(false)
-    // }
-
-    // const handleInputChange = (id, text) => {
-    //     setFormObject(()=>{return(
-    //         {...formObject, [id]:text}
-    //     )})
-    // }
-
-//     return(
-//         <Modal
-//             visible={editModalVisible}
-//             animationType="slide"
-//             onRequestClose={()=> setEditModalVisible(false)}
-//         >
-//             <TextInput 
-//                 placeholder='New Image URL'
-//                 onChangeText={(text)=>handleInputChange('image', text)}
-//                 value = {formObject.image}
-//             />
-//             <Button 
-//                 title = 'Submit Edit'
-//                 onPress={handleEditSubmit}
-//             />
-//             <TouchableOpacity key={specificPlant.id} onPress={()=>setEditModalVisible(false)}>
-//                 <Text>Close</Text>
-//             </TouchableOpacity>
-//         </Modal>
-//     )
-// }
-
 export default EditModal
-
-
-
-
-
-// return(
-//     <View>
-//         <TextInput
-//             placeholder='username'
-//             onChangeText={formik.handleChange('username')}
-//             onBlur={formik.handleBlur('username')}
-//             value= {formik.values.username}
-//         >
-//         </TextInput>
-//         {formik.touched.username && formik.errors.username && (
-//             <Text style={{ color: 'red' }}>{formik.errors.username}</Text>
-//         )}
-//         <TextInput
-//             placeholder='password'
-//             onChangeText={formik.handleChange('password')}
-//             onBlue = {formik.handleBlur('password')}
-//             value= {formik.values.password}
-//         >
-//         </TextInput>
-//         {formik.touched.password && formik.errors.password && (
-//             <Text style={{ color: 'red' }}>{formik.errors.password}</Text>
-//         )}
-//         <TextInput
-//             placeholder='email'
-//             onChangeText={formik.handleChange('email')}
-//             onBlur={formik.handleBlur('email')}
-//             value= {formik.values.email}
-//         >
-//         </TextInput>
-//         {formik.touched.email && formik.errors.email && (
-//             <Text style={{ color: 'red' }}>{formik.errors.email}</Text>
-//         )}
-//         <Button
-//             title = 'Sign In'
-//             onPress = {formik.handleSubmit}
-//         />
-//     </View>
-// )
-// }
-

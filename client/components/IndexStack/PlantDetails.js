@@ -5,7 +5,7 @@ import PlantUsers from './PlantDetailsModals/PlantUsers';
 import EditModal from './PlantDetailsModals/EditModal';
 import { PlantContext } from '../../context/PlantContext';
 
-function PlantDetails({route}) {
+function PlantDetails({navigation, route}) {
     
     const [specificPlant, setSpecificPlant] = useState(route.params.plant)
 
@@ -38,7 +38,8 @@ function PlantDetails({route}) {
         editModalVisible: editModalVisible,
         setEditModalVisible: setEditModalVisible,
         handleFormSubmit: handleFormSubmit,
-        specificPlant: specificPlant
+        specificPlant: specificPlant,
+        navigation: navigation,
     }
 
     userModalPropsObj = {

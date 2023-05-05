@@ -12,7 +12,6 @@ function Login ({handleLoggiesSubmit}) {
     const [loginObj, setLoginObj] = useState(emptyLoginObj)
 
     const handleLoginSubmit = () => {
-        console.log(loginObj)
         handleLoggiesSubmit(loginObj)
         setLoginObj(emptyLoginObj)
     }

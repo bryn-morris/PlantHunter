@@ -63,6 +63,7 @@ function Index({navigation}){
     function renderDetailPage (eachPl) {
         navigation.navigate('PlantDetails', { 
             plant: eachPl,
+            nagivation: navigation,
         })
         setDoomedIndices([])
     }
