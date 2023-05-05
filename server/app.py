@@ -193,7 +193,8 @@ class Plant_by_id(Resource):
         return make_response({}, 204)
     
 class Observations_by_User(Resource):
-
+    
+    @JWT_Authentication_Decorator
     def get(self):
 
         decoded_token = request.headers.get('Authorization').split(' ')[1]
