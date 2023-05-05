@@ -87,6 +87,10 @@ function MyProfile({navigation}) {
 
 export default MyProfile
 
+    ////////////////////////////////////////////////
+    ///////  Styling
+    ////////////////////////////////////////////////
+
 const styles = StyleSheet.create({
     image: {
         width: 100,

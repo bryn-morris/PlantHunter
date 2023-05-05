@@ -54,7 +54,7 @@ function EditModal ({navigation, editModalVisible, setEditModalVisible, specific
                     setTimeout(()=>{
                         setIsError(false)},3000)
                 }
-                if (error.status === 401){
+                if (error.response.status === 401){
                     setLogOutModalVisible(true)
                 }
             })

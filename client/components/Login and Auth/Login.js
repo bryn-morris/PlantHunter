@@ -4,6 +4,10 @@ import { View, TextInput, Button, Text } from "react-native"
 
 function Login ({handleLoggiesSubmit}) {
 
+    ////////////////////////////////////////////////
+    ///////  Form Submission State and Logic
+    ////////////////////////////////////////////////
+
     const emptyLoginObj = {
         username: '',
         password: ''
@@ -21,6 +25,10 @@ function Login ({handleLoggiesSubmit}) {
             {...loginObj, [id]: text}
         )})
     }
+
+    ////////////////////////////////////////////////
+    ///////  Render On This Page
+    ////////////////////////////////////////////////
 
     return(
         <View>

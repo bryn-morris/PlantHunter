@@ -8,6 +8,10 @@ function AppContainer() {
 
     const Tab = createBottomTabNavigator()
 
+    ////////////////////////////////////////////////
+    ///////  Render On This Page
+    ////////////////////////////////////////////////
+
     return(
         <PlantProvider>
             <Tab.Navigator>

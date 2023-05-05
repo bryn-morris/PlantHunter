@@ -15,12 +15,20 @@ function Main () {
 
     const { setUserToken } = useContext(AuthContext)
 
+    ////////////////////////////////////////////////
+    ///////  Set JWT on Start of App
+    ////////////////////////////////////////////////
+
     useEffect(()=>{
         async function tokenOnStart() {
             setUserToken(await SecureStore.getItemAsync('token'))
         }
         tokenOnStart()
     }, [])
+
+    ////////////////////////////////////////////////
+    ///////  Render On This Page
+    ////////////////////////////////////////////////
 
     return (
         <NavigationContainer>

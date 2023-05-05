@@ -5,6 +5,10 @@ import * as yup from 'yup'
 
 function SignUp ({handleLoggiesSubmit}) {
 
+    ////////////////////////////////////////////////
+    ///////  Formik and Yup 
+    ////////////////////////////////////////////////
+
     const signUpFormSchema = yup.object().shape({
         username : yup.string()
             .required('You must enter a username!')
@@ -27,6 +31,10 @@ function SignUp ({handleLoggiesSubmit}) {
         validationSchema: signUpFormSchema,
         onSubmit: (values) => handleLoggiesSubmit(values)
     });
+
+    ////////////////////////////////////////////////
+    ///////  Render On This Page
+    ////////////////////////////////////////////////
 
     return(
         <View>

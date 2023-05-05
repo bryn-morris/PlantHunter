@@ -2,8 +2,9 @@ import { View, TouchableOpacity, Text, Modal } from "react-native";
 
 function VerificationModal({modalVisible, recentError, setModalVisible}){
 
-//STYLE: Modal reconfigure so it is only part of the screen, maybe instead of
-           // attaching to button
+    ////////////////////////////////////////////////
+    ///////  Render On This Page
+    ////////////////////////////////////////////////
 
     return(
         <Modal
@@ -22,3 +23,7 @@ function VerificationModal({modalVisible, recentError, setModalVisible}){
 }
 
 export default VerificationModal
+
+
+//STYLE: Modal reconfigure so it is only part of the screen, maybe instead of
+           // attaching to button

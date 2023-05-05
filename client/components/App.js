@@ -11,13 +11,14 @@ function App() {
   // neat, or even just a vine pattern that extends across the top of the page
   // and stay there when it is fully loaded
 // Add required Elements to the Python PIPFile
-// Implement FORMIK for frontend Validation
 // Refactor PlantDetails so that images are pulled from observations and flask
   // uploads instead of from plants
 //Hook up API for compendium 
-// refactor validation modal, and create constraint on user model such taht if a 
-// user attempts to sign up with a username that already exists, an error is thrown
 
+
+  ////////////////////////////////////////////////
+    ///////  Render On This Page
+    ////////////////////////////////////////////////
 
   return (
     <AuthProvider>

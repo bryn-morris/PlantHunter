@@ -8,7 +8,11 @@ function LogOutModal({navigation}) {
 
     const { setUserToken, logOutModalVisible, setLogOutModalVisible } = useContext(AuthContext)
 
-     async function handleLogout() {
+    ////////////////////////////////////////////////
+    ///////  Logout Function 
+    ////////////////////////////////////////////////
+
+    async function handleLogout() {
         try{
             setLogOutModalVisible(false);
             await SecureStore.deleteItemAsync('token');
@@ -18,6 +22,10 @@ function LogOutModal({navigation}) {
             console.log(error)
         }
     }
+
+    ////////////////////////////////////////////////
+    ///////  Render On This Page
+    ////////////////////////////////////////////////
 
     return(
         <Modal

@@ -7,6 +7,10 @@ function OpeningPage ({navigation}) {
 
     const { userToken } = useContext(AuthContext)
 
+    ////////////////////////////////////////////////
+    ///////  Render On This Page
+    ////////////////////////////////////////////////
+
     return(
         <View>
             <Text>TESTING OPENING PAGE</Text>
@@ -23,6 +27,14 @@ function OpeningPage ({navigation}) {
     
 }
 
+
+
+export default OpeningPage
+
+////////////////////////////////////////////////
+///////  Styling
+////////////////////////////////////////////////
+
 // const styles = StyleSheet.create({
 //     container: {
 //       flex: 1,
@@ -31,5 +43,3 @@ function OpeningPage ({navigation}) {
 //       justifyContent: 'center',
 //     },
 //   });
-
-export default OpeningPage

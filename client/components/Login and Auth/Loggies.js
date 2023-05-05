@@ -15,13 +15,16 @@ function Loggies({navigation}) {
 
     const { setUserToken } = useContext(AuthContext)
 
-    const toggleSwitch = (e) => {
-        toggleIsLogin(isLogin === 'login' ? 'signup' : 'login')
-    }
-
     const [modalVisible, setModalVisible] = useState(false);
     const [recentError, setRecentError] = useState(null)
 
+    ////////////////////////////////////////////////
+    ///////   POST for Login Logic
+    ////////////////////////////////////////////////
+
+    const toggleSwitch = (e) => {
+        toggleIsLogin(isLogin === 'login' ? 'signup' : 'login')
+    }
 
     async function handleLoggiesSubmit(formObj) {
         
@@ -49,11 +52,19 @@ function Loggies({navigation}) {
         }            
     }
 
+    ////////////////////////////////////////////////
+    ///////  Props Objects
+    ////////////////////////////////////////////////
+
     const verificationModalObject = {
         modalVisible: modalVisible,
         recentError: recentError,
         setModalVisible: setModalVisible,
     }
+
+    ////////////////////////////////////////////////
+    ///////  Render On This Page
+    ////////////////////////////////////////////////
 
     return(
         <View>

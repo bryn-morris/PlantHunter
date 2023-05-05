@@ -3,6 +3,10 @@ import { View, Text } from "react-native"
 
 function ModalData({eachObs}) {
 
+    ////////////////////////////////////////////////
+    ///////  Render On This Page
+    ////////////////////////////////////////////////
+
     return(
         <View>
             <Text>{eachObs.comment}</Text>
