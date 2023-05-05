@@ -65,7 +65,8 @@ class Signup(Resource):
                     )
         except ValueError as e:
                 return make_response({"Value Error": f"{e}"}, 400)
-        
+        except KeyError as e:
+                return make_response({"Value Error": f"{e}"}, 400)
         try:
             db.session.add(newUser)
             db.session.commit()       
