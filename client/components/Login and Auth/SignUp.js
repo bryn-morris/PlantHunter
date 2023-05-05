@@ -1,56 +1,71 @@
 import { useState} from "react"
-import { View, TextInput, Button } from "react-native"
-
+import { View, TextInput, Button, Text } from "react-native"
+import { useFormik } from 'formik'
+import * as yup from 'yup'
 
 function SignUp ({handleLoggiesSubmit}) {
 
-    const emptySignupObj = {
-        username: '',
-        password: '',
-        email: ''
-    }
+    const signUpFormSchema = yup.object().shape({
+        username : yup.string()
+            .required('You must enter a username!')
+            .matches(/^\w+$/, 'Username can only contain letters, numbers, and underscores')
+            .min(8),
+        password : yup.string()
+            .required('You must enter a password!')
+            .matches(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\-\=[\]{};':"\\|,.<>\/?])/, 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character')
+            .min(8),
+        email: yup.string()
+            .email("Invalid Email!")
+    });
 
-    const [signupObj, setSignupObj] = useState(emptySignupObj)
-
-    const handleSignupSubmit = () => {
-        handleLoggiesSubmit(signupObj)
-        setSignupObj(emptySignupObj)
-
-    }
-
-    const handleInputChange = (id, text) => {
-        setSignupObj(()=>{return(
-            {...signupObj, [id]: text}
-        )})
-    }
+    const formik = useFormik({
+        initialValues: {
+            username: '',
+            password: '',
+            email: ''
+        },
+        validationSchema: signUpFormSchema,
+        onSubmit: (values) => handleLoggiesSubmit(values)
+    });
 
     return(
         <View>
             <TextInput
                 placeholder='username'
-                onChangeText={(text) => handleInputChange('username',text)}
-                value= {signupObj.username}
+                onChangeText={formik.handleChange('username')}
+                onBlur={formik.handleBlur('username')}
+                value= {formik.values.username}
             >
             </TextInput>
+            {formik.touched.username && formik.errors.username && (
+                <Text style={{ color: 'red' }}>{formik.errors.username}</Text>
+            )}
             <TextInput
                 placeholder='password'
-                onChangeText={(text) => handleInputChange('password', text)}
-                value= {signupObj.password}
+                onChangeText={formik.handleChange('password')}
+                onBlue = {formik.handleBlur('password')}
+                value= {formik.values.password}
             >
             </TextInput>
+            {formik.touched.password && formik.errors.password && (
+                <Text style={{ color: 'red' }}>{formik.errors.password}</Text>
+            )}
             <TextInput
                 placeholder='email'
-                onChangeText={(text)=>handleInputChange('email', text)}
-                value= {signupObj.email}
+                onChangeText={formik.handleChange('email')}
+                onBlur={formik.handleBlur('email')}
+                value= {formik.values.email}
             >
             </TextInput>
+            {formik.touched.email && formik.errors.email && (
+                <Text style={{ color: 'red' }}>{formik.errors.email}</Text>
+            )}
             <Button
                 title = 'Sign In'
-                onPress = {handleSignupSubmit}
+                onPress = {formik.handleSubmit}
             />
         </View>
     )
-
 }
 
 export default SignUp

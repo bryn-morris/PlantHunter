@@ -19,8 +19,6 @@ function MyProfile({navigation}) {
     const [ photo, setPhoto ] = useState(null);
 
 
-
-
     ////////////////////////////////////////////
     ///////   Random Image from DB
     ////////////////////////////////////////////
@@ -70,7 +68,7 @@ function MyProfile({navigation}) {
                 onPress = {handleNewObservation} 
             />
             {
-                plantIndexImages ?
+                plantIndexImages && plantIndexImages.length > 0 ?
                     <Image 
                         source = {{uri: plantIndexImages[determineRandomImageIndex()].image}}
                         style = {styles.image}

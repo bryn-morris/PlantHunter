@@ -15,6 +15,8 @@ function App() {
 // Refactor PlantDetails so that images are pulled from observations and flask
   // uploads instead of from plants
 //Hook up API for compendium 
+// refactor validation modal, and create constraint on user model such taht if a 
+// user attempts to sign up with a username that already exists, an error is thrown
 
 
   return (

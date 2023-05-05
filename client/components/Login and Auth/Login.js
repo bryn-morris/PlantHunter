@@ -1,6 +1,6 @@
-import { StackActions } from "@react-navigation/routers"
 import { useState } from "react"
-import { View, TextInput, Button } from "react-native"
+import { View, TextInput, Button, Text } from "react-native"
+
 
 function Login ({handleLoggiesSubmit}) {
 
@@ -12,6 +12,7 @@ function Login ({handleLoggiesSubmit}) {
     const [loginObj, setLoginObj] = useState(emptyLoginObj)
 
     const handleLoginSubmit = () => {
+        console.log(loginObj)
         handleLoggiesSubmit(loginObj)
         setLoginObj(emptyLoginObj)
     }
