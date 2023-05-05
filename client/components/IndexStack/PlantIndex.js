@@ -17,7 +17,7 @@ function Index({navigation}){
 
     // May Need to refactor to get observations instead of plants once
     // Compendium is set up
-    
+
     ////////////////////////////////////////////////
     ///////   GET for all Plants from DB
     ////////////////////////////////////////////////
@@ -64,7 +64,6 @@ function Index({navigation}){
     function renderDetailPage (eachPl) {
         navigation.navigate('PlantDetails', { 
             plant: eachPl,
-            nagivation: navigation,
         })
         setDoomedIndices([])
     }
