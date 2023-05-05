@@ -86,7 +86,7 @@ class Observation(db.Model, SerializerMixin):
 
 class Plant(db.Model, SerializerMixin):
 
-    # Will need to adjust models if incorporating data from a live plant api such as:
+    # May need to adjust models if incorporating data from a live plant api such as:
     #       https://data.nal.usda.gov/dataset/usda-plants-database-api-r
     #       https://explorer.natureserve.org/api-docs/
 

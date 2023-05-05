@@ -27,8 +27,6 @@ function OpeningPage ({navigation}) {
     
 }
 
-
-
 export default OpeningPage
 
 ////////////////////////////////////////////////
