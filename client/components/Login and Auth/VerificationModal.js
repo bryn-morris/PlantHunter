@@ -1,5 +1,6 @@
 import { View, TouchableOpacity, Text, Modal } from "react-native";
 
+
 function VerificationModal({modalVisible, recentError, setModalVisible}){
 
     ////////////////////////////////////////////////

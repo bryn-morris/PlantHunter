@@ -3,6 +3,7 @@ import PlantDetails from './PlantDetails'
 import PlantIndex from './PlantIndex';
 import PlantUsers from './PlantDetailsModals/PlantUsers';
 
+
 function IndexStack() {
 
     const Stack = createNativeStackNavigator()

@@ -5,6 +5,7 @@ import PlantUsers from './PlantDetailsModals/PlantUsers';
 import EditModal from './PlantDetailsModals/EditModal';
 import { PlantContext } from '../../context/PlantContext';
 
+
 function PlantDetails({navigation, route}) {
     
     const [specificPlant, setSpecificPlant] = useState(route.params.plant)

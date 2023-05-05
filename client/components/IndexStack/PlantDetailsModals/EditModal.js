@@ -6,6 +6,7 @@ import LogOutModal from "../../Login and Auth/LogOutModal"
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 
+
 function EditModal ({navigation, editModalVisible, setEditModalVisible, specificPlant }) {
 
     const { userToken, logOutModalVisible, setLogOutModalVisible } = useContext(AuthContext)

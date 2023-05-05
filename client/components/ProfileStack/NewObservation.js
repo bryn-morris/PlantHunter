@@ -6,7 +6,6 @@ import { Camera, CameraType } from 'expo-camera';
 // const [ cameraView, setCameraView ] = useState(CameraType.back);
 
 function NewObservation ({navigation}) {
-    // Will likely need to add this to Stack in Stack Container
 
     // want to have user take picture, represent it on screen with an option
     // to retake the picture, as well as a comment box below, and a submit button
