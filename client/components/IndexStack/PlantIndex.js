@@ -1,4 +1,4 @@
-import { Text, StyleSheet, FlatList } from "react-native"
+import { Text, StyleSheet, FlatList, View } from "react-native"
 import { useContext, useEffect, useState } from "react"
 import { PlantContext } from "../../context/PlantContext"
 import { AuthContext } from '../../context/AuthContext';
@@ -117,28 +117,34 @@ function Index({navigation}){
     ////////////////////////////////////////////////
 
     return(
-        <>
+        <View style = {styles.container}>
             {userPlants ?
             <>
-            <PlantSearch {...plantSearchPropsObj}/>
-            <FlatList
-                data={userPlants ? filteredByName : null}
-                nestedScrollEnabled = {true}
-                style = {styles.container}
-                numColumns={2}
-                contentContainerStyle={styles.container}
-                keyExtractor={(item) => item.observations[0].id}
-                renderItem={({ item }) => (
-                    <PlantIcon eachPl={item} {...plantIconPropsObj} />
-                )}
-            />
+            <View style={styles.searchcontainer}>
+                <PlantSearch 
+                    {...plantSearchPropsObj}           
+                />
+            </View>
+            <View style = {styles.listcontainer}>
+                <FlatList
+                    data={userPlants ? filteredByName : null}
+                    nestedScrollEnabled = {true}
+                    style = {styles.container}
+                    numColumns={2}
+                    contentContainerStyle={styles.flatlist}
+                    keyExtractor={(item) => item.observations[0].id}
+                    renderItem={({ item }) => (
+                        <PlantIcon eachPl={item} {...plantIconPropsObj} />
+                    )}
+                />
+            </View>
             </>
             :
             <Text>Loading...</Text>}
             {logOutModalVisible ?
             <LogOutModal {...logOutModalPropsObj}/>:
             null}
-        </>
+        </View>
             
     )    
 }
@@ -150,11 +156,31 @@ function Index({navigation}){
 
 const styles = StyleSheet.create({
     container: {
-        paddingHorizontal: 20,
-        paddingTop: 90,
+        flex: 1,
+        backgroundColor: "#fafcee",
+    },
+    flatlist: {
+        paddingHorizontal: 35,
+        paddingTop: 10,
         minHeight: '100%',
         paddingBottom: 100,
     },
+    searchcontainer: {
+        flex: 1/4,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#fff",
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        backgroundColor: "#d5ceae",
+    },
+    listcontainer: {
+        flex: 2,
+        backgroundColor: "#fff",
+        paddingHorizontal: 5,
+        paddingVertical: 5,
+        backgroundColor: "#fafcee"
+    }
   });
 
   export default Index

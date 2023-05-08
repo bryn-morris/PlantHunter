@@ -87,6 +87,10 @@ function PlantDetails({navigation, route}) {
     )
 }
 
+////////////////////////////////////////////////
+///////  Styling
+////////////////////////////////////////////////
+
 const styles = StyleSheet.create({
     image: {
         width: 100,

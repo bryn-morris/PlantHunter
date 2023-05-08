@@ -23,6 +23,7 @@ function App() {
     // total for their region
 
 // Refactor Styling with UI kitten
+// Jiggle when selected!
 
 
   ////////////////////////////////////////////////

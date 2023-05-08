@@ -1,9 +1,8 @@
-import { View, Image, StyleSheet, Text, Button } from "react-native"
+import { View, Image, StyleSheet, Text, Button, TouchableOpacity } from "react-native"
 import { useContext } from "react"
 import { PlantContext } from "../../../context/PlantContext"
 import { AuthContext } from '../../../context/AuthContext'
-import { TouchableOpacity } from 'react-native';
-
+import { Ionicons } from '@expo/vector-icons';
 
 function PlantIcon ({eachPl, renderDetailPage, deletionAddition, doomedIndices, setDoomedIndices}) {
 
@@ -60,23 +59,22 @@ function PlantIcon ({eachPl, renderDetailPage, deletionAddition, doomedIndices, 
             {
                 doomedIndices.includes(eachPl.id) ?
                 <TouchableOpacity 
-                    style={styles.Xbutton}
+                    style={styles.buttoncontainer}
                     key = {eachPl.observations.id + "-button"} 
                     onPress={()=>deletionFetch(eachPl.id)}
                 >
-                    <Text style={styles.text}>X</Text>
+                        <Ionicons name="close-circle-outline" size={32} color="black" />
                 </TouchableOpacity>:
-                
-                // <Button
-                //     key = {eachPl.observations.id + "-button"} 
-                //     title="Delete"
-                //     onPress={()=>deletionFetch(eachPl.id)}/>:
                 null
             }
         </View>
         
     )
 }
+
+////////////////////////////////////////////////
+///////  Styling
+////////////////////////////////////////////////
 
 const styles = StyleSheet.create({
     container: {
@@ -88,19 +86,20 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
         margin: 30,
         borderRadius: 50,
-        borderWidth: 2,
-        borderColor: 'black',
+        borderWidth: 4,
+        borderColor: '#d5ceae',
     },
     title:{
         top: -20,
         textAlign: 'center',
         fontSize: 20,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: "#4e372c",
     },
-    Xbutton: {
+    buttoncontainer: {
         position: 'absolute',
-        top: 0,
-        right: 30,
+        top: 10,
+        right: 15,
         backgroundColor: 'transparent',
         paddingHorizontal: 0,
         paddingVertical: 0,
