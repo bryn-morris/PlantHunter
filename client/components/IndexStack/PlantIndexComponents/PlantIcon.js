@@ -3,7 +3,7 @@ import { useContext } from "react"
 import { PlantContext } from "../../../context/PlantContext"
 import { AuthContext } from '../../../context/AuthContext'
 import { TouchableOpacity } from 'react-native';
-import { FontAwesome } from 'react-native-vector-icons/FontAwesome';
+
 
 function PlantIcon ({eachPl, renderDetailPage, deletionAddition, doomedIndices, setDoomedIndices}) {
 
@@ -38,12 +38,13 @@ function PlantIcon ({eachPl, renderDetailPage, deletionAddition, doomedIndices, 
     ////////////////////////////////////////////////
 
     return(
-        <View>
+        <View style={styles.container}>
             <TouchableOpacity
                 // style = {styles.touchableIcon}
                 key={eachPl.observations.id}
                 onPress={()=> renderDetailPage(eachPl)}
                 onLongPress={()=>{deletionAddition(eachPl.id)}}
+                style = {styles.touchableIcon}
             >
                 <View>
                     <Image 
@@ -58,17 +59,18 @@ function PlantIcon ({eachPl, renderDetailPage, deletionAddition, doomedIndices, 
             </TouchableOpacity>
             {
                 doomedIndices.includes(eachPl.id) ?
-                <Button
+                <TouchableOpacity 
+                    style={styles.Xbutton}
                     key = {eachPl.observations.id + "-button"} 
-                    title="Delete"
-                    onPress={()=>deletionFetch(eachPl.id)}/>:
-                // <FontAwesome 
+                    onPress={()=>deletionFetch(eachPl.id)}
+                >
+                    <Text style={styles.text}>X</Text>
+                </TouchableOpacity>:
+                
+                // <Button
                 //     key = {eachPl.observations.id + "-button"} 
-                //     onPress={()=>deletionFetch(eachPl.id)}
-                //     style = {styles.IconContainer}
-                //     name = 'flower'
-                //     size = {20}
-                // />:
+                //     title="Delete"
+                //     onPress={()=>deletionFetch(eachPl.id)}/>:
                 null
             }
         </View>
@@ -77,6 +79,9 @@ function PlantIcon ({eachPl, renderDetailPage, deletionAddition, doomedIndices, 
 }
 
 const styles = StyleSheet.create({
+    container: {
+        position: 'relative',
+    },
     image: {
         width: 100,
         height: 130,
@@ -87,8 +92,26 @@ const styles = StyleSheet.create({
         borderColor: 'black',
     },
     title:{
+        top: -20,
         textAlign: 'center',
+        fontSize: 20,
+        fontWeight: 'bold'
     },
+    Xbutton: {
+        position: 'absolute',
+        top: 0,
+        right: 30,
+        backgroundColor: 'transparent',
+        paddingHorizontal: 0,
+        paddingVertical: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    text: {
+        fontSize: 50,
+        fontWeight: 'bold',
+        color: '#f18f01',
+    }
   });
 
 export default PlantIcon

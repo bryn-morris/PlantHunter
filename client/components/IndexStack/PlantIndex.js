@@ -5,6 +5,7 @@ import { AuthContext } from '../../context/AuthContext';
 import PlantIcon from "./PlantIndexComponents/PlantIcon";
 import LogOutModal from "../Login and Auth/LogOutModal";
 import PlantSearch from "./PlantIndexComponents/PlantSearch";
+import * as Haptics from 'expo-haptics';
 
 
 function Index({navigation}){
@@ -50,11 +51,14 @@ function Index({navigation}){
         
         if (checkState == -1){
             setDoomedIndices([...doomedIndices, doomedID])
+            Haptics.selectionAsync()
         } else {
             setDoomedIndices(
             [...doomedIndices].filter((each)=>each !== doomedID)
             )
         }
+
+        
     }
 
     ////////////////////////////////////////////////
