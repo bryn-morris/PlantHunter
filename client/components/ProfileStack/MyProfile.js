@@ -59,6 +59,7 @@ function MyProfile({navigation}) {
     ////////////////////////////////////////////
 
     const handleNewObservation = () => {
+        navigation.replace('NewObservation')
         console.log("Is this hooked up?")
     }
     
@@ -87,7 +88,7 @@ function MyProfile({navigation}) {
                 <LogOutModal navigation={navigation} /> :
                 null
             }
-            
+            <Text>Badges:</Text>
         </View>   
     )
 }

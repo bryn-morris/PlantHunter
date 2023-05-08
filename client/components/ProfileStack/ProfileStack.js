@@ -19,4 +19,4 @@ function ProfileStack() {
 
 }
 
-export default ProfileStack  
+export default ProfileStack

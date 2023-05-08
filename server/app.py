@@ -124,7 +124,17 @@ class Login(Resource):
 
 #######################################################
 ###########             Other Resources
-#######################################################       
+#######################################################     
+
+class All_Plants(Resource):
+    @JWT_Authentication_Decorator
+    def get(self):
+
+        all_plants = [pl.to_dict(
+            only = ('name',)
+        ) for pl in Plant.query.all()]
+
+        return make_response(all_plants, 200)
 
 
 class Plants_by_User(Resource):
@@ -155,6 +165,36 @@ class Plants_by_User(Resource):
             
         return make_response(
             user_plants, 200)
+    
+    @JWT_Authentication_Decorator
+    def post(self):
+
+        decoded_token = request.headers.get('Authorization').split(' ')[1]
+        
+        user_id = jwt.decode(
+                            jwt = decoded_token,
+                            key = SECRET_KEY,
+                            algorithms = ['HS256'],
+                          )['user_id']
+        
+        plant_name = request.get_json()['plant_name']
+
+        try:
+            sel_plant = Plant.query.filter(Plant.name == plant_name).one()
+        except:
+            return make_response({"error":"404 Plant Not Found!"}, 404)
+        
+        newObservation = Observation(
+            location = request.get_json()['location'],
+            comment = request.get_json()['comment'],
+            user_id = user_id,
+            plant_id = sel_plant.id
+        )
+
+        db.session.add(newObservation)
+        db.session.commit()
+
+        return make_response(newObservation.to_dict(), 201)
 
 #possible refactor for non restful so sel_plant only take one space
 # in memory
@@ -163,7 +203,7 @@ class Plants_by_User(Resource):
 class Plant_by_id(Resource):
     @JWT_Authentication_Decorator
     def patch(self, id):
-        try: 
+        try:
             sel_plant = Plant.query.filter(Plant.id == id).one()
         except:
             return make_response({"error":"Entry Not Found!"},404)
@@ -225,6 +265,7 @@ api.add_resource(Login, '/login')
 api.add_resource(Observations_by_User, '/observationsbyuser')
 api.add_resource(Plant_by_id, '/plantsbyuser/<int:id>')
 api.add_resource(Plants_by_User, '/plantsbyuser')
+api.add_resource(All_Plants, '/plants')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
