@@ -1,7 +1,9 @@
-import { TouchableHighlight, Image, StyleSheet, Button, Text } from "react-native"
+import { View, Image, StyleSheet, Text, Button } from "react-native"
 import { useContext } from "react"
 import { PlantContext } from "../../../context/PlantContext"
 import { AuthContext } from '../../../context/AuthContext'
+import { TouchableOpacity } from 'react-native';
+import { FontAwesome } from 'react-native-vector-icons/FontAwesome';
 
 function PlantIcon ({eachPl, renderDetailPage, deletionAddition, doomedIndices, setDoomedIndices}) {
 
@@ -36,44 +38,57 @@ function PlantIcon ({eachPl, renderDetailPage, deletionAddition, doomedIndices, 
     ////////////////////////////////////////////////
 
     return(
-        <TouchableHighlight 
-            key={eachPl.observations.id}
-            onPress={()=> renderDetailPage(eachPl)}
-            onLongPress={()=>{deletionAddition(eachPl.id)}}
-        >
-            <>
-                <Image 
-                    key={eachPl.observations.id} 
-                    source = {{uri: eachPl.image}} 
-                    style = {styles.image}
-                />
-                <Text
-                    style = {styles.title}
-                >{eachPl.name}</Text>
-                {
+        <View>
+            <TouchableOpacity
+                // style = {styles.touchableIcon}
+                key={eachPl.observations.id}
+                onPress={()=> renderDetailPage(eachPl)}
+                onLongPress={()=>{deletionAddition(eachPl.id)}}
+            >
+                <View>
+                    <Image 
+                        key={eachPl.observations.id} 
+                        source = {{uri: eachPl.image}} 
+                        style = {styles.image}
+                    />
+                    <Text
+                        style = {styles.title}
+                    >{eachPl.name}</Text>
+                </View>
+            </TouchableOpacity>
+            {
                 doomedIndices.includes(eachPl.id) ?
                 <Button
                     key = {eachPl.observations.id + "-button"} 
                     title="Delete"
-                    onPress={()=>deletionFetch(eachPl.id)}/>: 
+                    onPress={()=>deletionFetch(eachPl.id)}/>:
+                // <FontAwesome 
+                //     key = {eachPl.observations.id + "-button"} 
+                //     onPress={()=>deletionFetch(eachPl.id)}
+                //     style = {styles.IconContainer}
+                //     name = 'flower'
+                //     size = {20}
+                // />:
                 null
-                }
-                
-            </>
-        </TouchableHighlight>
+            }
+        </View>
+        
     )
 }
 
 const styles = StyleSheet.create({
     image: {
         width: 100,
-        height: 100,
+        height: 130,
         resizeMode: 'cover',
-        margin: 30
+        margin: 30,
+        borderRadius: 50,
+        borderWidth: 2,
+        borderColor: 'black',
     },
     title:{
         textAlign: 'center',
-    }
+    },
   });
 
 export default PlantIcon
