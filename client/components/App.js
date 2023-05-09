@@ -25,6 +25,7 @@ function App() {
 // Refactor Styling with UI kitten
 // Jiggle when selected!
 // Update with responsive styling and positioning
+// refactor Loading... text with <AppLoading> Component in expo
 
 
   ////////////////////////////////////////////////

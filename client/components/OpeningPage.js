@@ -1,12 +1,11 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext, useState, useEffect} from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native'
 import { AuthContext } from "../context/AuthContext";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
-import { Dimensions } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import * as Font from 'expo-font';
-import { AppLoading } from 'expo';
+import * as SplashScreen from 'expo-splash-screen';
 
 // If I am going to be stuck with a button until I can get gesture
 // handler to work there should at least be an animation....
@@ -16,80 +15,81 @@ import { AppLoading } from 'expo';
 
 function OpeningPage ({navigation}) {
 
-    // const fetchFonts = () => {
-    //     return Font.loadAsync({
-    //       'braah-one': require('../assets/fonts/BraahOne-Regular.ttf')
-    //     });
-    //   }
+    ////////////////////////////////////////////////
+    ///////  Font & Image Imports
+    ////////////////////////////////////////////////
 
+    const [isSplashReady, setIsSplashReady] = useState(false)
     const samplebackingp5 = require("../images/samplebackingp5.png");
-
     const { userToken } = useContext(AuthContext)
 
-    // const [dataLoaded, setDataLoaded] = useState(false);
+    async function fetchFonts () {
+        await Font.loadAsync({
+          'braah-one': require('../assets/fonts/BraahOne-Regular.ttf')
+        });
+        setIsSplashReady(true);
+        SplashScreen.hideAsync();
+    }
+
+    useEffect(()=>{
+        fetchFonts()
+    }, [])
 
     ////////////////////////////////////////////////
     ///////  Render On This Page
     ////////////////////////////////////////////////
 
-    // if (dataLoaded === false) {
-    //   return (
-    //     <AppLoading
-    //       startAsync={fetchFonts}
-    //       onFinish={() => setDataLoaded(true)}
-    //       onError={(err) => console.log(err)}
-    //     />
-    //   );
-    // }
+    if (!isSplashReady) {
+        return null;
+    }
+    
+    return(
+        <View style = {styles.container}>
+            <Text 
+                style = {{...styles.title, fontFamily: 'braah-one'}}
+            >Plant Hunter</Text>
+            <MaterialCommunityIcons 
+                name="bee-flower" 
+                size={100} 
+                color="#4a7c59"
+                style = {styles.bee} 
+            />
+            <Ionicons  
+                name="search"
+                size={250} 
+                color="#ffbf00" 
+                style = {styles.border}
+            />
+            <Image
+                source={samplebackingp5}
+                alt = "Green dots on ivory background"
+                style = {styles.bandBacking}
+            />
+            <FontAwesome 
+                name="circle" 
+                size={170} 
+                color="#fafcee"
+                style = {styles.circleBacking}
+            />
+            <TouchableOpacity
+                style = {styles.buttonContainer}
+                onPress = {() => {navigation.navigate(
+                        userToken ?
+                        'AppContainer' : 
+                        'Loggies'
+                )}}
+            >
+                <Ionicons 
+                    name="search-circle"
+                    size= {100}
+                    color= "black"
+                    style = {styles.buttonIcon}
+                />
+                <Text style = {{...styles.buttonText, fontFamily: 'braah-one'}}>Transition Between Screens!</Text>
+            </TouchableOpacity>
+        </View>
+    ); 
 
-    // if (dataLoaded === true) {
-        return(
-            <View style = {styles.container}>
-                <Text 
-                    style = {styles.title}
-                >Plant Hunter</Text>
-                <MaterialCommunityIcons 
-                    name="bee-flower" 
-                    size={100} 
-                    color="#4a7c59"
-                    style = {styles.bee} 
-                />
-                <Ionicons  
-                    name="search"
-                    size={250} 
-                    color="#ffbf00" 
-                    style = {styles.border}
-                />
-                <Image
-                    source={samplebackingp5}
-                    alt = "Green dots on ivory background"
-                    style = {styles.bandBacking}
-                />
-                <FontAwesome 
-                    name="circle" 
-                    size={170} 
-                    color="#fafcee"
-                    style = {styles.circleBacking}
-                />
-                <TouchableOpacity
-                    style = {styles.buttonContainer}
-                    onPress = {() => {navigation.navigate(
-                            userToken ?
-                            'AppContainer' : 
-                            'Loggies'
-                    )}}
-                >
-                    <Ionicons 
-                        name="search-circle"
-                        size= {100}
-                        color= "black"
-                        style = {styles.buttonIcon}
-                    />
-                    <Text style = {styles.buttonText}>Transition Between Screens!</Text>
-                </TouchableOpacity>
-            </View>
-        ); 
-    // }
 }
 
 export default OpeningPage
@@ -109,8 +109,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 220,
         fontSize: 65,
-        fontWeight: 'bold',
-        // fontFamily: 'braah-one',
     },
     bee: {
         position: 'absolute',
@@ -132,7 +130,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         padding: 10,
         borderRadius: 30,
-        backgroundColor: '#fff',
+        backgroundColor: '#d5ceae',
         elevation: 5
     },
     buttonIcon: {
