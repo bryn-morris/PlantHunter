@@ -1,10 +1,11 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { 
     View,
     TextInput,
     TouchableOpacity,
     StyleSheet,
     Text,
+    Keyboard
  } from "react-native"
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -17,9 +18,10 @@ function Login ({handleLoggiesSubmit}) {
     const emptyLoginObj = {
         username: '',
         password: ''
-    }
+    };
 
-    const [loginObj, setLoginObj] = useState(emptyLoginObj)
+    const [loginObj, setLoginObj] = useState(emptyLoginObj);
+    const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
  
     // add icons to end of search bars but smaller and rotated - maybe with view
 
@@ -28,13 +30,36 @@ function Login ({handleLoggiesSubmit}) {
     const handleLoginSubmit = () => {
         handleLoggiesSubmit(loginObj)
         setLoginObj(emptyLoginObj)
-    }
+    };
 
     const handleInputChange = (id, text) => {
         setLoginObj(()=>{return(
             {...loginObj, [id]: text}
         )})
-    }
+    };
+
+    ////////////////////////////////////////////////
+    ///////  KeyBoard Events Listeners
+    ////////////////////////////////////////////////
+
+    useEffect(() => {
+        const keyboardShowListener = Keyboard.addListener('keyboardDidShow',(e) =>
+            {
+                setIsKeyboardVisible(true);
+            },
+        );
+        const keyboardHideListener = Keyboard.addListener('keyboardDidHide',({nativeEvent}) =>
+            {
+                setIsKeyboardVisible(false);
+            },
+        );
+    
+        // cleanup
+        return () => {
+          keyboardShowListener.remove();
+          keyboardHideListener.remove();
+        };
+      }, []);
 
     ////////////////////////////////////////////////
     ///////  Render On This Page
@@ -42,14 +67,18 @@ function Login ({handleLoggiesSubmit}) {
 
     return(
         <View style = {styles.pageContainer}>
-            <Text style = {styles.title}>Login</Text>
-            <View style = {styles.imageContainer}>
-                <MaterialCommunityIcons 
-                    name="flower-pollen" 
-                    size={250}
-                    style = {styles.loginIcon}
-                />
-            </View>
+            {isKeyboardVisible ? null :
+            <>
+                <Text style = {styles.title}>Login</Text>
+                <View style = {styles.imageContainer}>
+                    <MaterialCommunityIcons 
+                        name="flower-pollen" 
+                        size={250}
+                        style = {styles.loginIcon}
+                    />
+                </View>
+            </>  
+            }
             <View style = {styles.inputContainer}>
                 <TextInput
                     placeholder='username'
@@ -75,7 +104,6 @@ function Login ({handleLoggiesSubmit}) {
                     <Text style = {styles.buttonText}>Log In</Text>
                 </TouchableOpacity>
             </View>
-            
         </View>  
     )
 }
@@ -99,14 +127,13 @@ const styles = StyleSheet.create({
         transform: [{scaleY:1.2}],
         textShadowOffset: {width: 0, height: 2},
         textShadowRadius: 8,
-        textShadowColor: '#5A5A5A'
+        textShadowColor: '#5A5A5A',
     },
     imageContainer: {
         flex:1/2,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#fff',
-        minHeight:'auto',
     },
     loginIcon: {
         position: 'absolute',
@@ -118,10 +145,10 @@ const styles = StyleSheet.create({
         zIndex: -1,
     },
     inputContainer: {
-        height: 40,
+        height:'auto',
         width: "80%",
         backgroundColor: '#d5ceae',
-        marginBottom:10,
+        marginBottom: 30,
     },
     inputBar: {
         backgroundColor: "#fafcee",

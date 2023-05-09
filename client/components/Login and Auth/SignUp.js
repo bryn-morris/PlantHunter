@@ -1,9 +1,19 @@
-import { View, TextInput, TouchableOpacity, Text, StyleSheet } from "react-native"
+import { 
+    View,
+    TextInput,
+    TouchableOpacity, 
+    Text, 
+    StyleSheet,
+    Keyboard 
+} from "react-native"
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import { FontAwesome5 } from '@expo/vector-icons';
+import { useState, useEffect } from "react";
 
 function SignUp ({handleLoggiesSubmit}) {
+
+    const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
 
     ////////////////////////////////////////////////
     ///////  Formik and Yup 
@@ -34,20 +44,51 @@ function SignUp ({handleLoggiesSubmit}) {
     });
 
     ////////////////////////////////////////////////
+    ///////  KeyBoard Events Listeners
+    ////////////////////////////////////////////////
+
+    useEffect(() => {
+        const keyboardShowListener = Keyboard.addListener('keyboardDidShow',(e) =>
+            {
+                setIsKeyboardVisible(true);
+            },
+        );
+        const keyboardHideListener = Keyboard.addListener('keyboardDidHide',({nativeEvent}) =>
+            {
+                setIsKeyboardVisible(false);
+            },
+        );
+    
+        // cleanup
+        return () => {
+          keyboardShowListener.remove();
+          keyboardHideListener.remove();
+        };
+      }, []);
+
+    ////////////////////////////////////////////////
     ///////  Render On This Page
     ////////////////////////////////////////////////
 
+    // The ground element moves hwen formik renders the relevant components : <
+    // commenting out for now have other things to focus on
+
     return(
         <View style = {styles.pageContainer}>
-            <Text style = {styles.title}>Sign Up</Text>
-            <View style = {styles.imageContainer}>
-                <FontAwesome5 
-                    name="kiwi-bird"
-                    size={200}
-                    style = {styles.signupIcon}
-                />
-                <Text style = {styles.ground}>....................</Text>
-            </View>
+            
+            {isKeyboardVisible ? null :
+            <>
+                <Text style = {styles.title}>Sign Up</Text>
+                <View style = {styles.imageContainer}>
+                    <FontAwesome5 
+                        name="kiwi-bird"
+                        size={200}
+                        style = {styles.signupIcon}
+                    />
+                    {/* <Text style = {styles.ground}>....................</Text> */}
+                </View>
+            </>   
+            }
             <View style = {styles.inputContainer}>
                 <TextInput
                     placeholder='username'
@@ -126,7 +167,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#fff',
-        minHeight:'auto',
     },
     signupIcon: {
         position: 'absolute',
@@ -140,7 +180,7 @@ const styles = StyleSheet.create({
     ground: {
         position: 'absolute',
         fontSize: 50,
-        bottom: "8%",
+        bottom: "-3%",
         color: '#4e372c',
         fontFamily: 'braah-one',
         textShadowOffset: {width: 0, height: 2},
@@ -148,10 +188,10 @@ const styles = StyleSheet.create({
         textShadowColor: '#5A5A5A',
     },  
     inputContainer: {
-        height: 40,
+        height: 'auto',
         width: "80%",
         backgroundColor: '#d5ceae',
-        marginBottom:10,
+        marginBottom:30,
     },
     inputBar: {
         backgroundColor: "#fafcee",
