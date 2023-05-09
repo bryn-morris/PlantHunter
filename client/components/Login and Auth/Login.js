@@ -43,34 +43,39 @@ function Login ({handleLoggiesSubmit}) {
     return(
         <View style = {styles.pageContainer}>
             <Text style = {styles.title}>Login</Text>
-            <View style = {styles.userContainer}>
+            <View style = {styles.imageContainer}>
+                <MaterialCommunityIcons 
+                    name="flower-pollen" 
+                    size={250}
+                    style = {styles.loginIcon}
+                />
+            </View>
+            <View style = {styles.inputContainer}>
                 <TextInput
                     placeholder='username'
                     onChangeText={(text)=>handleInputChange('username', text)}
                     value = {loginObj.username}
-                    style = {styles.userSearchbar}
+                    style = {styles.inputBar}
                 />
             </View>
-            <View style = {styles.passContainer}>
+            <View style = {styles.inputContainer}>
                 <TextInput
                     placeholder='password'
                     secureTextEntry= {true}
                     onChangeText={(text)=>handleInputChange('password', text)}
                     value = {loginObj.password}
-                    style = {styles.passSearchbar}
+                    style = {styles.inputBar}
                 />
             </View>
-            <MaterialCommunityIcons 
-                name="flower-pollen" 
-                size={250}
-                style = {styles.loginIcon}
-            />
-            <TouchableOpacity
-                onPress = {handleLoginSubmit}
-                style = {styles.submitButton}
-            >
-                <Text style = {styles.buttonText}>Log In</Text>
-            </TouchableOpacity>
+            <View style = {styles.submitContainer}>
+                <TouchableOpacity
+                    onPress = {handleLoginSubmit}
+                    style = {styles.submitButton}
+                >
+                    <Text style = {styles.buttonText}>Log In</Text>
+                </TouchableOpacity>
+            </View>
+            
         </View>  
     )
 }
@@ -96,7 +101,29 @@ const styles = StyleSheet.create({
         textShadowRadius: 8,
         textShadowColor: '#5A5A5A'
     },
-    userSearchbar: {
+    imageContainer: {
+        flex:1/2,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#fff',
+        minHeight:'auto',
+    },
+    loginIcon: {
+        position: 'absolute',
+        top: 0,
+        color: '#4e372c',
+        textShadowOffset: {width: 0, height: 2},
+        textShadowRadius: 8,
+        textShadowColor: '#5A5A5A',
+        zIndex: -1,
+    },
+    inputContainer: {
+        height: 40,
+        width: "80%",
+        backgroundColor: '#d5ceae',
+        marginBottom:10,
+    },
+    inputBar: {
         backgroundColor: "#fafcee",
         borderRadius: 25,
         borderWidth: 1,
@@ -108,17 +135,12 @@ const styles = StyleSheet.create({
         color: "#333",
         elevation: 5,
     },
-    passSearchbar: {
-        backgroundColor: "#fafcee",
-        borderRadius: 25,
-        borderWidth: 1,
-        borderColor: "#ccc",
-        width: "100%",
-        fontSize: 18,
+    submitContainer: {
         height: 40,
-        paddingLeft: 20,
-        color: "#333",
-        elevation: 5,
+        width: "50%",
+        backgroundColor: '#d5ceae',
+        marginBottom:10,
+        top:160,
     },
     submitButton: {
         position: 'absolute',
@@ -128,37 +150,12 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 30,
         backgroundColor: '#4e372c',
-        left: 70,
-        right: 70,
+        width:"100%",
         elevation: 5,
-    },
-    loginIcon: {
-        position: 'absolute',
-        top: 120,
-        color: '#4e372c',
-        textShadowOffset: {width: 0, height: 2},
-        textShadowRadius: 8,
-        textShadowColor: '#5A5A5A',
-        zIndex: -1,
     },
     buttonText: {
         color: '#ffbf00',
         fontSize: 18,
         fontWeight: 'bold'
-    },
-    userContainer: {
-        top:100,
-        height: 40,
-        width: "80%",
-        backgroundColor: '#d5ceae',
-        marginBottom:10,
-    },
-    passContainer: {
-        top:100,
-        height: 40,
-        width: "80%",
-        backgroundColor: '#d5ceae',
-        marginBottom:10,
-    },
-    
+    },   
 })

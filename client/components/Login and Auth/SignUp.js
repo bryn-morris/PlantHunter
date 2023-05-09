@@ -40,52 +40,62 @@ function SignUp ({handleLoggiesSubmit}) {
     return(
         <View style = {styles.pageContainer}>
             <Text style = {styles.title}>Sign Up</Text>
-            <Text style = {styles.ground}>....................</Text>
-            <TextInput
-                placeholder='username'
-                onChangeText={formik.handleChange('username')}
-                onBlur={formik.handleBlur('username')}
-                value= {formik.values.username}
-                style = {styles.userSearchbar}
-            >
-            </TextInput>
-            {formik.touched.username && formik.errors.username && (
-                <Text style={{ color: 'red' }}>{formik.errors.username}</Text>
-            )}
-            <TextInput
-                placeholder='password'
-                secureTextEntry= {true}
-                onChangeText={formik.handleChange('password')}
-                onBlue = {formik.handleBlur('password')}
-                value= {formik.values.password}
-                style = {styles.passSearchbar}
-            >
-            </TextInput>
-            {formik.touched.password && formik.errors.password && (
-                <Text style={{ color: 'red' }}>{formik.errors.password}</Text>
-            )}
-            <TextInput
-                placeholder='email'
-                onChangeText={formik.handleChange('email')}
-                onBlur={formik.handleBlur('email')}
-                value= {formik.values.email}
-                style = {styles.emailSearchbar}
-            >
-            </TextInput>
-            {formik.touched.email && formik.errors.email && (
-                <Text style={{ color: 'red' }}>{formik.errors.email}</Text>
-            )}
-            <FontAwesome5 
-                name="kiwi-bird"
-                size={200}
-                style = {styles.signupIcon}
-            />
-            <TouchableOpacity
-                onPress = {formik.handleSubmit}
-                style = {styles.submitButton}
-            >
-                <Text style = {styles.buttonText}>Sign Up</Text>
-            </TouchableOpacity>
+            <View style = {styles.imageContainer}>
+                <FontAwesome5 
+                    name="kiwi-bird"
+                    size={200}
+                    style = {styles.signupIcon}
+                />
+                <Text style = {styles.ground}>....................</Text>
+            </View>
+            <View style = {styles.inputContainer}>
+                <TextInput
+                    placeholder='username'
+                    onChangeText={formik.handleChange('username')}
+                    onBlur={formik.handleBlur('username')}
+                    value= {formik.values.username}
+                    style = {styles.inputBar}
+                >
+                </TextInput>
+                {formik.touched.username && formik.errors.username && (
+                    <Text style={{ color: 'red' }}>{formik.errors.username}</Text>
+                )}
+            </View>
+            <View style = {styles.inputContainer}>
+                <TextInput
+                    placeholder='password'
+                    secureTextEntry= {true}
+                    onChangeText={formik.handleChange('password')}
+                    onBlue = {formik.handleBlur('password')}
+                    value= {formik.values.password}
+                    style = {styles.inputBar}
+                >
+                </TextInput>
+                {formik.touched.password && formik.errors.password && (
+                    <Text style={{ color: 'red' }}>{formik.errors.password}</Text>
+                )}
+            </View>
+            <View style = {styles.inputContainer}>
+                <TextInput
+                    placeholder='email'
+                    onChangeText={formik.handleChange('email')}
+                    onBlur={formik.handleBlur('email')}
+                    value= {formik.values.email}
+                    style = {styles.inputBar}
+                >
+                </TextInput>
+                {formik.touched.email && formik.errors.email && (
+                    <Text style={{ color: 'red' }}>{formik.errors.email}</Text>
+                )}
+            </View>
+            <View style = {styles.submitContainer}>
+                <TouchableOpacity
+                    onPress = {formik.handleSubmit}
+                    style = {styles.submitButton}
+                >
+                    <Text style = {styles.buttonText}>Sign Up</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     )
 }
@@ -103,89 +113,79 @@ const styles = StyleSheet.create({
     title:{
         position: 'absolute',
         fontFamily: 'braah-one',
-        top: 120,
+        top: 0,
         color: '#4e372c',
         fontSize: 65,
         transform: [{scaleY:1.2}],
         textShadowOffset: {width: 0, height: 2},
         textShadowRadius: 8,
         textShadowColor: '#5A5A5A'
-    },
-    userSearchbar: {
-        backgroundColor: "#fafcee",
-        borderRadius: 25,
-        borderWidth: 1,
-        borderColor: "#ccc",
-        top:200,
-        height: 40,
-        width: "80%",
-        paddingLeft: 20,
-        fontSize: 18,
-        color: "#333",
-        marginBottom: 20,
-        elevation: 5,
-    },
-    passSearchbar: {
-        backgroundColor: "#fafcee",
-        borderRadius: 25,
-        borderWidth: 1,
-        borderColor: "#ccc",
-        top:210,
-        height: 40,
-        width: "80%",
-        paddingLeft: 20,
-        fontSize: 18,
-        color: "#333",
-        marginBottom: 20,
-        elevation: 5,
-    },
-    emailSearchbar: {
-        backgroundColor: "#fafcee",
-        borderRadius: 25,
-        borderWidth: 1,
-        borderColor: "#ccc",
-        top:220,
-        height: 40,
-        width: "80%",
-        paddingLeft: 20,
-        fontSize: 18,
-        color: "#333",
-        marginBottom: 20,
-        elevation: 5,
-    },
-    submitButton: {
-        position: 'absolute',
-        bottom: 20,
+    },  
+    imageContainer: {
+        flex:1/2,
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 10,
-        borderRadius: 30,
-        backgroundColor: '#4e372c',
-        left: 70,
-        right: 70,
-        elevation: 5,
+        backgroundColor: '#fff',
+        minHeight:'auto',
     },
     signupIcon: {
         position: 'absolute',
-        top: 230,
+        top: 0,
         color: '#4e372c',
         textShadowOffset: {width: 0, height: 2},
         textShadowRadius: 8,
         textShadowColor: '#5A5A5A',
-    },
-    buttonText: {
-        color: '#ffbf00',
-        fontSize: 18,
-        fontWeight: 'bold'
+        zIndex: -1,
     },
     ground: {
         position: 'absolute',
         fontSize: 50,
-        bottom: 308,
+        bottom: "8%",
         color: '#4e372c',
         fontFamily: 'braah-one',
         textShadowOffset: {width: 0, height: 2},
         textShadowRadius: 8,
         textShadowColor: '#5A5A5A',
+    },  
+    inputContainer: {
+        height: 40,
+        width: "80%",
+        backgroundColor: '#d5ceae',
+        marginBottom:10,
+    },
+    inputBar: {
+        backgroundColor: "#fafcee",
+        borderRadius: 25,
+        borderWidth: 1,
+        borderColor: "#ccc",
+        width: "100%",
+        fontSize: 18,
+        height: 40,
+        paddingLeft: 20,
+        color: "#333",
+        elevation: 5,
+    },
+    submitContainer: {
+        height: 40,
+        width: "50%",
+        backgroundColor: '#d5ceae',
+        marginBottom:10,
+        top:160,
+    },
+    submitButton: {
+        position: 'absolute',
+        bottom: 150,
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 10,
+        borderRadius: 30,
+        backgroundColor: '#4e372c',
+        width:"100%",
+        elevation: 5,
+    },
+    buttonText: {
+        color: '#ffbf00',
+        fontSize: 18,
+        fontWeight: 'bold'
     },
 })
