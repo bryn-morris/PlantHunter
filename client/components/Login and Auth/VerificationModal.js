@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     },
     modalBody: {
         paddingTop:20,
-        color: '#ffbf00',
+        color: '#4a7c59',
         fontSize: 14,
         fontWeight: 'bold'
     },
