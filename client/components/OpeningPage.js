@@ -12,7 +12,6 @@ import * as SplashScreen from 'expo-splash-screen';
 
 // maybe a pop animation and action lines? Possibly haptic feedback
 
-
 function OpeningPage ({navigation}) {
 
     ////////////////////////////////////////////////
@@ -107,8 +106,9 @@ const styles = StyleSheet.create({
     },
     title: {
         position: 'absolute',
-        top: 220,
+        top: 230,
         fontSize: 65,
+        transform: [{scaleY:1.2}]
     },
     bee: {
         position: 'absolute',
