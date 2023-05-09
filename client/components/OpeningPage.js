@@ -67,7 +67,7 @@ function OpeningPage ({navigation}) {
             <FontAwesome 
                 name="circle" 
                 size={170} 
-                color="#fafcee"
+                color="#eae6d7"
                 style = {styles.circleBacking}
             />
             <TouchableOpacity
@@ -106,9 +106,13 @@ const styles = StyleSheet.create({
     },
     title: {
         position: 'absolute',
+        color: '#4e372c',
         top: 200,
         fontSize: 65,
-        transform: [{scaleY:1.2}]
+        transform: [{scaleY:1.2}],
+        textShadowOffset: {width: 0, height: 2},
+        textShadowRadius: 8,
+        textShadowColor: '#5A5A5A'
     },
     bee: {
         position: 'absolute',
@@ -121,7 +125,10 @@ const styles = StyleSheet.create({
         top:310,
         left: 55,
         zIndex: 2, 
-        transform: [{ rotate: '90deg' }]
+        transform: [{ rotate: '90deg' }],
+        textShadowOffset: {width: 0, height: 2},
+        textShadowRadius: 8,
+        textShadowColor: '#5A5A5A'
     },
     buttonContainer: {
         position: 'absolute',
@@ -153,5 +160,5 @@ const styles = StyleSheet.create({
         position:  'absolute',
         zIndex: 0,
         top: 340,
-    }
+    },
   });

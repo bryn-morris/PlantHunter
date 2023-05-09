@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react'
-import { View, Switch, Modal, TouchableOpacity, Text } from 'react-native';
+import { View, Switch, StyleSheet } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import { StackActions } from "@react-navigation/routers"
 
@@ -67,22 +67,29 @@ function Loggies({navigation}) {
     ////////////////////////////////////////////////
 
     return(
-        <View>
+        <View style = {styles.pageContainer}>
             {
-                isLogin == 'login' ?
-                <View>
-                    <Login handleLoggiesSubmit = {handleLoggiesSubmit}/>
-                    <Switch onValueChange={toggleSwitch}/>
-                </View>
-                    :
-                <View>
-                    <SignUp handleLoggiesSubmit = {handleLoggiesSubmit}/>
-                    <Switch onValueChange={toggleSwitch}/>
-                </View> 
+                isLogin === 'login' ?
+                <Login handleLoggiesSubmit = {handleLoggiesSubmit}/> :
+                <SignUp handleLoggiesSubmit = {handleLoggiesSubmit}/>
             }
+            <Switch onValueChange={toggleSwitch}/>
             <VerificationModal {...verificationModalObject}/>
-        </View>    
+        </View>                     
     )
 }
+export default Loggies
 
-export default Loggies    
+const styles = StyleSheet.create({
+    
+    pageContainer: {
+        flex: 1,
+        backgroundColor: '#fafcee',
+    },
+    switchButton : {
+
+    },
+    verificationModal: {
+        
+    }
+})

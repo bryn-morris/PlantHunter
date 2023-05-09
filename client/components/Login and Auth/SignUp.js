@@ -1,7 +1,7 @@
-import { View, TextInput, Button, Text } from "react-native"
+import { View, TextInput, TouchableOpacity, Text, StyleSheet } from "react-native"
 import { useFormik } from 'formik'
 import * as yup from 'yup'
-
+import { FontAwesome5 } from '@expo/vector-icons';
 
 function SignUp ({handleLoggiesSubmit}) {
 
@@ -38,12 +38,15 @@ function SignUp ({handleLoggiesSubmit}) {
     ////////////////////////////////////////////////
 
     return(
-        <View>
+        <View style = {styles.pageContainer}>
+            <Text style = {styles.title}>Sign Up</Text>
+            <Text style = {styles.ground}>....................</Text>
             <TextInput
                 placeholder='username'
                 onChangeText={formik.handleChange('username')}
                 onBlur={formik.handleBlur('username')}
                 value= {formik.values.username}
+                style = {styles.userSearchbar}
             >
             </TextInput>
             {formik.touched.username && formik.errors.username && (
@@ -51,9 +54,11 @@ function SignUp ({handleLoggiesSubmit}) {
             )}
             <TextInput
                 placeholder='password'
+                secureTextEntry= {true}
                 onChangeText={formik.handleChange('password')}
                 onBlue = {formik.handleBlur('password')}
                 value= {formik.values.password}
+                style = {styles.passSearchbar}
             >
             </TextInput>
             {formik.touched.password && formik.errors.password && (
@@ -64,17 +69,123 @@ function SignUp ({handleLoggiesSubmit}) {
                 onChangeText={formik.handleChange('email')}
                 onBlur={formik.handleBlur('email')}
                 value= {formik.values.email}
+                style = {styles.emailSearchbar}
             >
             </TextInput>
             {formik.touched.email && formik.errors.email && (
                 <Text style={{ color: 'red' }}>{formik.errors.email}</Text>
             )}
-            <Button
-                title = 'Sign In'
-                onPress = {formik.handleSubmit}
+            <FontAwesome5 
+                name="kiwi-bird"
+                size={200}
+                style = {styles.signupIcon}
             />
+            <TouchableOpacity
+                onPress = {formik.handleSubmit}
+                style = {styles.submitButton}
+            >
+                <Text style = {styles.buttonText}>Sign Up</Text>
+            </TouchableOpacity>
         </View>
     )
 }
 
 export default SignUp
+
+const styles = StyleSheet.create({
+    
+    pageContainer: {
+        flex: 1,
+        backgroundColor: '#d5ceae',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    title:{
+        position: 'absolute',
+        fontFamily: 'braah-one',
+        top: 120,
+        color: '#4e372c',
+        fontSize: 65,
+        transform: [{scaleY:1.2}],
+        textShadowOffset: {width: 0, height: 2},
+        textShadowRadius: 8,
+        textShadowColor: '#5A5A5A'
+    },
+    userSearchbar: {
+        backgroundColor: "#fafcee",
+        borderRadius: 25,
+        borderWidth: 1,
+        borderColor: "#ccc",
+        top:200,
+        height: 40,
+        width: "80%",
+        paddingLeft: 20,
+        fontSize: 18,
+        color: "#333",
+        marginBottom: 20,
+        elevation: 5,
+    },
+    passSearchbar: {
+        backgroundColor: "#fafcee",
+        borderRadius: 25,
+        borderWidth: 1,
+        borderColor: "#ccc",
+        top:210,
+        height: 40,
+        width: "80%",
+        paddingLeft: 20,
+        fontSize: 18,
+        color: "#333",
+        marginBottom: 20,
+        elevation: 5,
+    },
+    emailSearchbar: {
+        backgroundColor: "#fafcee",
+        borderRadius: 25,
+        borderWidth: 1,
+        borderColor: "#ccc",
+        top:220,
+        height: 40,
+        width: "80%",
+        paddingLeft: 20,
+        fontSize: 18,
+        color: "#333",
+        marginBottom: 20,
+        elevation: 5,
+    },
+    submitButton: {
+        position: 'absolute',
+        bottom: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 10,
+        borderRadius: 30,
+        backgroundColor: '#4e372c',
+        left: 70,
+        right: 70,
+        elevation: 5,
+    },
+    signupIcon: {
+        position: 'absolute',
+        top: 230,
+        color: '#4e372c',
+        textShadowOffset: {width: 0, height: 2},
+        textShadowRadius: 8,
+        textShadowColor: '#5A5A5A',
+    },
+    buttonText: {
+        color: '#ffbf00',
+        fontSize: 18,
+        fontWeight: 'bold'
+    },
+    ground: {
+        position: 'absolute',
+        fontSize: 50,
+        bottom: 308,
+        color: '#4e372c',
+        fontFamily: 'braah-one',
+        textShadowOffset: {width: 0, height: 2},
+        textShadowRadius: 8,
+        textShadowColor: '#5A5A5A',
+    },
+})
