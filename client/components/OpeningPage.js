@@ -78,13 +78,13 @@ function OpeningPage ({navigation}) {
                         'Loggies'
                 )}}
             >
-                <Ionicons 
-                    name="search-circle"
+                <MaterialCommunityIcons 
+                    name="flower-tulip"
                     size= {100}
-                    color= "black"
+                    color= "#4a7c59"
                     style = {styles.buttonIcon}
                 />
-                <Text style = {{...styles.buttonText, fontFamily: 'braah-one'}}>Transition Between Screens!</Text>
+                <Text style = {{...styles.buttonText, fontFamily: 'braah-one'}}>Start!</Text>
             </TouchableOpacity>
         </View>
     ); 
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     },
     title: {
         position: 'absolute',
-        top: 230,
+        top: 200,
         fontSize: 65,
         transform: [{scaleY:1.2}]
     },
@@ -125,21 +125,22 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         position: 'absolute',
-        bottom: 50,
+        bottom: 100,
         alignItems: 'center',
         justifyContent: 'center',
         padding: 10,
         borderRadius: 30,
         backgroundColor: '#d5ceae',
+        left: 70,
+        right: 70,
         elevation: 5
     },
     buttonIcon: {
-        color: '#000',
         fontSize: 48,
         marginBottom: 10
     },
     buttonText: {
-        color: '#000',
+        color: '#4a7c59',
         fontSize: 18,
         fontWeight: 'bold'
     },
