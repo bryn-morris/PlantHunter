@@ -74,8 +74,7 @@ function SignUp ({handleLoggiesSubmit}) {
     // commenting out for now have other things to focus on
 
     return(
-        <View style = {styles.pageContainer}>
-            
+        <View style = {styles.pageContainer}> 
             {isKeyboardVisible ? null :
             <>
                 <Text style = {styles.title}>Sign Up</Text>
@@ -142,6 +141,10 @@ function SignUp ({handleLoggiesSubmit}) {
 }
 
 export default SignUp
+
+////////////////////////////////////////////////
+///////  Styling
+////////////////////////////////////////////////
 
 const styles = StyleSheet.create({
     

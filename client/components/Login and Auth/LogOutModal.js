@@ -1,4 +1,4 @@
-import { View, Text, Modal, Button } from "react-native";
+import { View, Text, Modal, Button, StyleSheet } from "react-native";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import * as SecureStore from 'expo-secure-store'
@@ -43,7 +43,11 @@ function LogOutModal({navigation}) {
                 </View>
         </Modal>
     )
-
 }
 
 export default LogOutModal
+
+////////////////////////////////////////////////
+///////  Styling
+////////////////////////////////////////////////
+

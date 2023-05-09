@@ -110,6 +110,10 @@ function Login ({handleLoggiesSubmit}) {
 
 export default Login
 
+////////////////////////////////////////////////
+///////  Styling
+////////////////////////////////////////////////
+
 const styles = StyleSheet.create({
     
     pageContainer: {

@@ -87,6 +87,10 @@ function Loggies({navigation}) {
 }
 export default Loggies
 
+////////////////////////////////////////////////
+///////  Styling
+////////////////////////////////////////////////
+
 const styles = StyleSheet.create({
     
     pageContainer: {
