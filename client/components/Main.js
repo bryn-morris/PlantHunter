@@ -31,13 +31,13 @@ function Main () {
     ////////////////////////////////////////////////
 
     return (
-        <NavigationContainer>
-            <Stack.Navigator initialRouteName='OpeningPage'>
-                <Stack.Screen name = 'OpeningPage' component={OpeningPage} />
-                <Stack.Screen name = 'AppContainer' component={AppContainer} options={{ headerShown: false }}/> 
-                <Stack.Screen name = 'Loggies' component = {Loggies} />
-            </Stack.Navigator>
-      </NavigationContainer>
+            <NavigationContainer>
+                <Stack.Navigator initialRouteName='OpeningPage'>
+                    <Stack.Screen name = 'OpeningPage' component={OpeningPage} options={{ headerShown: false }}/>
+                    <Stack.Screen name = 'AppContainer' component={AppContainer} options={{ headerShown: false }}/> 
+                    <Stack.Screen name = 'Loggies' component = {Loggies} />
+                </Stack.Navigator>
+            </NavigationContainer>      
     )
 
 }

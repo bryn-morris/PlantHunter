@@ -16,37 +16,38 @@ function AppContainer() {
     return(
         <PlantProvider>
             <Tab.Navigator
+                tabBarStyle = {{height: 70}}
                 screenOptions={({ route }) => ({
-                tabBarActiveTintColor: '#4a7c59',
-                tabBarInactiveTintColor: '#4e372c',
-                tabBarIconSize: 28,
-                tabBarActiveBackgroundColor: '#d5ceae',
-                tabBarInactiveBackgroundColor: '#d5ceae',
-                tabBarLabelStyle: {
-                    fontWeight: 'bold',
-                    fontSize: 14,
-                    color: route.state && route.state.index === 0 ? '#4a7c59' : '#4e372c',
-                },
-                tabBarIcon: ({ size, focused }) => {
-                    let iconName;
+                    tabBarActiveTintColor: '#4a7c59',
+                    tabBarInactiveTintColor: '#4e372c',
+                    tabBarIconSize: 28,
+                    tabBarActiveBackgroundColor: '#d5ceae',
+                    tabBarInactiveBackgroundColor: '#d5ceae',
+                    tabBarLabelStyle: {
+                        fontWeight: 'bold',
+                        fontSize: 14,
+                        color: route.state && route.state.index === 0 ? '#4a7c59' : '#4e372c',
+                    },
+                    tabBarIcon: ({ size, focused }) => {
+                        let iconName;
 
-                    if (route.name === 'My Profile') {
-                        return (<Ionicons name="md-leaf" size={size} 
-                            color={focused ? "#4a7c59": "#4e372c"}/>)
-                    } else if (route.name === 'My Index') {
-                        iconName = 'flower';
-                    } else if (route.name === 'My Compendium') {
-                        iconName = 'open-book';
-                    }
+                        if (route.name === 'My Profile') {
+                            return (<Ionicons name="md-leaf" size={size} 
+                                color={focused ? "#4a7c59": "#4e372c"}/>)
+                        } else if (route.name === 'My Index') {
+                            iconName = 'flower';
+                        } else if (route.name === 'My Compendium') {
+                            iconName = 'open-book';
+                        }
 
-                    return <Entypo name={iconName} size={size} color={focused ? '#4a7c59' : '#4e372c'} />;
-                },
+                        return <Entypo name={iconName} size={size} color={focused ? '#4a7c59' : '#4e372c'} />;
+                    },
                 })}
             >
                 <Tab.Screen 
                     name = 'My Profile' 
                     component={ProfileStack}
-                    options={{ 
+                    options={{
                         headerShown: false,
                      }}
                      
@@ -54,14 +55,14 @@ function AppContainer() {
                 <Tab.Screen 
                     name = 'My Index'
                     component={IndexStack}
-                    options={{ 
+                    options={{
                         headerShown: false,
                      }}  
                 />
                 <Tab.Screen 
                     name = 'My Compendium' 
                     component={Compendium}
-                    options={{ 
+                    options={{
                      }}   
                 />
             </Tab.Navigator>  

@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
         margin: 30,
         borderRadius: 50,
-        borderWidth: 4,
+        borderWidth: 3,
         borderColor: '#d5ceae',
     },
     title:{
