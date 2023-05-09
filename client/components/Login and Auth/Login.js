@@ -86,6 +86,11 @@ function Login ({handleLoggiesSubmit}) {
                     value = {loginObj.username}
                     style = {styles.inputBar}
                 />
+                <MaterialCommunityIcons 
+                        name="flower-pollen" 
+                        size={50}
+                        style = {styles.inputIcon}
+                    />
             </View>
             <View style = {styles.inputContainer}>
                 <TextInput
@@ -95,6 +100,11 @@ function Login ({handleLoggiesSubmit}) {
                     value = {loginObj.password}
                     style = {styles.inputBar}
                 />
+                <MaterialCommunityIcons 
+                        name="flower-pollen" 
+                        size={50}
+                        style = {styles.inputIcon}
+                    />
             </View>
             <View style = {styles.submitContainer}>
                 <TouchableOpacity
@@ -165,6 +175,14 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
         color: "#333",
         elevation: 5,
+    },
+    inputIcon: {
+        position:'absolute',
+        color: '#4e372c',
+        zIndex:6,
+        transform: [{rotate: "45deg"}],
+        right: "-5%",
+        bottom: "30%",
     },
     submitContainer: {
         height: 40,

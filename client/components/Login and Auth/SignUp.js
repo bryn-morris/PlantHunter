@@ -89,41 +89,62 @@ function SignUp ({handleLoggiesSubmit}) {
             </>   
             }
             <View style = {styles.inputContainer}>
-                <TextInput
-                    placeholder='username'
-                    onChangeText={formik.handleChange('username')}
-                    onBlur={formik.handleBlur('username')}
-                    value= {formik.values.username}
-                    style = {styles.inputBar}
-                >
-                </TextInput>
+                <View>
+                    <TextInput
+                        placeholder='username'
+                        onChangeText={formik.handleChange('username')}
+                        onBlur={formik.handleBlur('username')}
+                        value= {formik.values.username}
+                        style = {styles.inputBar}
+                    >
+                    </TextInput>
+                    <FontAwesome5 
+                        name="kiwi-bird"
+                        size={30}
+                        style = {styles.inputIcon}
+                    />
+                </View>
                 {formik.touched.username && formik.errors.username && (
                     <Text style={{ color: 'red' }}>{formik.errors.username}</Text>
                 )}
             </View>
             <View style = {styles.inputContainer}>
-                <TextInput
-                    placeholder='password'
-                    secureTextEntry= {true}
-                    onChangeText={formik.handleChange('password')}
-                    onBlue = {formik.handleBlur('password')}
-                    value= {formik.values.password}
-                    style = {styles.inputBar}
-                >
-                </TextInput>
+                <View>
+                    <TextInput
+                        placeholder='password'
+                        secureTextEntry= {true}
+                        onChangeText={formik.handleChange('password')}
+                        onBlue = {formik.handleBlur('password')}
+                        value= {formik.values.password}
+                        style = {styles.inputBar}
+                    >
+                    </TextInput>
+                    <FontAwesome5 
+                        name="kiwi-bird"
+                        size={30}
+                        style = {styles.inputIcon}
+                    />
+                </View>
                 {formik.touched.password && formik.errors.password && (
                     <Text style={{ color: 'red' }}>{formik.errors.password}</Text>
-                )}
+                )} 
             </View>
             <View style = {styles.inputContainer}>
-                <TextInput
-                    placeholder='email'
-                    onChangeText={formik.handleChange('email')}
-                    onBlur={formik.handleBlur('email')}
-                    value= {formik.values.email}
-                    style = {styles.inputBar}
-                >
-                </TextInput>
+                <View>
+                    <TextInput
+                        placeholder='email'
+                        onChangeText={formik.handleChange('email')}
+                        onBlur={formik.handleBlur('email')}
+                        value= {formik.values.email}
+                        style = {styles.inputBar}
+                    >
+                    </TextInput>
+                    <FontAwesome5 
+                        name="kiwi-bird"
+                        size={30}
+                        style = {styles.inputIcon}
+                    />
+                </View>
                 {formik.touched.email && formik.errors.email && (
                     <Text style={{ color: 'red' }}>{formik.errors.email}</Text>
                 )}
@@ -207,6 +228,14 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
         color: "#333",
         elevation: 5,
+    },
+    inputIcon: {
+        position:'absolute',
+        color: '#4e372c',
+        zIndex:6,
+        transform: [{rotateY: "180deg"}, {rotate:"5deg"}],
+        right: "4%",
+        top: "-70%",
     },
     submitContainer: {
         height: 40,
