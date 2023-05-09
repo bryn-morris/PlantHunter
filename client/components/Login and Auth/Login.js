@@ -5,9 +5,6 @@ import {
     TouchableOpacity,
     StyleSheet,
     Text,
-    Keyboard,
-    KeyboardAvoidingView,
-    ScrollView,
  } from "react-native"
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -23,10 +20,8 @@ function Login ({handleLoggiesSubmit}) {
     }
 
     const [loginObj, setLoginObj] = useState(emptyLoginObj)
-    // Some Kind of Listener - when keyboard is focused, translate input fields
-    // up and remove everything from page other than the input fields and title
-    const [isKeyboardVisible, setIsKeyboardVisible] = useState(false)
-    // add icons to end of search bars but smaller and rotated
+ 
+    // add icons to end of search bars but smaller and rotated - maybe with view
 
     //need to fix toggle, if I am keeping
 
@@ -46,35 +41,37 @@ function Login ({handleLoggiesSubmit}) {
     ////////////////////////////////////////////////
 
     return(
-                <View style = {styles.pageContainer}>
-                    <Text style = {styles.title}>Login</Text>
-                    <TextInput
-                        placeholder='username'
-                        onChangeText={(text)=>handleInputChange('username', text)}
-                        value = {loginObj.username}
-                        style = {styles.userSearchbar}
-                    >
-                    </TextInput>
-                    <TextInput
-                        placeholder='password'
-                        secureTextEntry= {true}
-                        onChangeText={(text)=>handleInputChange('password', text)}
-                        value = {loginObj.password}
-                        style = {styles.passSearchbar}
-                    >
-                    </TextInput>
-                    <MaterialCommunityIcons 
-                        name="flower-pollen" 
-                        size={250}
-                        style = {styles.loginIcon}
-                    />
-                    <TouchableOpacity
-                        onPress = {handleLoginSubmit}
-                        style = {styles.submitButton}
-                    >
-                        <Text style = {styles.buttonText}>Log In</Text>
-                    </TouchableOpacity>
-                </View>
+        <View style = {styles.pageContainer}>
+            <Text style = {styles.title}>Login</Text>
+            <View style = {styles.userContainer}>
+                <TextInput
+                    placeholder='username'
+                    onChangeText={(text)=>handleInputChange('username', text)}
+                    value = {loginObj.username}
+                    style = {styles.userSearchbar}
+                />
+            </View>
+            <View style = {styles.passContainer}>
+                <TextInput
+                    placeholder='password'
+                    secureTextEntry= {true}
+                    onChangeText={(text)=>handleInputChange('password', text)}
+                    value = {loginObj.password}
+                    style = {styles.passSearchbar}
+                />
+            </View>
+            <MaterialCommunityIcons 
+                name="flower-pollen" 
+                size={250}
+                style = {styles.loginIcon}
+            />
+            <TouchableOpacity
+                onPress = {handleLoginSubmit}
+                style = {styles.submitButton}
+            >
+                <Text style = {styles.buttonText}>Log In</Text>
+            </TouchableOpacity>
+        </View>  
     )
 }
 
@@ -91,7 +88,7 @@ const styles = StyleSheet.create({
     title:{
         position: 'absolute',
         fontFamily: 'braah-one',
-        top: 120,
+        top: 0,
         color: '#4e372c',
         fontSize: 65,
         transform: [{scaleY:1.2}],
@@ -104,13 +101,11 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         borderWidth: 1,
         borderColor: "#ccc",
-        top:200,
-        height: 40,
-        width: "80%",
-        paddingLeft: 20,
+        width: "100%",
         fontSize: 18,
+        height: 40,
+        paddingLeft: 20,
         color: "#333",
-        marginBottom: 20,
         elevation: 5,
     },
     passSearchbar: {
@@ -118,18 +113,16 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         borderWidth: 1,
         borderColor: "#ccc",
-        top:200,
-        height: 40,
-        width: "80%",
-        paddingLeft: 20,
+        width: "100%",
         fontSize: 18,
+        height: 40,
+        paddingLeft: 20,
         color: "#333",
-        marginBottom: 20,
         elevation: 5,
     },
     submitButton: {
         position: 'absolute',
-        bottom: 70,
+        bottom: 150,
         alignItems: 'center',
         justifyContent: 'center',
         padding: 10,
@@ -138,19 +131,34 @@ const styles = StyleSheet.create({
         left: 70,
         right: 70,
         elevation: 5,
-        zIndex:2,
     },
     loginIcon: {
         position: 'absolute',
-        top: 230,
+        top: 120,
         color: '#4e372c',
         textShadowOffset: {width: 0, height: 2},
         textShadowRadius: 8,
-        textShadowColor: '#5A5A5A'
+        textShadowColor: '#5A5A5A',
+        zIndex: -1,
     },
     buttonText: {
         color: '#ffbf00',
         fontSize: 18,
         fontWeight: 'bold'
     },
+    userContainer: {
+        top:100,
+        height: 40,
+        width: "80%",
+        backgroundColor: '#d5ceae',
+        marginBottom:10,
+    },
+    passContainer: {
+        top:100,
+        height: 40,
+        width: "80%",
+        backgroundColor: '#d5ceae',
+        marginBottom:10,
+    },
+    
 })

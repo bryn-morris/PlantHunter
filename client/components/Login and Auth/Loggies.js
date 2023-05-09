@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react'
-import { View, Switch, StyleSheet } from 'react-native';
+import { View, Switch, StyleSheet, ScrollView } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import { StackActions } from "@react-navigation/routers"
 
@@ -68,12 +68,19 @@ function Loggies({navigation}) {
 
     return(
         <View style = {styles.pageContainer}>
-            {
-                isLogin === 'login' ?
-                <Login handleLoggiesSubmit = {handleLoggiesSubmit}/> :
-                <SignUp handleLoggiesSubmit = {handleLoggiesSubmit}/>
-            }
-            <Switch onValueChange={toggleSwitch}/>
+            <View style = {styles.switchContainer}>
+                <Switch onValueChange={toggleSwitch}/>
+            </View>
+            <ScrollView 
+                contentContainerStyle={styles.contentContainer}
+                keyboardShouldPersistTaps='always'
+            >
+                {
+                    isLogin === 'login' ?
+                    <Login handleLoggiesSubmit = {handleLoggiesSubmit}/> :
+                    <SignUp handleLoggiesSubmit = {handleLoggiesSubmit}/>
+                }   
+            </ScrollView>
             <VerificationModal {...verificationModalObject}/>
         </View>                     
     )
@@ -84,12 +91,28 @@ const styles = StyleSheet.create({
     
     pageContainer: {
         flex: 1,
-        backgroundColor: '#fafcee',
+        backgroundColor: '#d5ceae',
     },
-    switchButton : {
-
+    contentContainer: {
+        flexGrow: 1,
+        justifyContent: 'flex-end',
+    },
+    switchContainer : {
+        alignItems: 'center',
+        justifyContent: 'center',
+        bottom:0,
+        marginTop: 60,
+        // marginBottom: 20,
+        backgroundColor: '#d5ceae',
     },
     verificationModal: {
         
-    }
+    },
+    container: {
+        flex: 1,
+    },
+    contentContainer: {
+    flexGrow: 1,
+    justifyContent: 'flex-end',
+    },
 })
