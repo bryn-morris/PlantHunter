@@ -85,6 +85,3 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
 });
-
-//STYLE: Modal reconfigure so it is only part of the screen, maybe instead of
-           // attaching to button

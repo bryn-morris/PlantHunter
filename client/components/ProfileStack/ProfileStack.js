@@ -12,7 +12,11 @@ function ProfileStack() {
     
     return (
         <Stack.Navigator initialRouteName='MyProfile'>
-            <Stack.Screen name = 'MyProfile' component = {MyProfile} />
+            <Stack.Screen 
+                name = 'MyProfile' 
+                component = {MyProfile} 
+                options={{headerShown: false,}}
+            />
             <Stack.Screen name = 'NewObservation' component = {NewObservation} />
         </Stack.Navigator>
     )

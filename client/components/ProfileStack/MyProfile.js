@@ -1,14 +1,20 @@
-import {View, Text, StyleSheet, Image, Button} from 'react-native'
+import {View, Text, StyleSheet, Image, TouchableOpacity, Dimensions} from 'react-native'
 import { Camera, CameraType } from 'expo-camera'
 import LogOutButton from './LogOutButton'
 import { useEffect, useContext, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import LogOutModal from '../Login and Auth/LogOutModal'
+import { FontAwesome5 } from '@expo/vector-icons';
+import BadgeFlowers from './BadgeFlowers'
+import { Ionicons } from '@expo/vector-icons';
 
 
 //Settings Icon to have user be able to update and change their settings
 // possibly integrate react native elements for ui
 // Logout functionality should be included, Delete Account
+
+// Add Badges
+// Add Carousel to Badges
 
 function MyProfile({navigation}) {
 
@@ -17,6 +23,9 @@ function MyProfile({navigation}) {
     const [ plantIndexImages, setPlantIndexImages ] = useState(null);
     const [ permission, setPermission ] = Camera.useCameraPermissions();
     const [ photo, setPhoto ] = useState(null);
+
+
+    const {height, width} = Dimensions.get('screen')
 
 
     ////////////////////////////////////////////
@@ -68,13 +77,11 @@ function MyProfile({navigation}) {
     ////////////////////////////////////////////
 
     return(
-        <View>
-            <LogOutButton navigation = {navigation}/>
-            <Text>Profile Page</Text>
-            <Button
-                title = "New Observation"
-                onPress = {handleNewObservation} 
-            />
+        <View style = {styles.pageContainer}>
+            <View style = {styles.headerContainer}>
+                <LogOutButton navigation = {navigation}/>
+            </View>
+            <View style = {styles.imageContainer}>
             {
                 plantIndexImages && plantIndexImages.length > 0 ?
                     <Image 
@@ -82,13 +89,38 @@ function MyProfile({navigation}) {
                         style = {styles.image}
                     />:
                     null
-            } 
+            }
+            </View>
+            {/* <BadgeFlowers/> */}
+            <View style = {styles.buttonContainer} >
+                <TouchableOpacity
+                    onPress = {handleNewObservation}
+                    style = {styles.newObservationButton}
+                >
+                    <FontAwesome5 
+                        name="camera" 
+                        size={48} 
+                        style = {styles.newObservationButtonImage} 
+                    />
+                </TouchableOpacity>
+            </View>
+            <View style = {styles.badgeContainer}>
+                <View style = {
+                        {...styles.badgeTitleContainer,
+                            width: width*2, 
+                            height: width*2, 
+                            borderRadius: width
+                        }
+                    }
+                >
+                    <Ionicons name="ribbon" size={50} color="black" />
+                </View>
+            </View>
             {
                 logOutModalVisible ?
                 <LogOutModal navigation={navigation} /> :
                 null
             }
-            <Text>Badges:</Text>
         </View>   
     )
 }
@@ -100,11 +132,77 @@ export default MyProfile
 ////////////////////////////////////////////////
 
 const styles = StyleSheet.create({
-    image: {
-        width: 100,
-        height: 100,
-        resizeMode: 'cover',
-        margin: 30
+    pageContainer: {
+        flex: 1,
+        backgroundColor: '#fafcee',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
-    
+    headerContainer: {
+        backgroundColor:"#fafcee",
+        flex:1/8,
+        top: "-10%",
+        width: "100%",
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    buttonContainer:{
+        position: "absolute",
+        flex:1/7,
+        alignItems: 'center',
+        justifyContent: 'center',
+        bottom: "0%",
+        zIndex: 1,
+    },
+    newObservationButton:{
+        position: 'absolute',
+        alignItems: 'center',
+        padding: 10,
+        borderRadius: 180,
+        backgroundColor: '#4a7c59',
+        width:160,
+        height:160,
+        elevation: 5,
+    },
+    newObservationButtonImage: {
+        color: '#ffbf00',
+        fontSize: 60,
+        paddingTop: "0%",
+        fontWeight: 'bold',
+    },
+    imageContainer:{
+        flex:1/3,
+        alignItems: 'center',
+        top: "-5%",
+        width: "100%",
+        justifyContent: 'center',
+    },
+    image: {
+        width: 220,
+        height: 220,
+        resizeMode: 'cover',
+        margin: 30,
+        borderRadius: 110,
+        borderWidth: 3,
+        borderColor: '#d5ceae',
+    },
+    badgeContainer:{
+        flex: 1/3,
+        bottom: "0%",
+        backgroundColor:"#fff",
+        alignItems: 'center',
+    },
+    badgeTitleContainer: {
+        position:"absolute",
+        alignItems: 'center',
+        backgroundColor:"#d5ceae",
+    },
+    badgeContainerImage:{
+        position:"absolute",
+        color: '#4e372c',
+        paddingTop: "10%",
+        fontSize: 26,
+        padding: 10,
+    },
   });

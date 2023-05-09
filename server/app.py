@@ -4,12 +4,11 @@
 
 
 # Remote library imports
-from flask import make_response, request, session, jsonify
+from flask import make_response, request
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 import jwt
 import os
-from jwt.exceptions import DecodeError, InvalidTokenError, InvalidSignatureError
 
 # Local imports
 from config import app, db, api

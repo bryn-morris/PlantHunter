@@ -49,8 +49,7 @@ function AppContainer() {
                     component={ProfileStack}
                     options={{
                         headerShown: false,
-                     }}
-                     
+                     }}  
                 />
                 <Tab.Screen 
                     name = 'My Index'

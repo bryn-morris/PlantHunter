@@ -174,6 +174,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#d5ceae',
         alignItems: 'center',
         justifyContent: 'center',
+        paddingTop:20,
     },
     title:{
         position: 'absolute',

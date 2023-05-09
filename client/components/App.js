@@ -24,8 +24,12 @@ function App() {
 
 // Refactor Styling with UI kitten
 // Jiggle when selected!
-// Update with responsive styling and positioning
+// Update with responsive styling and positioning - refactor away
+  // from using pixel measurements
 // refactor Loading... text with <AppLoading> Component in expo
+
+// yellow circles in flower and in kiwi eye in login and signup
+
 
 
   ////////////////////////////////////////////////
