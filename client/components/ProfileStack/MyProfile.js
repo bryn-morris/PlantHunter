@@ -5,7 +5,6 @@ import { useEffect, useContext, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import LogOutModal from '../Login and Auth/LogOutModal'
 import { FontAwesome5 } from '@expo/vector-icons';
-import BadgeFlowers from './BadgeFlowers'
 import { Ionicons } from '@expo/vector-icons';
 
 
@@ -24,6 +23,7 @@ function MyProfile({navigation}) {
     const [ permission, setPermission ] = Camera.useCameraPermissions();
     const [ photo, setPhoto ] = useState(null);
 
+    const samplebackingp5 = require("../../images/samplebackingp5.png");
 
     const {height, width} = Dimensions.get('screen')
 
@@ -82,14 +82,21 @@ function MyProfile({navigation}) {
                 <LogOutButton navigation = {navigation}/>
             </View>
             <View style = {styles.imageContainer}>
-            {
-                plantIndexImages && plantIndexImages.length > 0 ?
-                    <Image 
-                        source = {{uri: plantIndexImages[determineRandomImageIndex()].image}}
-                        style = {styles.image}
-                    />:
-                    null
-            }
+                {
+                    plantIndexImages && plantIndexImages.length > 0 ?
+                        <Image 
+                            source = {{uri: plantIndexImages[determineRandomImageIndex()].image}}
+                            style = {styles.image}
+                        />:
+                        null
+                }
+                <Image source = {samplebackingp5} style = {styles.imageBacking}/>
+                <Ionicons  
+                    name="search"
+                    size={350} 
+                    color="#ffbf00" 
+                    style = {styles.searchImageContainer}
+                />
             </View>
             {/* <BadgeFlowers/> */}
             <View style = {styles.buttonContainer} >
@@ -113,9 +120,20 @@ function MyProfile({navigation}) {
                         }
                     }
                 >
-                    <Ionicons name="ribbon" size={50} color="black" />
+                    <Ionicons 
+                        name="ribbon" 
+                        style = {styles.badgeContainerImage}
+                    />
                 </View>
             </View>
+            <View style = {
+                {
+                    ...styles.designSpacer, 
+                    width: width,
+                    height: height/75,
+                }
+                }
+            />
             {
                 logOutModalVisible ?
                 <LogOutModal navigation={navigation} /> :
@@ -177,15 +195,28 @@ const styles = StyleSheet.create({
         top: "-5%",
         width: "100%",
         justifyContent: 'center',
+        backgroundColor: "#fafcee"
     },
     image: {
-        width: 220,
-        height: 220,
+        width: 170,
+        height: 170,
         resizeMode: 'cover',
         margin: 30,
-        borderRadius: 110,
-        borderWidth: 3,
-        borderColor: '#d5ceae',
+        borderRadius: 85,
+        zIndex:1
+    },
+    imageBacking: {
+        position: "absolute",
+    },
+    searchImageContainer: {
+        position: "absolute",
+        zIndex: 2,
+        right: 55,
+        top: -36,
+        transform: [{ rotate: '90deg' }],
+        textShadowOffset: {width: 0, height: 2},
+        textShadowRadius: 8,
+        textShadowColor: '#5A5A5A'
     },
     badgeContainer:{
         flex: 1/3,
@@ -197,12 +228,23 @@ const styles = StyleSheet.create({
         position:"absolute",
         alignItems: 'center',
         backgroundColor:"#d5ceae",
+        paddingTop: 10,
+        elevation: 10,
     },
     badgeContainerImage:{
         position:"absolute",
         color: '#4e372c',
-        paddingTop: "10%",
-        fontSize: 26,
-        padding: 10,
+        paddingTop: "2%",
+        fontSize: 50,
+        textShadowOffset: {width: 0, height: 2},
+        textShadowRadius: 3,
+        textShadowColor: '#5A5A5A',
     },
+    designSpacer: {
+        position:"absolute",
+        backgroundColor: "#4a7c59",
+        bottom: "0%",
+        zIndex: 1,
+    },
+
   });
