@@ -1,9 +1,9 @@
 import { View, Text, TouchableOpacity, Image, StyleSheet, Dimensions } from 'react-native'
 import { useEffect, useState, useContext } from 'react';
 import PlantUsers from './PlantDetailsModals/PlantUsers';
-import EditModal from './PlantDetailsModals/EditModal';
 import { PlantContext } from '../../context/PlantContext';
 import { Ionicons } from '@expo/vector-icons';
+import EditButton from './EditButton';
 
 
 function PlantDetails({navigation, route}) {
@@ -33,6 +33,12 @@ function PlantDetails({navigation, route}) {
     //refactor header icon renders similar to interpolate index and render
         // names in an array.from({length: 5}, ()=>{"ios-flower"}) and map
         // through
+
+    // refactor stylesheet icons so that differences are in line and all
+        // inherit from the same style
+
+    // add edit buttons to each section of data and change the
+        // content in the edit modal based on which section of data is clicked
 
     /////////////////////////////////
     ///////   Props Objects
@@ -101,22 +107,31 @@ function PlantDetails({navigation, route}) {
             {
                 specificPlant ? 
                 (<> 
-                    <View style = {styles.editContainer}>
-                        <TouchableOpacity 
-                            onPress={()=>setEditModalVisible(true)}
-                            style = {styles.editButton}
+                    <View style = {
+                        {
+                            ...styles.plantDataContainer,
+                            width:width,
+                            height:height,
+                        }
+                    }>
+                        <View 
+                            style = {
+                                {
+                                    ...styles.imageContainer,
+                                    width: width*.45,
+                                }
+                            }
                         >
-                            <Text
-                                style = {styles.editButtonText}
-                            >Edit</Text>
-                        </TouchableOpacity>
-                        <EditModal {...editModalPropsObj}/>
-                    </View>
-                    <View style = {styles.plantDataContainer}>
-                        <Image 
-                            source = {{uri: specificPlant.image}}
-                            style = {styles.image}
-                        />
+                            <View style = {styles.imageEditIcon}>
+                                <EditButton setEditModalVisible = {setEditModalVisible}/>
+                            </View>
+                            
+                            <Image 
+                                source = {{uri: specificPlant.image}}
+                                style = {styles.image}
+                            />
+                        </View>
+                        
                         <Text>{specificPlant.name}</Text>
                         <Text>{specificPlant.growth_duration}</Text>
                         <Text>{specificPlant.genus}</Text>
@@ -164,6 +179,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     headerIcon1: {
+        position: "absolute",
         fontSize: 120,
         color: "#73d2de",
         zIndex: 1,
@@ -212,27 +228,34 @@ const styles = StyleSheet.create({
     },
     headerText:{
         textAlign: 'center',
-        fontSize: 50,
+        fontSize: 55,
         fontFamily: 'braah-one',
         color: "#4e372c",
     },
-    editContainer:{
-
-    },
-    editButton: {
-
-    },
-    editButtonText:{
-
-    },
     plantDataContainer: {
-
+        backgroundColor: "#fafcee",
+        // alignItems: "center",
+        top:"-5%",
+        borderTopWidth: 2,
+        borderTopColor: "#4e372c"
+    },
+    imageContainer:{
+        alignContent: "center",
+        padding: 10,
+        top: "8%",
     },
     image: {
-        width: 100,
-        height: 100,
+        width: 160,
+        height: 200,
         resizeMode: 'cover',
-        margin: 10
+        borderRadius: 80,
+        borderWidth: 2,
+        borderColor: '#4e372c',
+    },
+    imageEditIcon: {
+        position:"absolute",
+        zIndex:1,
+        right: "0%",
     },
     usersModalContainer: {
     
