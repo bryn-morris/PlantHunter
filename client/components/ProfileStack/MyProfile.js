@@ -168,6 +168,15 @@ function MyProfile({navigation}) {
                         name="ribbon" 
                         style = {styles.badgeContainerImage}
                     />
+                    <View style = {
+                        {
+                            ...styles.badgeInnerContainer,
+                            width: width*.95,
+                            height: height*.21,
+                        }
+                    }
+                    >
+                    </View>
                 </View>
             </View>
             <View style = {
@@ -293,6 +302,15 @@ const styles = StyleSheet.create({
         backgroundColor:"#fff",
         alignItems: 'center',
     },
+    badgeInnerContainer: {
+        position: "absolute",
+        backgroundColor:"#fafcee",
+        top: "9%",
+        borderWidth: 4,
+        borderStyle: "dashed",
+        borderDashOffset: 4,
+        borderColor: "#4e372c",
+    },
     badgeTitleContainer: {
         position:"absolute",
         alignItems: 'center',
@@ -303,8 +321,8 @@ const styles = StyleSheet.create({
     badgeContainerImage:{
         position:"absolute",
         color: '#4e372c',
-        paddingTop: "2%",
-        fontSize: 50,
+        paddingTop: ".5%",
+        fontSize: 60,
         textShadowOffset: {width: 0, height: 2},
         textShadowRadius: 3,
         textShadowColor: '#5A5A5A',
