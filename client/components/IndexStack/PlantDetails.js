@@ -136,9 +136,20 @@ function PlantDetails({navigation, route}) {
                             />
                         </View>
                         <View
-                            style = {styles.nameInfoContainer}
+                            style = {
+                                {
+                                    ...styles.nameInfoContainer,
+                                    width: width,
+                                    height: height*.05
+                                }
+                            }
                         >
-                            <Text>{specificPlant.name}</Text>
+                            <Text
+                                style = {styles.nameText}
+                            >{specificPlant.name}</Text>
+                            <Text
+                                style = {styles.character}
+                            >|</Text>
                             <Text style = {styles.latinName}>
                                 {capitalizedGenus} {specificPlant.species}
                             </Text>
@@ -239,7 +250,7 @@ const styles = StyleSheet.create({
     },
     plantDataContainer: {
         backgroundColor: "#fafcee",
-        top:"-5%",
+        top:"-2%",
         borderTopWidth: 2,
         borderTopColor: "#4e372c"
     },
@@ -264,14 +275,30 @@ const styles = StyleSheet.create({
     nameInfoContainer: {
         position: "absolute",
         backgroundColor: "orange",
-        borderWidth: 2,
+        alignItems: "center",
         justifyContent: "center",
-        borderColor: '#4e372c',
-        width: 130,
-        height: 60,
+        marginTop: 10, 
+        elevation:5,
+        borderRadius: 30,
+        flexDirection: "row",
     },
     latinName: {
+        position:"absolute",
         fontStyle: "italic",
+        color: 'black',
+        fontSize: 18,
+        right:"12%",
+    },
+    nameText: {
+        position:"absolute",
+        color: 'black',
+        fontSize: 25,
+        fontWeight: 'bold',
+        left: "12%",
+    },
+    character: {
+        position:"absolute",
+        left: "45%",
     },
     growthInfoContainer: {
         backgroundColor: "green",
