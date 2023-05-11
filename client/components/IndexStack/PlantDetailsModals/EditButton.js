@@ -38,7 +38,8 @@ const styles = StyleSheet.create({
     },
     editIcon: {
         fontSize: 20,
-        color: "black"
+        color: "black",
+        top: "10%",
     },
     editButton: {
 

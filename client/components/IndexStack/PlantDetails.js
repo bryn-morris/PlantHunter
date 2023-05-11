@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
     imageEditIcon: {
         position:"absolute",
         zIndex:1,
-        right: "0%",
+        right: "2%",
     },
     nameInfoContainer: {
         position: "absolute",
