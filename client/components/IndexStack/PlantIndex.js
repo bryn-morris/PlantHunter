@@ -6,15 +6,24 @@ import PlantIcon from "./PlantIndexComponents/PlantIcon";
 import LogOutModal from "../Login and Auth/LogOutModal";
 import PlantSearch from "./PlantIndexComponents/PlantSearch";
 import * as Haptics from 'expo-haptics';
+import LogOutButton from "../Login and Auth/LogOutButton";
+import { FontAwesome } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
+import { Keyboard } from "react-native";
 
 
 function Index({navigation}){
 
-    const { userToken, logOutModalVisible, setLogOutModalVisible } = useContext(AuthContext)
-    const { userPlants, setUserPlants } = useContext(PlantContext)
-
-    const [ doomedIndices, setDoomedIndices ] = useState([])
-    const [ searchString, setSearchString ] = useState('')
+    const { 
+        userToken, 
+        logOutModalVisible, 
+        setLogOutModalVisible,
+        username,
+    } = useContext(AuthContext);
+    const { userPlants, setUserPlants } = useContext(PlantContext);
+    const [ doomedIndices, setDoomedIndices ] = useState([]);
+    const [ searchString, setSearchString ] = useState('');
+    const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
 
     // May Need to refactor to get observations instead of plants once
     // Compendium is set up
@@ -93,6 +102,29 @@ function Index({navigation}){
     ////////////////////////////////////////////////
 
     ////////////////////////////////////////////////
+    ///////  KeyBoard Events Listeners
+    ////////////////////////////////////////////////
+
+    useEffect(() => {
+        const keyboardShowListener = Keyboard.addListener('keyboardDidShow',(e) =>
+            {
+                setIsKeyboardVisible(true);
+            },
+        );
+        const keyboardHideListener = Keyboard.addListener('keyboardDidHide',({nativeEvent}) =>
+            {
+                setIsKeyboardVisible(false);
+            },
+        );
+    
+        // cleanup
+        return () => {
+          keyboardShowListener.remove();
+          keyboardHideListener.remove();
+        };
+      }, []);
+
+    ////////////////////////////////////////////////
     ///////  Props Objects
     ////////////////////////////////////////////////
 
@@ -118,9 +150,34 @@ function Index({navigation}){
 
     return(
         <View style = {styles.container}>
+            <View style = {styles.headerContainer}>
+                {isKeyboardVisible ? null :
+                <>
+                    <LogOutButton navigation = {navigation}/>
+                    <View style = {styles.usernameContainer}>
+                        <FontAwesome 
+                            name="user-circle-o" 
+                            style = {styles.usernameIcon}
+                        />
+                        {username && (
+                            <Text
+                                style = {styles.usernameText}
+                            >{username}
+                            </Text>
+                        )}
+                    </View>
+                </>    
+                }
+            </View>
             {userPlants ?
             <>
             <View style={styles.searchcontainer}>
+                <Ionicons  
+                        name="search"
+                        size={40} 
+                        color="#ffbf00" 
+                        style = {styles.searchIcon}
+                />
                 <PlantSearch 
                     {...plantSearchPropsObj}           
                 />
@@ -160,27 +217,70 @@ const styles = StyleSheet.create({
         backgroundColor: "#fafcee",
     },
     flatlist: {
-        paddingHorizontal: 35,
+        paddingHorizontal: 10,
         paddingTop: 10,
         minHeight: '100%',
         paddingBottom: 100,
     },
     searchcontainer: {
-        flex: 1/4,
+        flex: 1/2,
+        top: "13%",
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: "#fff",
         paddingHorizontal: 20,
         paddingVertical: 10,
         backgroundColor: "#d5ceae",
+        elevation: 5,
+    },
+    searchIcon: {
+        position: 'absolute',
+        color: '#4e372c',
+        textShadowOffset: {width: 0, height: 2},
+        textShadowRadius: 8,
+        textShadowColor: '#5A5A5A',
+        zIndex: 1,
+        right: "15%",
+        top:"30%",
     },
     listcontainer: {
+        top: "15%",
         flex: 2,
         backgroundColor: "#fff",
         paddingHorizontal: 5,
         paddingVertical: 5,
         backgroundColor: "#fafcee"
-    }
+    },
+    headerContainer: {
+        backgroundColor:"#fafcee",
+        flex:1/3,
+        top: "1%",
+        width: "100%",
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    usernameContainer: {
+        position: 'absolute',
+        flexDirection: "row",
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 10,
+        backgroundColor: '#fafcee',
+        height:"70%",
+        width:"30%",
+        left:30,
+        bottom:-21,
+    },
+    usernameIcon: {
+        fontSize: 30,
+        color: "#4e372c",
+    },
+    usernameText: {
+        color: '#4e372c',
+        fontSize: 16,
+        fontWeight: 'bold',
+        margin: 10,
+    },
   });
 
   export default Index

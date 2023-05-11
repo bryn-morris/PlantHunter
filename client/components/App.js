@@ -29,6 +29,10 @@ function App() {
 // refactor Loading... text with <AppLoading> Component in expo
 
 // yellow circles in flower and in kiwi eye in login and signup
+// refactor username and logout so they are present on every page with a parent
+  // instead of having to re-render them on every tab
+// Organize Imports
+// Reorganize Keybaord Event listeners so I don't repeat them across pages
 
 
 

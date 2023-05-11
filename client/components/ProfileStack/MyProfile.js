@@ -1,6 +1,6 @@
 import {View, Text, StyleSheet, Image, TouchableOpacity, Dimensions} from 'react-native'
 import { Camera, CameraType } from 'expo-camera'
-import LogOutButton from './LogOutButton'
+import LogOutButton from '../Login and Auth/LogOutButton'
 import { useEffect, useContext, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import LogOutModal from '../Login and Auth/LogOutModal'
@@ -122,7 +122,6 @@ function MyProfile({navigation}) {
                         </Text>
                     )}
                 </View>
-                
             </View>
             <View style = {styles.imageContainer}>
                 {
