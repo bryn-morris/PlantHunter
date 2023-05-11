@@ -20,7 +20,7 @@ function PlantUsers({modalVisible, setModalVisible, specificPlant}){
 
     const sections = [
         {
-            title: 'User Observations',
+            title: 'Other User\'s Comments',
             data: specificPlant.observations,
         },
     ];
@@ -33,7 +33,7 @@ function PlantUsers({modalVisible, setModalVisible, specificPlant}){
         <View style = {styles.outerModalcontainer}>
             <Modal
                 visible={modalVisible}
-                animationType="slide"
+                animationType="fade"
                 onRequestClose={()=> setModalVisible(false)}
                 transparent = {true}
             >
@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         paddingBottom: 10,
         textAlign: "center",
+        color: "#4e372c",
     },
     outerModalcontainer: {
         flex: 1,
@@ -93,7 +94,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: '#fafcee',
-        height: "74%",
+        height: "68%",
         top:  "18%",
         borderRadius: 50,
         elevation: 5,
@@ -107,6 +108,7 @@ const styles = StyleSheet.create({
         width: "50%",
         borderRadius: 30,
         bottom:"3%",
+        zIndex: 10,
     },
     closeText: {
         color: '#ffbf00',
@@ -116,10 +118,8 @@ const styles = StyleSheet.create({
     listcontainer: {
         top: "0%",
         flex: 2,
-        backgroundColor: "#fff",
         paddingHorizontal: 5,
         paddingVertical: 5,
-        backgroundColor: "#fafcee"
     },
     separator: {
         height: 1,
