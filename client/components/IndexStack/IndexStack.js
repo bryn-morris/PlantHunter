@@ -14,9 +14,21 @@ function IndexStack() {
     
     return (
         <Stack.Navigator initialRouteName='PlantIndex'>
-            <Stack.Screen name = 'PlantIndex' component = {PlantIndex} />
-            <Stack.Screen name = 'PlantDetails' component = {PlantDetails} />
-            <Stack.Screen name = 'PlantUsers' component = {PlantUsers} />
+            <Stack.Screen 
+                name = 'PlantIndex' 
+                component = {PlantIndex} 
+                options={{headerShown: false,}}
+            />
+            <Stack.Screen 
+                name = 'PlantDetails' 
+                component = {PlantDetails} 
+                options={{headerShown: false,}}
+            />
+            <Stack.Screen 
+                name = 'PlantUsers' 
+                component = {PlantUsers}
+                options={{headerShown: false,}} 
+            />
         </Stack.Navigator>
     )
 

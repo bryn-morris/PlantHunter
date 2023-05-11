@@ -21,10 +21,15 @@ import { FontAwesome } from '@expo/vector-icons';
 
 function MyProfile({navigation}) {
 
-    const { userToken, logOutModalVisible, setLogOutModalVisible } = useContext(AuthContext)
+    const { 
+        userToken,
+        logOutModalVisible, 
+        setLogOutModalVisible,
+        username,
+        setUsername 
+    } = useContext(AuthContext)
 
     const [ plantIndexImages, setPlantIndexImages ] = useState(null);
-    const [ username, setUsername ] = useState(null) 
     // const [ permission, setPermission ] = Camera.useCameraPermissions();
     // const [ photo, setPhoto ] = useState(null);
 
