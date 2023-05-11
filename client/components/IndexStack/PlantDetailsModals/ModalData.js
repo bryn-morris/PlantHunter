@@ -34,7 +34,10 @@ const styles = StyleSheet.create({
 
     dataContainer: {
         flex: 1,
-        padding: 10,
+        padding: 30,
+        paddingRight: 0,
+        paddingLeft: 0,
+
     },
     usernameText: {
         fontSize: 13,
