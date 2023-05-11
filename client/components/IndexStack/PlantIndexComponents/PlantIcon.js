@@ -67,8 +67,7 @@ function PlantIcon ({eachPl, renderDetailPage, deletionAddition, doomedIndices, 
                 </TouchableOpacity>:
                 null
             }
-        </View>
-        
+        </View>  
     )
 }
 

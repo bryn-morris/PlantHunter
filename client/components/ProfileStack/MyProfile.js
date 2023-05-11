@@ -310,7 +310,7 @@ const styles = StyleSheet.create({
         position: "absolute",
         backgroundColor:"#fafcee",
         top: "9%",
-        borderWidth: 4,
+        borderWidth: 3,
         borderStyle: "dashed",
         borderDashOffset: 4,
         borderColor: "#4e372c",
