@@ -6,6 +6,8 @@ import { AuthContext } from '../../context/AuthContext'
 import LogOutModal from '../Login and Auth/LogOutModal'
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+
 
 
 //Settings Icon to have user be able to update and change their settings
@@ -15,13 +17,16 @@ import { Ionicons } from '@expo/vector-icons';
 // Add Badges
 // Add Carousel to Badges
 
+// combine two fetch reqeusts into one, can access observations through user
+
 function MyProfile({navigation}) {
 
     const { userToken, logOutModalVisible, setLogOutModalVisible } = useContext(AuthContext)
 
     const [ plantIndexImages, setPlantIndexImages ] = useState(null);
-    const [ permission, setPermission ] = Camera.useCameraPermissions();
-    const [ photo, setPhoto ] = useState(null);
+    const [ username, setUsername ] = useState(null) 
+    // const [ permission, setPermission ] = Camera.useCameraPermissions();
+    // const [ photo, setPhoto ] = useState(null);
 
     const samplebackingp5 = require("../../images/samplebackingp5.png");
 
@@ -42,6 +47,26 @@ function MyProfile({navigation}) {
     function determineRandomImageIndex () {
         return Math.floor(Math.random()* plantIndexImages.length)
     }
+
+    useEffect( () => {
+        fetch('https://customngrok.ngrok.app/currentuser',{
+            method: "GET",
+            headers: {
+                "Content-type":"application/json",
+                "Authorization": `Bearer ${userToken}`,
+            }
+        })
+        .then(r=>{
+            if (!r.ok) {
+                setLogOutModalVisible(true)
+            };
+            return r.json()})
+        .then(username => {
+            setUsername(username.username)
+        })
+    }
+    ,[]
+    )
 
     useEffect( () => {
         fetch('https://customngrok.ngrok.app/observationsbyuser',{
@@ -80,6 +105,19 @@ function MyProfile({navigation}) {
         <View style = {styles.pageContainer}>
             <View style = {styles.headerContainer}>
                 <LogOutButton navigation = {navigation}/>
+                <View style = {styles.usernameContainer}>
+                    <FontAwesome 
+                        name="user-circle-o" 
+                        style = {styles.usernameIcon}
+                    />
+                    {username && (
+                        <Text
+                            style = {styles.usernameText}
+                        >{username}
+                        </Text>
+                    )}
+                </View>
+                
             </View>
             <View style = {styles.imageContainer}>
                 {
@@ -96,6 +134,12 @@ function MyProfile({navigation}) {
                     size={350} 
                     color="#ffbf00" 
                     style = {styles.searchImageContainer}
+                />
+                <FontAwesome 
+                    name="circle"
+                    size={200} 
+                    color="#eae6d7"
+                    style = {styles.circleBacking}
                 />
             </View>
             {/* <BadgeFlowers/> */}
@@ -164,7 +208,28 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-
+    usernameContainer: {
+        position: 'absolute',
+        flexDirection: "row",
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 10,
+        backgroundColor: '#fafcee',
+        height:"70%",
+        width:"30%",
+        left:30,
+        bottom:-20,
+    },
+    usernameIcon: {
+        fontSize: 30,
+        color: "#4e372c",
+    },
+    usernameText: {
+        color: '#4e372c',
+        fontSize: 16,
+        fontWeight: 'bold',
+        margin: 10,
+    },
     buttonContainer:{
         position: "absolute",
         flex:1/7,
@@ -203,10 +268,14 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
         margin: 30,
         borderRadius: 85,
-        zIndex:1
+        zIndex:2
     },
     imageBacking: {
         position: "absolute",
+    },
+    circleBacking: {
+        position:  'absolute',
+        zIndex: 1,
     },
     searchImageContainer: {
         position: "absolute",

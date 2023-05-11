@@ -13,6 +13,7 @@ function EditModal ({navigation, editModalVisible, setEditModalVisible, specific
     const { userPlants, setUserPlants } = useContext(PlantContext)
     const [ isError, setIsError ] = useState(null)
 
+    // test formik on edit modal
 
     ////////////////////////////////////////////////
     ///////   Patch to Plant Details

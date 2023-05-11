@@ -77,8 +77,7 @@ class Signup(Resource):
 
         db_user = User.query.filter(User.username == user_obj[f'{user_attr[0]}']).one()
         token = jwt.encode(
-                {
-                    'user_id': db_user.id},
+                {'user_id': db_user.id},
                     SECRET_KEY,
                     algorithm='HS256'
             )   
@@ -120,6 +119,22 @@ class Login(Resource):
                 )
             
             return response
+        
+class CurrentUser(Resource):
+
+    @JWT_Authentication_Decorator
+    def get(self):
+
+        decoded_token = request.headers.get('Authorization').split(' ')[1]
+        user_id = jwt.decode(
+                            jwt = decoded_token,
+                            key = SECRET_KEY,
+                            algorithms = ['HS256'],
+                          )['user_id']
+
+        current_user = User.query.filter(User.id == user_id).one()
+
+        return make_response(current_user.to_dict(only = ('username',)), 200)
 
 #######################################################
 ###########             Other Resources
@@ -254,6 +269,7 @@ class Observations_by_User(Resource):
         ) for o in sel_Observations]
 
         return make_response(response, 200)
+        
     
 #######################################################
 ###########             API Resources
@@ -265,6 +281,7 @@ api.add_resource(Observations_by_User, '/observationsbyuser')
 api.add_resource(Plant_by_id, '/plantsbyuser/<int:id>')
 api.add_resource(Plants_by_User, '/plantsbyuser')
 api.add_resource(All_Plants, '/plants')
+api.add_resource(CurrentUser, '/currentuser')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

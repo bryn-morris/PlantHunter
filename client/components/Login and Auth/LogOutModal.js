@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
         height: "20%",
         top:  "30%",
         borderRadius: 50,
+        elevation: 5,
     },
     modalTitle:{
         position: 'absolute',
