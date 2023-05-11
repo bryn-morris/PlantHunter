@@ -1,9 +1,9 @@
 import { View, Text, TouchableOpacity, Image, StyleSheet, Dimensions } from 'react-native'
 import { useEffect, useState, useContext } from 'react';
-import PlantUsers from './PlantDetailsModals/PlantUsers';
 import { PlantContext } from '../../context/PlantContext';
 import { Ionicons } from '@expo/vector-icons';
-import EditButton from './EditButton';
+import EditButton from './PlantDetailsModals/EditButton';
+import UserButton from './PlantDetailsModals/UserButton';
 
 
 function PlantDetails({navigation, route}) {
@@ -125,36 +125,41 @@ function PlantDetails({navigation, route}) {
                             <View style = {styles.imageEditIcon}>
                                 <EditButton setEditModalVisible = {setEditModalVisible}/>
                             </View>
-                            
                             <Image 
                                 source = {{uri: specificPlant.image}}
                                 style = {styles.image}
                             />
                         </View>
-                        
-                        <Text>{specificPlant.name}</Text>
-                        <Text>{specificPlant.growth_duration}</Text>
-                        <Text>{specificPlant.genus}</Text>
-                        <Text>{specificPlant.growth_habit}</Text>
-                        <Text>{specificPlant.description}</Text>
-                        <Text>{specificPlant.species}</Text>
-                    </View>
-                    {/* Plant Detail Data */}
-                        
-                    {/* User Comments Modal Below */}
-                    <View style = {styles.usersModalContainer}>
-                        <TouchableOpacity 
-                            onPress={()=>{setModalVisible(true)}}
-                            style = {styles.usersModalButton}
+
+                        <View
+                            style = {styles.nameInfoContainer}
                         >
-                            <Text
-                                style = {styles.usersModalButtonText}
-                            >
-                                User Reviews
-                            </Text>
-                        </TouchableOpacity>
-                        <PlantUsers {...userModalPropsObj}/>
-                    </View>   
+                            <Text>{specificPlant.name}</Text>
+                            <Text>{specificPlant.genus}</Text>
+                            <Text>{specificPlant.species}</Text>
+                        </View>
+
+                        <View
+                            style = {styles.growthInfoContainer}
+                        >
+                            <Text>{specificPlant.growth_duration}</Text>
+                            <Text>{specificPlant.growth_habit}</Text>
+                        </View>
+
+                        <View
+                            style = {styles.descriptionInfoContainer}
+                        >
+                            <Text>{specificPlant.description}</Text>
+                        </View>
+
+                        <View
+                        style = {styles.usersModalButtonContainer}
+                        >
+                            <UserButton {...userModalPropsObj}/>
+                        </View>
+                         
+                    </View>
+                    
                  </>
                 ) :
                 <Text> Loading... </Text>
@@ -234,7 +239,6 @@ const styles = StyleSheet.create({
     },
     plantDataContainer: {
         backgroundColor: "#fafcee",
-        // alignItems: "center",
         top:"-5%",
         borderTopWidth: 2,
         borderTopColor: "#4e372c"
@@ -257,14 +261,20 @@ const styles = StyleSheet.create({
         zIndex:1,
         right: "0%",
     },
-    usersModalContainer: {
-    
+    nameInfoContainer: {
+        backgroundColor: "orange",
     },
-    usersModalButton: {
-
+    growthInfoContainer: {
+        backgroundColor: "green",
     },
-    usersModalButtonText: {
-
+    descriptionInfoContainer: {
+        backgroundColor: "lightblue",
+    },
+    usersModalButtonContainer: {
+        backgroundColor: "#fff",
+        height: 100,
+        width: 100,
+        zIndex:10,
     },
 })
 

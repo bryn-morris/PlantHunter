@@ -3,9 +3,8 @@ import {
     TouchableOpacity, 
     StyleSheet,
 } from "react-native"
-import { Feather } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
-import EditModal from './PlantDetailsModals/EditModal';
+import EditModal from './EditModal';
 
 function EditButton ({setEditModalVisible}) {
 
