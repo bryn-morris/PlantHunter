@@ -23,6 +23,8 @@ function PlantDetails({navigation, route}) {
     const [modalVisible, setModalVisible] = useState(false);
     const [editModalVisible, setEditModalVisible] = useState(false)
 
+    const capitalizedGenus = specificPlant.genus.charAt(0).toUpperCase()+specificPlant.genus.slice(1)
+
     // eventually I want the edit functionality for name tied to a search bar
     // that the user must use to search through documented plants so that
     // the species and genus etc may be determined.
@@ -130,36 +132,31 @@ function PlantDetails({navigation, route}) {
                                 style = {styles.image}
                             />
                         </View>
-
                         <View
                             style = {styles.nameInfoContainer}
                         >
                             <Text>{specificPlant.name}</Text>
-                            <Text>{specificPlant.genus}</Text>
-                            <Text>{specificPlant.species}</Text>
+                            <Text style = {styles.latinName}>
+                                {capitalizedGenus} {specificPlant.species}
+                            </Text>
                         </View>
-
                         <View
                             style = {styles.growthInfoContainer}
                         >
                             <Text>{specificPlant.growth_duration}</Text>
                             <Text>{specificPlant.growth_habit}</Text>
                         </View>
-
                         <View
                             style = {styles.descriptionInfoContainer}
                         >
                             <Text>{specificPlant.description}</Text>
                         </View>
-
                         <View
                         style = {styles.usersModalButtonContainer}
                         >
                             <UserButton {...userModalPropsObj}/>
                         </View>
-                         
                     </View>
-                    
                  </>
                 ) :
                 <Text> Loading... </Text>
@@ -263,6 +260,9 @@ const styles = StyleSheet.create({
     },
     nameInfoContainer: {
         backgroundColor: "orange",
+    },
+    latinName: {
+        fontStyle: "italic",
     },
     growthInfoContainer: {
         backgroundColor: "green",

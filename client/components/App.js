@@ -22,7 +22,7 @@ function App() {
 // in userIndex, want to display to users how many they have caught out of
     // total for their region
 
-// Refactor Styling with UI kitten
+// Refactor Styling with UI kitten ?? 
 // Jiggle when selected!
 // Update with responsive styling and positioning - refactor away
   // from using pixel measurements
