@@ -16,19 +16,21 @@ function UserButton ({setModalVisible, modalVisible, specificPlant}) {
     }
 
     return (
-        <View style = {styles.usersContainer}>
+        <>
             <TouchableOpacity 
                 onPress={()=>setModalVisible(true)}
                 style = {styles.usersButton}
             >
+            <View style = {styles.usersContainer}>
                 <Text
                     style = {styles.usersButtonText}
                 >
                     User Reviews
                 </Text>
+            </View>  
             </TouchableOpacity>
             <PlantUsers {...userModalPropsObj}/>
-        </View>
+        </>
     )
 }
 
@@ -38,7 +40,7 @@ const styles = StyleSheet.create({
 
     usersContainer:{
         height: 30,
-        width: 30,
+        width: "100%",
         borderRadius:15,
         borderWidth:2,
         borderColor:"black",

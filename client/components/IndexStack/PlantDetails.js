@@ -157,16 +157,34 @@ function PlantDetails({navigation, route}) {
                         <View
                             style = {styles.growthInfoContainer}
                         >
-                            <Text>{specificPlant.growth_duration}</Text>
-                            <Text>{specificPlant.growth_habit}</Text>
+                            <Text
+                                style = {styles.growthText}
+                            >{specificPlant.growth_duration}</Text>
+                            <Text
+                                style = {styles.growthHabitText}
+                            >{specificPlant.growth_habit}</Text>
                         </View>
                         <View
-                            style = {styles.descriptionInfoContainer}
+                            style = {
+                                {
+                                    ...styles.descriptionInfoContainer,
+                                    width: width,
+                                    height: height*.23
+                                }
+                            }
                         >
-                            <Text>{specificPlant.description}</Text>
+                            <Text
+                                style = {styles.descriptionText}
+                            >{specificPlant.description}</Text>
                         </View>
                         <View
-                        style = {styles.usersModalButtonContainer}
+                        style = {
+                            {
+                                ...styles.usersModalButtonContainer,
+                                width: width,
+                                height: height*.04
+                            }
+                        }
                         >
                             <UserButton {...userModalPropsObj}/>
                         </View>
@@ -257,7 +275,7 @@ const styles = StyleSheet.create({
     imageContainer:{
         alignContent: "center",
         padding: 10,
-        top: "8%",
+        top: "13%",
     },
     image: {
         width: 160,
@@ -274,10 +292,10 @@ const styles = StyleSheet.create({
     },
     nameInfoContainer: {
         position: "absolute",
-        backgroundColor: "orange",
+        backgroundColor: "#d5ceae",
         alignItems: "center",
         justifyContent: "center",
-        marginTop: 10, 
+        marginTop: 50, 
         elevation:5,
         borderRadius: 30,
         flexDirection: "row",
@@ -287,7 +305,7 @@ const styles = StyleSheet.create({
         fontStyle: "italic",
         color: 'black',
         fontSize: 18,
-        right:"12%",
+        right:"20%",
     },
     nameText: {
         position:"absolute",
@@ -301,16 +319,48 @@ const styles = StyleSheet.create({
         left: "45%",
     },
     growthInfoContainer: {
-        backgroundColor: "green",
+        position:"absolute",
+        backgroundColor: "#d5ceae",
+        alignContent: "center",
+        justifyContent: "center",
+        width: 200,
+        height:90,
+        borderRadius: 25,
+        right: "3%",
+        top: "20%",
+    },
+    growthText: {
+        color: 'black',
+        fontSize: 18,
+        fontWeight: 'bold',
+        textAlign: "center",
+        padding: 10,
+    },
+    growthHabitText: {
+        color: 'black',
+        fontSize: 18,
+        fontWeight: 'bold',
+        textAlign: "center",
+        padding: 10,
     },
     descriptionInfoContainer: {
         backgroundColor: "lightblue",
+        position: "absolute",
+        alignItems:"center",
+        justifyContent:"center",
+        borderRadius: 100,
+        top: "39%",
+    },
+    descriptionText: {
+        color: 'black',
+        fontSize: 14,
+        fontWeight: 'bold'
     },
     usersModalButtonContainer: {
+        position: "absolute",
         backgroundColor: "#fff",
-        height: 100,
-        width: 100,
-        zIndex:10,
+        zIndex:6,
+        bottom: "31%",
     },
 })
 
