@@ -25,7 +25,7 @@ function UserButton ({setModalVisible, modalVisible, specificPlant}) {
                 <Text
                     style = {styles.usersButtonText}
                 >
-                    User Reviews
+                    Users' Comments
                 </Text>
             </View>  
             </TouchableOpacity>
