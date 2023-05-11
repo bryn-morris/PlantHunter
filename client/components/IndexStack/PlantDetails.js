@@ -168,7 +168,7 @@ function PlantDetails({navigation, route}) {
                             style = {
                                 {
                                     ...styles.descriptionInfoContainer,
-                                    width: width,
+                                    width: width*.95,
                                     height: height*.23
                                 }
                             }
@@ -270,12 +270,15 @@ const styles = StyleSheet.create({
         backgroundColor: "#fafcee",
         top:"-2%",
         borderTopWidth: 2,
-        borderTopColor: "#4e372c"
+        borderTopColor: "#4e372c",
+        alignItems: "center",
     },
     imageContainer:{
+        position: "absolute",
         alignContent: "center",
         padding: 10,
         top: "13%",
+        left: "0%",
     },
     image: {
         width: 160,
@@ -359,6 +362,8 @@ const styles = StyleSheet.create({
     usersModalButtonContainer: {
         position: "absolute",
         backgroundColor: "#fff",
+        alignItems: "center",
+        justifyContent: "center",
         zIndex:6,
         bottom: "31%",
     },

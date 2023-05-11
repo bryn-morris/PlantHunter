@@ -42,16 +42,16 @@ const styles = StyleSheet.create({
         height: 30,
         width: "100%",
         borderRadius:15,
-        borderWidth:2,
-        borderColor:"black",
         alignItems:"center",
         justifyContent:"center",
     },
     usersButton: {
-
+        backgroundColor: "#4e372c",
+        borderRadius:15,
+        width: "80%",
     },
     usersButtonText:{
-        color: 'black',
+        color: '#ffbf00',
         fontSize: 18,
         fontWeight: 'bold'
     },
