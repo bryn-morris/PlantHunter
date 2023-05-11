@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
         borderRadius:15,
         alignItems:"center",
         justifyContent:"center",
+        elevation: 5,
     },
     usersButton: {
         backgroundColor: "#4e372c",
