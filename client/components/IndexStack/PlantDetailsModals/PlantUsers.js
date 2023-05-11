@@ -20,7 +20,7 @@ function PlantUsers({modalVisible, setModalVisible, specificPlant}){
 
     const sections = [
         {
-            title: 'Other User\'s Comments',
+            title: 'Users\' Comments',
             data: specificPlant.observations,
         },
     ];
