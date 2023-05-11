@@ -23,7 +23,10 @@ function PlantDetails({navigation, route}) {
     const [modalVisible, setModalVisible] = useState(false);
     const [editModalVisible, setEditModalVisible] = useState(false)
 
-    const capitalizedGenus = specificPlant.genus.charAt(0).toUpperCase()+specificPlant.genus.slice(1)
+    const capitalizedGenus = (
+        specificPlant.genus.charAt(0).toUpperCase()+
+        specificPlant.genus.slice(1)
+    )
 
     // eventually I want the edit functionality for name tied to a search bar
     // that the user must use to search through documented plants so that
@@ -185,7 +188,7 @@ const styles = StyleSheet.create({
         fontSize: 120,
         color: "#73d2de",
         zIndex: 1,
-        top: "-5%",
+        top: "3%",
     },
     headerIcon2:{
         position: "absolute",
@@ -193,7 +196,7 @@ const styles = StyleSheet.create({
         color: "#8f2d56",
         zIndex: 2,
         right: "18%",
-        top: "-3%",
+        top: "7%",
     },
     headerIcon3: {
         position: "absolute",
@@ -201,7 +204,7 @@ const styles = StyleSheet.create({
         color: "#ffbc42",
         zIndex: 2,
         left: "18%",
-        top: "-3%",
+        top: "7%",
     },
     headerIcon4:{
         position: "absolute",
@@ -209,7 +212,7 @@ const styles = StyleSheet.create({
         color: "#5c415d",
         zIndex: 3,
         left: "-2%",
-        top: "3%",
+        top: "14%",
     },
     headerIcon5: {
         position: "absolute",
@@ -217,10 +220,10 @@ const styles = StyleSheet.create({
         color: "#fcb0b3",
         zIndex: 3,
         right: "-2%",
-        top: "3%",
+        top: "14%",
     },
     headerTextContainer:{
-        top: "30%",
+        top: "40%",
         position:"absolute",
         alignItems: 'center',
         backgroundColor:"#d5ceae",
@@ -259,7 +262,13 @@ const styles = StyleSheet.create({
         right: "0%",
     },
     nameInfoContainer: {
+        position: "absolute",
         backgroundColor: "orange",
+        borderWidth: 2,
+        justifyContent: "center",
+        borderColor: '#4e372c',
+        width: 130,
+        height: 60,
     },
     latinName: {
         fontStyle: "italic",
