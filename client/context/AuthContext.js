@@ -21,6 +21,6 @@ function AuthProvider ({children}) {
         >
             {children}
         </AuthContext.Provider>
-        )
+    )
 }
 export {AuthContext, AuthProvider}

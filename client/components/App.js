@@ -22,6 +22,9 @@ function App() {
 // in userIndex, want to display to users how many they have caught out of
     // total for their region
 
+// Set Expiry or JWT top conform to industry standards
+
+
 // Refactor Styling with UI kitten ?? 
 // Jiggle when selected!
 // Update with responsive styling and positioning - refactor away

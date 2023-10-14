@@ -12,11 +12,11 @@ import os
 
 # Local imports
 from config import app, db, api
-from models import User, Observation, Plant
+from models import User, Observation, Plant  
 
 #Super Secret Key, no looking pls
 # Move to somewhere more secure on refactor
-# likely store within app context to import over here
+# likely store within app context/config file to import over here
 SECRET_KEY = os.urandom(16)
 
 #######################################################
@@ -260,7 +260,7 @@ class Observations_by_User(Resource):
             jwt = decoded_token,
             key = SECRET_KEY,
             algorithms = ['HS256'],
-        )['user_id']
+        )['user_id']    
 
         sel_Observations = Observation.query.filter(Observation.user_id == user_id).all()
 

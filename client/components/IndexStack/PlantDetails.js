@@ -146,10 +146,10 @@ function PlantDetails({navigation, route}) {
                         >
                             <Text
                                 style = {styles.nameText}
-                            >{specificPlant.name}</Text>
-                            <Text
+                            >{specificPlant.name}     |</Text>
+                            {/* <Text
                                 style = {styles.character}
-                            >|</Text>
+                            >|</Text> */}
                             <Text style = {styles.latinName}>
                                 {capitalizedGenus} {specificPlant.species}
                             </Text>
@@ -308,14 +308,14 @@ const styles = StyleSheet.create({
         fontStyle: "italic",
         color: 'black',
         fontSize: 18,
-        right:"20%",
+        right:"5%",
     },
     nameText: {
         position:"absolute",
         color: 'black',
-        fontSize: 25,
+        fontSize: 18,
         fontWeight: 'bold',
-        left: "12%",
+        left: "5%",
     },
     character: {
         position:"absolute",
@@ -357,7 +357,8 @@ const styles = StyleSheet.create({
     descriptionText: {
         color: 'black',
         fontSize: 14,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        padding: 20,
     },
     usersModalButtonContainer: {
         position: "absolute",
